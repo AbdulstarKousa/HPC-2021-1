@@ -3,7 +3,6 @@
 
 
 void matmult_nat(int m, int n, int k, double **A, double **B, double **C) {
-
     double sum = 0;
 
     for (int i_m = 0; i_m != m; i_m++) {
@@ -18,16 +17,38 @@ void matmult_nat(int m, int n, int k, double **A, double **B, double **C) {
 }
 
 
+// void matmult_mnk_fast(int m, int n, int k, double **A, double **B, double **C) {
+//     double sum = 0;
+
+//     for (int i_m = 0; i_m != m; i_m++) {
+//         for (int i_n = 0; i_n != n; i_n++) {
+//             sum = 0;
+//             for (int i_k = 0; i_k != k; i_k++) {
+//                 // C[i_m][i_n] += A[i_m][i_k] * B[i_k][i_n];
+//                 sum += A[i_m][i_k] * B[i_k][i_n];
+//             }
+//             C[i_m][i_n] = sum;
+//         }
+//     }
+// }
+
 void matmult_mnk(int m, int n, int k, double **A, double **B, double **C) {
-    double sum = 0;
+    // Reset C Matrix before storing result
+    for (int i_m = 0; i_m < m; i_m++) {
+        for (int i_n = 0; i_n < n; i_n++) {
+            C[i_m][i_n] = 0.0;
+        }
+    }
+
     for (int i_m = 0; i_m != m; i_m++) {
         for (int i_n = 0; i_n != n; i_n++) {
-            sum = 0;
+            // sum = 0;
             for (int i_k = 0; i_k != k; i_k++) {
                 // C[i_m][i_n] += A[i_m][i_k] * B[i_k][i_n];
-                sum += A[i_m][i_k] * B[i_k][i_n];
+                // sum += A[i_m][i_k] * B[i_k][i_n];
+                C[i_m][i_n] += A[i_m][i_k] * B[i_k][i_n];
             }
-            C[i_m][i_n] = sum;
+            // C[i_m][i_n] = sum;
         }
     }
 }
@@ -56,15 +77,35 @@ void matmult_mkn(int m, int n, int k, double **A, double **B, double **C) {
 }
 
 
+// void matmult_nmk_fast(int m, int n, int k, double **A, double **B, double **C) {
+//     double sum = 0;
+//     for (int i_n = 0; i_n != n; i_n++) {
+//         for (int i_m = 0; i_m != m; i_m++) {
+//             sum = 0;
+//             for (int i_k = 0; i_k != k; i_k++) {
+//                 sum += A[i_m][i_k] * B[i_k][i_n];
+//             }
+//             C[i_m][i_n] = sum;
+//         }
+//     }
+// }
+
 void matmult_nmk(int m, int n, int k, double **A, double **B, double **C) {
-    double sum = 0;
+    for (int i_m = 0; i_m < m; i_m++) {
+        for (int i_n = 0; i_n < n; i_n++) {
+            C[i_m][i_n] = 0.0;
+        }
+    }
+
+
     for (int i_n = 0; i_n != n; i_n++) {
         for (int i_m = 0; i_m != m; i_m++) {
-            sum = 0;
+            // sum = 0;
             for (int i_k = 0; i_k != k; i_k++) {
-                sum += A[i_m][i_k] * B[i_k][i_n];
+                // sum += A[i_m][i_k] * B[i_k][i_n];
+                C[i_m][i_n] += A[i_m][i_k] * B[i_k][i_n];
             }
-            C[i_m][i_n] = sum;
+            // C[i_m][i_n] = sum;
         }
     }
 }
