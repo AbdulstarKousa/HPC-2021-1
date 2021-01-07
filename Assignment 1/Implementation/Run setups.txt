@@ -1,0 +1,18 @@
+# -O3
+# -O3 -funroll-loops
+# -O3 -funroll-loops -flto
+# -O2
+# -O2 -funroll-loops
+# -O2 -funroll-loops -flto
+# -Ofast
+# -Ofast -funroll-loops
+# -Ofast -funroll-loops -flto
+
+    
+
+1) Change make file
+2) Change job name
+3) Change data name 
+4) make clean
+5) make 
+6) submit
