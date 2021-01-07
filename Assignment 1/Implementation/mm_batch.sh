@@ -6,12 +6,12 @@
 #
 # Author: Bernd Dammann <bd@cc.dtu.dk>
 #
-#BSUB -J mm_batch
+#BSUB -J mm_batch12
 #BSUB -o mm_batch_%J.out
 #BSUB -q hpcintro
 #BSUB -n 1
 #BSUB -R "rusage[mem=2048]"
-#BSUB -W 59
+#BSUB -W 20
 #BSUB -B
 
 # define the driver name to use
@@ -19,7 +19,7 @@
 # matmult_f.gcc
 #
 EXECUTABLE=matmult_c.gcc
-LOGEXT=matmult_-O2-flto.dat
+LOGEXT=matmult_-Ofast-funroll-loops-flto.dat
 
 # define the mkn values in the MKN variable
 #
