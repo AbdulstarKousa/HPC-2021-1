@@ -41,10 +41,16 @@ export MATMULT_COMPARE=0
 
 # start the collect command with the above settings
 
+LOGEXT=""
+
 for OPT in $OPTIMIZATIONLEVELS
+do
 
     # No further optimization
-    LOGEXT="$OPT_matmult_.dat"
+    LOGEXT="matmult_"
+    LOGEXT+="${OPT}"
+    LOGEXT+="_.dat"
+    # LOGEXT="$OPT_matmult_.dat"
     /bin/rm -f $LOGEXT
 
     make clean
@@ -60,7 +66,10 @@ for OPT in $OPTIMIZATIONLEVELS
     done
 
     # funroll-loops
-    LOGEXT="${OPT}_funroll_loops_matmult_.dat"
+    # LOGEXT="${OPT}_funroll_loops_matmult_.dat"
+    LOGEXT="matmult_"
+    LOGEXT+="${OPT}"
+    LOGEXT+="_funroll_loops_.dat"
     /bin/rm -f $LOGEXT
 
     make clean
@@ -76,7 +85,10 @@ for OPT in $OPTIMIZATIONLEVELS
     done
 
     # flto
-    LOGEXT="${OPT}_flto_matmult_.dat"
+    # LOGEXT="${OPT}_flto_matmult_.dat"
+    LOGEXT="matmult_"
+    LOGEXT+="${OPT}"
+    LOGEXT+="_flto_.dat"
     /bin/rm -f $LOGEXT
 
     make clean
@@ -92,7 +104,10 @@ for OPT in $OPTIMIZATIONLEVELS
     done
 
     # funroll-loops and flto
-    LOGEXT="${OPT}_funroll_loops_flto_matmult_.dat"
+    # LOGEXT="${OPT}_funroll_loops_flto_matmult_.dat"
+    LOGEXT="matmult_"
+    LOGEXT+="${OPT}"
+    LOGEXT+="_funroll_loops_flto_.dat"
     /bin/rm -f $LOGEXT
 
     make clean
