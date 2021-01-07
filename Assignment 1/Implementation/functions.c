@@ -1,5 +1,6 @@
-#include <stdlib.h>
-#include <stdio.h>
+#include <stdio.h>     // for in-out purposes  
+#include <stdlib.h>    // for memory purposes 
+#include "cblas.h"     // for cblas_dgemm Prototype 
 
 
 void matmult_nat(int m, int n, int k, double **A, double **B, double **C) {
@@ -189,82 +190,27 @@ void matmult_blk(int m,int n,int k,double **A,double **B,double **C, int bs) {
 
 // #include <stdlib.h>
 
-/* DGEMM (double generel matrix matrix multiplication)                           */
-void dgemm_(
-    const char * transa,    /* a transposed?        */
-    const char * transb,    /* b transposed?        */
-    const int * m,          /* rows of a,c          */
-    const int * n,          /* columns of b,c       */
-    const int * k,          /* columns a, rows c    */
-    const double * alpha,   /* scalar alpha         */
-
-    double * a,             /* array a              */
-    const int * inca,       /* array a, stride      */
-
-    double * b,             /* array b              */
-    const int * incb,       /* array b, stride      */
-
-    double * c,             /* array c              */
-    const int * incc        /* array c, stride      */
-);
+// dgemm prototype 
+void cblas_dgemm(
+  const enum CBLAS_ORDER __Order,      //reserved enum (CblasRowMajor)
+  const enum CBLAS_TRANSPOSE __TransA, //reserved enum (CblasNoTrans)
+  const enum CBLAS_TRANSPOSE __TransB, //reserved enum (CblasNoTrans)
+  const int __M,        // C #Row. 
+  const int __N,        // C #Col.
+  const int __K,        // A #Col. || B #Row.  
+  const double __alpha, // C=alpha*A*B+beta*C => alpha = 1 for C=A*B
+  const double *__A,    // A[0]
+  const int __lda,      // A #Col.
+  const double *__B,    // B[0]
+  const int __ldb,      // B #Col.
+  const double __beta,  // C=alpha*A*B+beta*C => beta = 0 for C=A*B
+  double *__C,          // C[0]
+  const int __ldc);     // C #Col.
 
 /* Scale the diagonal elements of a square two-dimensional row-major array */
 void matmult_lib(int m,int n,int k,double **A,double **B,double **C) {
+  double alpha, beta;
+  alpha = 1.0; beta = 0.0;
+  cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, m, n, k, alpha, A[0], k, B[0], n, beta, C[0], n);  
 
-    // if (k ==0) return -1;
-    // if (m ==0) return -1;
-    // if (n ==0) return -1;
-    // if (A == 0) return -1;
-    // if (B == 0) return -1;
-    // if (C == 0) return -1;
-
-    // "Unpack" A
-    // double *dataA;
-    // dataA = malloc(k*m*sizeof(double));
-    // if(dataA == NULL){
-    //   free(dataA);
-    // }
-    // int N=0;
-    // for (int i = 0; i < k; i++) {
-    //     for (int j = 0; j < m; j++) {
-    //         dataA[N++] = A[j][i];
-    //     }
-    // }
-
-    // // "Unpack" B
-    // double *dataB;
-    // dataB = malloc(n*k*sizeof(double));
-    // if(dataB == NULL){
-    //   free(dataB);
-    // }
-    // N=0;
-    // for (int i = 0; i < n; i++) {
-    //     for (int j = 0; j < k; j++) {
-    //         dataB[N++] = B[j][i];
-    //     }
-    // }
-
-    // // "Unpack" C
-    // double *dataC;
-    // dataC = malloc(m*n*sizeof(double));
-    // if(dataC == NULL){
-    //   free(dataC);
-    // }
-    // N=0;
-    // for (int i = 0; i < n; i++) {
-    //     for (int j = 0; j < m; j++) {
-    //         dataC[N++] = C[j][i];
-    //     }
-    // }
-
-    char trans = 'N';
-    double alpha = 1.0;
-
-    dgemm_(&trans, &trans, &m, &n, &k, &alpha, &A[0][0], &k, &B[0][0], &n, &C[0][0], &m);
-
-    // free(dataA);
-    // free(dataB);
-    // free(dataC);
-
-    // return 0;
 }
