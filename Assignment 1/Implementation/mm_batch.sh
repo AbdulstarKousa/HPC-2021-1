@@ -12,18 +12,19 @@
 #BSUB -n 1
 #BSUB -R "rusage[mem=2048]"
 #BSUB -W 59
+#BSUB -B
 
 # define the driver name to use
 # valid values: matmult_c.studio, matmult_f.studio, matmult_c.gcc or
 # matmult_f.gcc
 #
 EXECUTABLE=matmult_c.gcc
-LOGEXT=matmult_-O2.dat
+LOGEXT=matmult_-O2-flto.dat
 
 # define the mkn values in the MKN variable
 #
 # SIZES="100 200 500 1000 2000"
-SIZES="10 20 50 100 200 500"
+SIZES="10 20 50 100 200 500 1000 2000"
 
 # define the permutation type in PERM
 #
