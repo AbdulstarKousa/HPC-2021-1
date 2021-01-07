@@ -163,11 +163,28 @@ void matmult_knm(int m, int n, int k, double **A, double **B, double **C) {
 
 
 
-
-
-
 void matmult_blk(int m,int n,int k,double **A,double **B,double **C, int bs) {
+    for (int i_m = 0; i_m < m; i_m++) {
+        for (int i_n = 0; i_n < n; i_n++) {
+            C[i_m][i_n] = 0.0;
+        }
+    }
 
+    // OBS, the block size needs to be a multiple of m, n and k in order for this to work!
+    // ie. m, n and k also need to be the same 
+    int block = bs * (n / bs); //Defining the block size 
+
+    for (int i_kk = 0; i_kk < block; i_kk += block){
+        for (int i_nn = 0; i_nn < block; i_nn += block){
+            for (int i_m = 0; i_m != m; i_m++) {
+                for (int i_n = i_nn; i_n < i_nn + block ; i_n++) {
+                    for (int i_k = i_kk; i_n < i_kk + block ; i_k++) {
+                        C[i_m][i_n] += A[i_m][i_k] * B[i_k][i_n];
+                    }
+                }
+            }
+        }
+    }
 }
 
 // #include <stdlib.h>
