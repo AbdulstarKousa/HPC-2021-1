@@ -3,11 +3,11 @@
 
 
 void matmult_nat(int m, int n, int k, double **A, double **B, double **C) {
-    double sum = 0;
+    double sum = 0.0;
 
     for (int i_m = 0; i_m != m; i_m++) {
         for (int i_n = 0; i_n != n; i_n++) {
-            sum = 0;
+            sum = 0.0;
             for (int i_k = 0; i_k != k; i_k++) {
                 sum += A[i_m][i_k] * B[i_k][i_n];
             }
@@ -202,52 +202,52 @@ void matmult_lib(int m,int n,int k,double **A,double **B,double **C) {
     // if (C == 0) return -1;
 
     // "Unpack" A
-    double *dataA;
-    dataA = malloc(k*m*sizeof(double));
-    if(dataA == NULL){
-      free(dataA);
-    }
-    int N=0;
-    for (int i = 0; i < k; i++) {
-        for (int j = 0; j < m; j++) {
-            dataA[N++] = A[j][i];
-        }
-    }
+    // double *dataA;
+    // dataA = malloc(k*m*sizeof(double));
+    // if(dataA == NULL){
+    //   free(dataA);
+    // }
+    // int N=0;
+    // for (int i = 0; i < k; i++) {
+    //     for (int j = 0; j < m; j++) {
+    //         dataA[N++] = A[j][i];
+    //     }
+    // }
 
-    // "Unpack" B
-    double *dataB;
-    dataB = malloc(n*k*sizeof(double));
-    if(dataB == NULL){
-      free(dataB);
-    }
-    N=0;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < k; j++) {
-            dataB[N++] = B[j][i];
-        }
-    }
+    // // "Unpack" B
+    // double *dataB;
+    // dataB = malloc(n*k*sizeof(double));
+    // if(dataB == NULL){
+    //   free(dataB);
+    // }
+    // N=0;
+    // for (int i = 0; i < n; i++) {
+    //     for (int j = 0; j < k; j++) {
+    //         dataB[N++] = B[j][i];
+    //     }
+    // }
 
-    // "Unpack" C
-    double *dataC;
-    dataC = malloc(m*n*sizeof(double));
-    if(dataC == NULL){
-      free(dataC);
-    }
-    N=0;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j++) {
-            dataC[N++] = C[j][i];
-        }
-    }
+    // // "Unpack" C
+    // double *dataC;
+    // dataC = malloc(m*n*sizeof(double));
+    // if(dataC == NULL){
+    //   free(dataC);
+    // }
+    // N=0;
+    // for (int i = 0; i < n; i++) {
+    //     for (int j = 0; j < m; j++) {
+    //         dataC[N++] = C[j][i];
+    //     }
+    // }
 
     char trans = 'N';
     double alpha = 1.0;
 
-    dgemm_(&trans, &trans, &m, &n, &k, &alpha, *A, &k, *B, &n, *C, &m);
+    dgemm_(&trans, &trans, &m, &n, &k, &alpha, &A[0][0], &k, &B[0][0], &n, &C[0][0], &m);
 
-    free(dataA);
-    free(dataB);
-    free(dataC);
+    // free(dataA);
+    // free(dataB);
+    // free(dataC);
 
     // return 0;
 }

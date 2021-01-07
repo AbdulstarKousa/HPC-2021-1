@@ -18,11 +18,11 @@
 # matmult_f.gcc
 #
 EXECUTABLE=matmult_c.gcc
-LOGEXT=matmult.dat
+LOGEXT=matmult_%J.dat
 
 # define the mkn values in the MKN variable
 #
-SIZES="10 50 100 200 500 1000 1400 1800 2000 2200"
+SIZES="100 200 500 1000 2000"
 
 # define the permutation type in PERM
 #
@@ -34,7 +34,7 @@ PERMUTATIONS="nat mnk mkn nmk nkm kmn knm"
 # BLKSIZE=1
 
 # enable(1)/disable(0) result checking
-export MATMULT_COMPARE=1
+export MATMULT_COMPARE=0
 
 # start the collect command with the above settings
 /bin/rm -f $LOGEXT

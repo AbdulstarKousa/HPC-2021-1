@@ -1,0 +1,39 @@
+   234.375    449.925 0 # matmult_nat
+   937.500    428.380 0 # matmult_nat
+  5859.375    363.422 0 # matmult_nat
+ 23437.500    393.316 0 # matmult_nat
+ 93750.000    265.097 248 # matmult_nat
+   234.375    307.146 0 # matmult_mnk
+   937.500    275.714 0 # matmult_mnk
+  5859.375    230.103 0 # matmult_mnk
+ 23437.500    256.606 0 # matmult_mnk
+ 93750.000    170.976 248 # matmult_mnk
+   234.375    314.070 0 # matmult_mkn
+   937.500    317.088 0 # matmult_mkn
+  5859.375    318.948 0 # matmult_mkn
+ 23437.500    319.966 0 # matmult_mkn
+ 93750.000    319.733 248 # matmult_mkn
+   234.375    310.335 0 # matmult_nmk
+   937.500    291.530 0 # matmult_nmk
+  5859.375    254.942 0 # matmult_nmk
+ 23437.500    278.505 0 # matmult_nmk
+ 93750.000    199.519 248 # matmult_nmk
+   234.375    299.798 0 # matmult_nkm
+   937.500    249.940 0 # matmult_nkm
+  5859.375    226.074 0 # matmult_nkm
+ 23437.500    248.590 0 # matmult_nkm
+ 93750.000    166.142 248 # matmult_nkm
+   234.375    314.248 0 # matmult_kmn
+   937.500    313.227 0 # matmult_kmn
+  5859.375    317.798 0 # matmult_kmn
+ 23437.500    319.670 0 # matmult_kmn
+ 93750.000    318.384 248 # matmult_kmn
+   234.375    301.496 0 # matmult_knm
+   937.500    250.075 0 # matmult_knm
+  5859.375    224.860 0 # matmult_knm
+ 23437.500    253.218 0 # matmult_knm
+ 93750.000    164.303 248 # matmult_knm
+
+SIZES1="100, 200, 500, 1000, 2000"
+
+OPT	= -g -std=c11
