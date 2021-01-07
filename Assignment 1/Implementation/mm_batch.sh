@@ -45,7 +45,6 @@ LOGEXT=""
 
 for OPT in $OPTIMIZATIONLEVELS
 do
-
     # No further optimization
     LOGEXT="matmult_"
     LOGEXT+="${OPT}"
@@ -61,9 +60,9 @@ do
         for S in $SIZES
         do
             ./$EXECUTABLE $PERM $S $S $S $BLKSIZE | grep -v CPU >> $LOGEXT
-            echo %$SIZES >> $LOGEXT
         done
     done
+    echo %$SIZES >> $LOGEXT
 
     # funroll-loops
     # LOGEXT="${OPT}_funroll_loops_matmult_.dat"
@@ -80,9 +79,9 @@ do
         for S in $SIZES
         do
             ./$EXECUTABLE $PERM $S $S $S $BLKSIZE | grep -v CPU >> $LOGEXT
-            echo %$SIZES >> $LOGEXT
         done
     done
+    echo %$SIZES >> $LOGEXT
 
     # flto
     # LOGEXT="${OPT}_flto_matmult_.dat"
@@ -99,9 +98,9 @@ do
         for S in $SIZES
         do
             ./$EXECUTABLE $PERM $S $S $S $BLKSIZE | grep -v CPU >> $LOGEXT
-            echo %$SIZES >> $LOGEXT
         done
     done
+    echo %$SIZES >> $LOGEXT
 
     # funroll-loops and flto
     # LOGEXT="${OPT}_funroll_loops_flto_matmult_.dat"
@@ -118,9 +117,9 @@ do
         for S in $SIZES
         do
             ./$EXECUTABLE $PERM $S $S $S $BLKSIZE | grep -v CPU >> $LOGEXT
-            echo %$SIZES >> $LOGEXT
         done
     done
+    echo %$SIZES >> $LOGEXT
 
 
     # /bin/rm -f $LOGEXT
