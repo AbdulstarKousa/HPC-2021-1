@@ -1,0 +1,15 @@
+### Start Fri Jan  8 11:09:49 2021
+# /opt/oracle/developerstudio12.6/bin/../bin/er_archive -n -O /zhome/e7/7/127502/Desktop/Assign01/HPC2021/Assignment 1/Implementation/collector.8703734nat_O3_flto.er/er_archive.log /zhome/e7/7/127502/Desktop/Assign01/HPC2021/Assignment 1/Implementation/collector.8703734nat_O3_flto.er
+Copying `/zhome/e7/7/127502/Desktop/Assign01/HPC2021/Assignment 1/Implementation/matmult_c.gcc'  to `/zhome/e7/7/127502/Desktop/Assign01/HPC2021/Assignment 1/Implementation/collector.8703734nat_O3_flto.er/archives/matmult_c.gcc_SwLB4TWOW36'
+Copying `/usr/lib64/libgcc_s-4.8.5-20150702.so.1'  to `/zhome/e7/7/127502/Desktop/Assign01/HPC2021/Assignment 1/Implementation/collector.8703734nat_O3_flto.er/archives/libgcc_s-4.8.5-20150702.so.1_OCEC1bthLm2'
+Copying `/usr/lib64/libquadmath.so.0.0.0'  to `/zhome/e7/7/127502/Desktop/Assign01/HPC2021/Assignment 1/Implementation/collector.8703734nat_O3_flto.er/archives/libquadmath.so.0.0.0_OCEC1bthLm2'
+Copying `/usr/lib64/libm-2.17.so'  to `/zhome/e7/7/127502/Desktop/Assign01/HPC2021/Assignment 1/Implementation/collector.8703734nat_O3_flto.er/archives/libm-2.17.so_OCEC1bthLm2'
+Copying `/usr/lib64/libgfortran.so.3.0.0'  to `/zhome/e7/7/127502/Desktop/Assign01/HPC2021/Assignment 1/Implementation/collector.8703734nat_O3_flto.er/archives/libgfortran.so.3.0.0_OCEC1bthLm2'
+Copying `/usr/lib64/librt-2.17.so'  to `/zhome/e7/7/127502/Desktop/Assign01/HPC2021/Assignment 1/Implementation/collector.8703734nat_O3_flto.er/archives/librt-2.17.so_OCEC1bthLm2'
+Copying `/usr/lib64/libpthread-2.17.so'  to `/zhome/e7/7/127502/Desktop/Assign01/HPC2021/Assignment 1/Implementation/collector.8703734nat_O3_flto.er/archives/libpthread-2.17.so_OCEC1bthLm2'
+Copying `/usr/lib64/libc-2.17.so'  to `/zhome/e7/7/127502/Desktop/Assign01/HPC2021/Assignment 1/Implementation/collector.8703734nat_O3_flto.er/archives/libc-2.17.so_OCEC1bthLm2'
+Copying `/usr/lib64/libdl-2.17.so'  to `/zhome/e7/7/127502/Desktop/Assign01/HPC2021/Assignment 1/Implementation/collector.8703734nat_O3_flto.er/archives/libdl-2.17.so_OCEC1bthLm2'
+Copying `/zhome/e7/7/127502/Desktop/Assign01/HPC2021/Assignment 1/Implementation/libmatmult.so'  to `/zhome/e7/7/127502/Desktop/Assign01/HPC2021/Assignment 1/Implementation/collector.8703734nat_O3_flto.er/archives/libmatmult.so_SwLB4TWOW36'
+Copying `/usr/lib64/atlas/libsatlas.so.3.10'  to `/zhome/e7/7/127502/Desktop/Assign01/HPC2021/Assignment 1/Implementation/collector.8703734nat_O3_flto.er/archives/libsatlas.so.3.10_bkXz1NQ1lK8'
+Copying `/opt/oracle/developerstudio12.6/lib/analyzer/amd64/runtime/libcollector.so'  to `/zhome/e7/7/127502/Desktop/Assign01/HPC2021/Assignment 1/Implementation/collector.8703734nat_O3_flto.er/archives/libcollector.so_-C8vWEvanQd'
+Copying `/usr/lib64/ld-2.17.so'  to `/zhome/e7/7/127502/Desktop/Assign01/HPC2021/Assignment 1/Implementation/collector.8703734nat_O3_flto.er/archives/ld-2.17.so_OCEC1bthLm2'
