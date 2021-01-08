@@ -23,16 +23,16 @@ EXECUTABLE=matmult_c.gcc
 
 # define the mkn values in the MKN variable
 #
-MKN="500 500 500"
+MKN="128 128 128"
 
 # define the permutation type in PERM
 #
-# PERM="per blk lib"
-PERM="per"
+# PERM="per blk lib nat"
+PERM="nat"
 
 # uncomment and set a reasonable BLKSIZE for the blk version
 #
-# BLKSIZE=1
+# BLKSIZE=8
 
 # define the max no. of iterations the driver should use - adjust to
 # get a reasonable run time.  You can get an estimate by trying this
@@ -45,7 +45,7 @@ export MATMULT_COMPARE=0
 # experiment name 
 #
 JID=${LSB_JOBID}
-EXPOUT="$LSB_JOBNAME.${JID}O3_flto.er"
+EXPOUT="$LSB_JOBNAME.${JID}_128_nat_O3_flto.er"
 
 # uncomment the HWCOUNT line, if you want to use hardware counters
 # define an option string for the harwdware counters (see output of
