@@ -11,7 +11,7 @@
 #BSUB -q hpcintro
 #BSUB -n 1
 #BSUB -R "rusage[mem=2048]"
-#BSUB -W 15
+#BSUB -W 00:59
 
 module load studio
 
@@ -23,10 +23,11 @@ EXECUTABLE=matmult_c.gcc
 
 # define the mkn values in the MKN variable
 #
-MKN="100 100 100"
+MKN="500 500 500"
 
 # define the permutation type in PERM
 #
+# PERM="per blk lib"
 PERM="per"
 
 # uncomment and set a reasonable BLKSIZE for the blk version
@@ -44,7 +45,7 @@ export MATMULT_COMPARE=0
 # experiment name 
 #
 JID=${LSB_JOBID}
-EXPOUT="$LSB_JOBNAME.${JID}.er"
+EXPOUT="$LSB_JOBNAME.${JID}O3_flto.er"
 
 # uncomment the HWCOUNT line, if you want to use hardware counters
 # define an option string for the harwdware counters (see output of

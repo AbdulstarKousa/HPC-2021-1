@@ -17,7 +17,7 @@ LIBSRCS	= functions.c
 LDLIBS=-L /usr/lib64/atlas -lsatlas
 LIBOBJS	= $(LIBSRCS:.c=.o)
 
-OPT	= -g -std=c11
+OPT	= -g -std=c11 -O3 -flto
 PIC	= -fPIC
 
 CC	= gcc
