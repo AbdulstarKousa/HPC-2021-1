@@ -9,14 +9,15 @@
 # DONE 9: -Ofast
 # DONE 10: -Ofast -funroll-loops 
 # DONE 11: -Ofast -flto
-# RUN 12: -Ofast -funroll-loops -flto
+# DONE 12: -Ofast -funroll-loops -flto
+# 13: No extra optimizations
 
 TARGET	= libmatmult.so
 LIBSRCS	= functions.c
 LDLIBS=-L /usr/lib64/atlas -lsatlas
 LIBOBJS	= $(LIBSRCS:.c=.o)
 
-OPT	= -g -Ofast -funroll-loops -flto -std=c11
+OPT	= -g -std=c11
 PIC	= -fPIC
 
 CC	= gcc
