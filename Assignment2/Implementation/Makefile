@@ -3,12 +3,12 @@
 TARGET_J  = poisson_j		# Jacobi
 TARGET_GS = poisson_gs		# Gauss-Seidel
 
-SOURCES	= main.c print.c alloc3d.c jacobi.c gauss_seidel.c sin_test.c
+SOURCES	= main.c print.c alloc3d.c jacobi.c gauss_seidel.c sin_test.c Norm_Fro.c
 OBJECTS	= print.o alloc3d.o 
 MAIN_J	= main_j.o
 MAIN_GS = main_gs.o
-OBJS_J	= $(MAIN_J) jacobi.o sin_test.o
-OBJS_GS	= $(MAIN_GS) gauss_seidel.o sin_test.o jacobi.o
+OBJS_J	= $(MAIN_J) jacobi.o sin_test.o Norm_Fro.o
+OBJS_GS	= $(MAIN_GS) gauss_seidel.o sin_test.o jacobi.o Norm_Fro.o
 
 # options and settings for the GCC compilers
 #
@@ -49,3 +49,4 @@ main_j.o: main.c print.h jacobi.h sin_test.h
 main_gs.o: main.c print.h gauss_seidel.h sin_test.h jacobi.h
 print.o: print.h
 sin_test.o: sin_test.h jacobi.h
+Norm_Fro.o: Norm_Fro.h

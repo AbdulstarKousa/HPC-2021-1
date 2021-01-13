@@ -1,4 +1,5 @@
-#include "NORM_FRO.h"
+#include "Norm_Fro.h"
+#include "alloc3d.h"
 
 /* norm_fro
 Purpose:
@@ -42,4 +43,22 @@ double norm_fro(double *** pA,int dim) {
     
     nrm = sqrt(nrm);
     return nrm;
+}
+
+
+double wrapper_norm(double *** m1, double *** m2, int dim){
+    
+    double *** sub_matrices = d_malloc_3d(dim, dim, dim); 
+    size_t i,j,k;
+
+    for (i=0;i<dim; i++) {
+        for (j=0;j<dim; j++) {
+            for (k=0;k<dim; k++) {
+                sub_matrices[i][j][k] = (m1[i][j][k]) - (m2[i][j][k]);
+            }
+            
+        }
+    }
+
+    return norm_fro(sub_matrices, dim); 
 }

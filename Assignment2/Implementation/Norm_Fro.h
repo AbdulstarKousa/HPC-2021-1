@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#include "alloc3d.h"
 
 /* Macros */
 #define ILLEGAL_INPUT -1.0 
@@ -15,5 +16,6 @@
 
 /* Prototype */
 double norm_fro(double *** pA, int dim);
+double wrapper_norm(double *** m1, double *** m2, int dim);
 
 #endif

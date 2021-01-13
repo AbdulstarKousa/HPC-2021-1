@@ -8,7 +8,7 @@
 
 #include "jacobi.h"
 #include "alloc3d.h"
-
+#include "Norm_Fro.h"
 
 void sin_test(){
     
@@ -62,7 +62,7 @@ void sin_test(){
 
     printf("Initialization finished\n");
 
-    int iter = 10000; 
+    int iter = 1000; 
     double grid_s = (double)(2.0/((double)(j-1)));
 
     printf("Entering Jacobi loop\n");
@@ -76,6 +76,8 @@ void sin_test(){
         u_next = temp; 
         
     }
+
+    //subtract matrices
 
     printf("Done with Jacobi loop\n");
 
@@ -94,6 +96,10 @@ void sin_test(){
     }
 
     printf("Done with printing results\n");
+
+    double norm_result = wrapper_norm(u, u_next, j); 
+
+    printf("Done with printing results: %e\n",norm_result);
     
     
     free(f); 
