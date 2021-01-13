@@ -1,15 +1,17 @@
 #include <math.h>
 
 // Function for initializing f, u, and u_next according to given initial conditions
-void init(double*** f, double*** u, double*** u_next, int edge_point_count, double edge_width) {
+void init(double*** f, double*** u, double*** u_next, int N, double start_T) {
     // f: Cube of function values -> Second derivatives of temperature
     // u: Cube of temperature estimates of previous iteration
     // u_next: Cube to hold new temperature estimates
-    // edge_point_count: Number of points along an axis
-    // edge_width: Physical width of an edge (-1..1 = 2)
+    // edge_point_count: Number of points along an axis -> N 
 
+    double edge_width = 2.0;  // edge_width: Physical width of an edge (-1..1 = 2)
     int min_point = 0;
+    int edge_point_count = N; 
     int max_point = edge_point_count - 1;
+    
 
     // Initialize u to 0 degrees everywhere except for the walls
     for (int x = 0; x < edge_point_count; x++) {
@@ -22,7 +24,7 @@ void init(double*** f, double*** u, double*** u_next, int edge_point_count, doub
                 ) {
                     u[x][y][z] = 20.0;
                 } else {
-                    u[x][y][z] = 0.0;
+                    u[x][y][z] = start_T;
                 }
             }
         }
@@ -32,7 +34,7 @@ void init(double*** f, double*** u, double*** u_next, int edge_point_count, doub
     for (int x = 0; x < edge_point_count; x++) {
         for (int y = 0; y < edge_point_count; y++) {
             for (int z = 0; z < edge_point_count; z++) {
-                u_next[x][y][z] = 0.0;
+                u_next[x][y][z] = start_T;
             }
         }
     }
@@ -48,7 +50,7 @@ void init(double*** f, double*** u, double*** u_next, int edge_point_count, doub
     for (int x = 0; x < edge_point_count; x++) {
         for (int y = 0; y < edge_point_count; y++) {
             for (int z = 0; z < edge_point_count; z++) {
-                f[x][y][z] = 0.0;
+                f[x][y][z] = start_T;
                 if (x_min <= x && x <= x_max) {
                     if (y_min <= y && y <= y_max) {
                         if (z <= z_min && z <= z_max) {

@@ -6,7 +6,8 @@
 #include "alloc3d.h"
 #include "print.h"
 #include "sin_test.h"
-//#include "init.h"
+#include "init.h"
+#include "collector.h"
 
 #ifdef _JACOBI
 #include "jacobi.h"
@@ -32,8 +33,8 @@ main(int argc, char *argv[]) {
     char        *output_ext    = "";
     char	output_filename[FILENAME_MAX];
     double 	***u = NULL;
-    double 	***u_next = NULL;
     double 	***f = NULL;
+    double 	***u_next = NULL;
 
 
     /* get the paramters from the command line */
@@ -61,17 +62,15 @@ main(int argc, char *argv[]) {
         exit(-1);
     }
 
-    printf("Done allocating memory for u\n");
+    printf("Done allocating memory for matrices\n");
 
     /*
-     *
      * fill in your code here 
-     *
-     *
      */
 
+    //call init function: void init(double*** f, double*** u, double*** u_next, int N, double start_T)
 
-
+    //call colletor: collector(double *** f, double *** u, double *** u_next, int N, int iter_max, double tolerance, double start_T)
 
 
      // TEST
@@ -106,6 +105,8 @@ main(int argc, char *argv[]) {
 
     // de-allocate memory
     free(u);
+    free(u_next);
+    free(f);
 
     return(0);
 }
