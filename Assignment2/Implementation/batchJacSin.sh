@@ -9,21 +9,27 @@
 #BSUB -J opmJ_batch
 #BSUB -o opmJ_batch_%J.out
 #BSUB -q hpcintro
-#BSUB -n 16
+#BSUB -n 12
 #BSUB -R "span[hosts=1]"
 #BSUB -R "rusage[mem=2048]"
 #BSUB -W 15
 
 EXECUTABLE=poisson_j
 
-THREADS="24 16 12 8 4 2 1"
+THREADS="12 8 4 2 1"
+
+SCHEDULE="static dynamic guided"
 
 LOGEXT=../Results/datjacobOPMsinTest.dat
 
 for T in $THREADS
 do
-	{ OMP_NUM_THREADS=$T ./$EXECUTABLE 5 5 5 5; } |& grep -v CPU >>$LOGEXT
-	echo $T |  grep -v CPU >>$LOGEXT
+	for S in $SCHEDULE
+	do
+		{ OMP_SCHEDULE=$S OMP_NUM_THREADS=$T ./$EXECUTABLE 5 5 5 5; } |& grep -v CPU >>$LOGEXT
+		echo $T |  grep -v CPU >>$LOGEXT
+		echo $S |  grep -v CPU >>$LOGEXT
+	done
 done
 
 

@@ -1,49 +1,45 @@
-Entering main
-Allocating memory for u
-Done allocating memory for u
-Starting sin test
-Wall time 49.862242 
+Wall time 11.549061 
 Done with printing results: 3.229558e-01
-Done with sin test
-Entering main
-Allocating memory for u
-Done allocating memory for u
-Starting sin test
-Wall time 25.457727 
+12
+Wall time 9.409202 
 Done with printing results: 3.229558e-01
-Done with sin test
-Entering main
-Allocating memory for u
-Done allocating memory for u
-Starting sin test
-Wall time 14.295914 
+12
+Wall time 11.400830 
 Done with printing results: 3.229558e-01
-Done with sin test
-Entering main
-Allocating memory for u
-Done allocating memory for u
-Starting sin test
-Wall time 8.006020 
+12
+Wall time 10.727821 
 Done with printing results: 3.229558e-01
-Done with sin test
-Entering main
-Allocating memory for u
-Done allocating memory for u
-Starting sin test
-Wall time 9.040599 
+8
+Wall time 9.991453 
 Done with printing results: 3.229558e-01
-Done with sin test
-Entering main
-Allocating memory for u
-Done allocating memory for u
-Starting sin test
-Wall time 11.384493 
+8
+Wall time 10.810285 
 Done with printing results: 3.229558e-01
-Done with sin test
-Entering main
-Allocating memory for u
-Done allocating memory for u
-Starting sin test
-Wall time 9.643802 
+8
+Wall time 14.281371 
 Done with printing results: 3.229558e-01
-Done with sin test
+4
+Wall time 14.755624 
+Done with printing results: 3.229558e-01
+4
+Wall time 14.405503 
+Done with printing results: 3.229558e-01
+4
+Wall time 26.134666 
+Done with printing results: 3.229558e-01
+2
+Wall time 27.976534 
+Done with printing results: 3.229558e-01
+2
+Wall time 26.182457 
+Done with printing results: 3.229558e-01
+2
+Wall time 49.504284 
+Done with printing results: 3.229558e-01
+1
+Wall time 49.826594 
+Done with printing results: 3.229558e-01
+1
+Wall time 49.649192 
+Done with printing results: 3.229558e-01
+1

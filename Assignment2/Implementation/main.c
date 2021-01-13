@@ -21,7 +21,7 @@
 int
 main(int argc, char *argv[]) {
 
-    printf("Entering main\n");
+    // printf("Entering main\n");
 
     int 	N = N_DEFAULT;
     int 	iter_max = 1000;
@@ -43,7 +43,7 @@ main(int argc, char *argv[]) {
 	output_type = atoi(argv[5]);  // ouput type
     }
 
-    printf("Allocating memory for u\n");
+    // printf("Allocating memory for u\n");
 
     // allocate memory
     if ( (u = d_malloc_3d(N, N, N)) == NULL ) {
@@ -51,7 +51,7 @@ main(int argc, char *argv[]) {
         exit(-1);
     }
 
-    printf("Done allocating memory for u\n");
+    // printf("Done allocating memory for u\n");
 
     /*
      *
@@ -61,9 +61,9 @@ main(int argc, char *argv[]) {
      */
 
      // TEST
-     printf("Starting sin test\n");
+    //  printf("Starting sin test\n");
      sin_test();
-     printf("Done with sin test\n");
+    //  printf("Done with sin test\n");
 
 
 

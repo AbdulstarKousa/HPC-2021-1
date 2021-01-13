@@ -23,7 +23,7 @@ void jacobiOMP(double*** f, double*** u, double*** u_next, int edge_point_count,
     double inv = 1.0/6.0;
     int i, j, k;
     double temp;
-    #pragma omp parallel for scheduling(runtime)\
+    #pragma omp parallel for schedule(runtime)\
 	shared(f, u, edge_point_count, inv, d_squared) private(i,j,k,temp)
     for (i = 1; i < edge_point_count - 1; i++) {
         for (j = 1; j < edge_point_count - 1; j++) {
