@@ -11,8 +11,8 @@
 
 
 void sin_test(){
-
-    int j = 6; //size of the cube 
+    
+    int j = 66; //size of the cube 
 
     int k = j; 
     int m = j; 
@@ -25,26 +25,45 @@ void sin_test(){
 
     printf("Initializing matrices\n");
 
+    double xx = -1.0; 
+    double yy = -1.0; 
+    double zz = -1.0; 
+
+    double grid_space = 2.0/((double)(j-1)); 
+    double array[j];
+
+    array[0] = -1.0; 
+    array[j-1] = 1.0; 
+    for(int i = 1; i < j-1; i++){
+        array[i] = array[i-1] + grid_space; 
+    }
+
+
     for (int x = 0; x < j; x++)
     {
+        xx = array[x];
         for (int y = 0; y < j; y++)
         {
+            yy = array[y];
             for (int z = 0; z < j; z++)
             {
-                f[x][y][z] = 3*(M_PI*M_PI)*(sin(M_PI*x)*sin(M_PI*y)*sin(M_PI*z));
+                zz = array[z];
+
+                f[x][y][z] = 3.0*(M_PI*M_PI)*(sin(M_PI*xx)*sin(M_PI*yy)*sin(M_PI*zz));
+                //printf("f val: %.2f \n", f[x][y][z]);
                 u[x][y][z] = 0.0; 
                 u_next[x][y][z] = 0.0; 
-                correct[x][y][z] = (sin(M_PI*x)*sin(M_PI*y)*sin(M_PI*z));
+                correct[x][y][z] = (sin(M_PI*xx)*sin(M_PI*yy)*sin(M_PI*zz));
+
+                
             }
-            
         }
-        
     }
 
     printf("Initialization finished\n");
 
-    int iter = 20; 
-    double grid_s = (double)(2.0/j);
+    int iter = 10000; 
+    double grid_s = (double)(2.0/((double)(j-1)));
 
     printf("Entering Jacobi loop\n");
     for (int i = 0; i < iter; i++)
@@ -61,13 +80,13 @@ void sin_test(){
     printf("Done with Jacobi loop\n");
 
 
-    for (int x = 0; x < j; x++)
+    for (int x = 20; x < 40; x++)
     {
-        for (int y = 0; y < j; y++)
+        for (int y = 20; y < 40; y++)
         {
-            for (int z = 0; z < j; z++)
+            for (int z = 20; z < 40; z++)
             {
-                printf("coorect vs jacobi: %.2f %.2f \n", correct[x][y][z], u[x][y][z]);
+                printf("correct vs jacobi vs f: [%d %d %d] %.4f %.4f %.1f \n", x,y,z,correct[x][y][z], u[x][y][z], f[x][y][z]);
             }
             
         }
