@@ -12,7 +12,7 @@ OBJS_GS	= $(MAIN_GS) gauss_seidel.o sin_test.o jacobi.o Norm_Fro.o init.o collec
 
 # options and settings for the GCC compilers
 #
-CC	= gcc -std=c11
+CC	= gcc -std=c11 -fopenmp -ofast
 DEFS	= -D_JACOBI -D_GAUSS_SEIDEL
 OPT	= -g 
 IPO	= 

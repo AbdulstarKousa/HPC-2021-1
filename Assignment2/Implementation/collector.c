@@ -15,18 +15,19 @@ void collector(double *** f, double *** u, double *** u_next, int N, int iter_ma
     //tolerance, threshold for Frobinius norm 
     //iter_max, max iterations for jocobi loop 
 
-    double grid_space = 2.0/((double)(N-1));
+    double grid_space = (double)(2.0/((double)(N+1)));
 
 
     //JACOBIAN VERSION 
 
-    #ifndef _JACOBI
+    //#ifndef _JACOBI
 
     //START LOOP 
     int k = 0; 
     //set norm = inf 
     double norm_check = 1000000000000000000;  
     //while norm > threshold && k < iter_max 
+    printf("Entering jocobi while loop \n");
     double start = omp_get_wtime();
     while (norm_check > tolerance && k < iter_max){
 
@@ -39,16 +40,18 @@ void collector(double *** f, double *** u, double *** u_next, int N, int iter_ma
         u_next = temp; 
     
         //call Fro Norm function
-        norm_check = wrapper_norm(u, u_next, j); 
+        norm_check = wrapper_norm(u, u_next, N); 
 
         //increment 
         k += 1; 
     }
+
     double end = omp_get_wtime();
 
     printf("Wall time %f \n", (end-start) );
+    printf("Norm result from collector: %e\n",norm_check);
 
-    #endif 
+    //#endif 
 
 
     //GAUSS_SEIDEL VERSION 

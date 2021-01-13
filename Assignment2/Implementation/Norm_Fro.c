@@ -28,13 +28,15 @@ double norm_fro(double *** pA,int dim) {
         return ILLEGAL_DIMENSION;
     }
 
+    int dim2 = dim + 2; 
+
 
     size_t i,j,k;
     double nrm=0.0;
     
-    for (i=0;i<dim; i++) {
-        for (j=0;j<dim; j++) {
-            for (k=0;k<dim; k++) {
+    for (i=0;i<dim2; i++) {
+        for (j=0;j<dim2; j++) {
+            for (k=0;k<dim2; k++) {
                 nrm += (pA[i][j][k])*(pA[i][j][k]);
             }
             
@@ -47,13 +49,15 @@ double norm_fro(double *** pA,int dim) {
 
 
 double wrapper_norm(double *** m1, double *** m2, int dim){
+
+    int dim2 = dim + 2; 
     
-    double *** sub_matrices = d_malloc_3d(dim, dim, dim); 
+    double *** sub_matrices = d_malloc_3d(dim2, dim2, dim2); 
     size_t i,j,k;
 
-    for (i=0;i<dim; i++) {
-        for (j=0;j<dim; j++) {
-            for (k=0;k<dim; k++) {
+    for (i=0;i<dim2; i++) {
+        for (j=0;j<dim2; j++) {
+            for (k=0;k<dim2; k++) {
                 sub_matrices[i][j][k] = (m1[i][j][k]) - (m2[i][j][k]);
             }
             

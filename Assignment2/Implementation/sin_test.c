@@ -13,10 +13,11 @@
 void sin_test(){
     
     int j = 66; //size of the cube 
+    int jj = j + 2; 
 
-    int k = j; 
-    int m = j; 
-    int n = j; 
+    int k = j + 2; 
+    int m = j + 2; 
+    int n = j + 2; 
 
     double *** f = d_malloc_3d(m, n, k); 
     double *** u = d_malloc_3d(m, n, k); 
@@ -29,23 +30,23 @@ void sin_test(){
     double yy = -1.0; 
     double zz = -1.0; 
 
-    double grid_space = 2.0/((double)(j-1)); 
+    double grid_space = 2.0/((double)(jj-1)); 
     double array[j];
 
     array[0] = -1.0; 
     array[j-1] = 1.0; 
-    for(int i = 1; i < j-1; i++){
+    for(int i = 1; i < j; i++){
         array[i] = array[i-1] + grid_space; 
     }
 
 
-    for (int x = 0; x < j; x++)
+    for (int x = 0; x < jj; x++)
     {
         xx = array[x];
-        for (int y = 0; y < j; y++)
+        for (int y = 0; y < jj; y++)
         {
             yy = array[y];
-            for (int z = 0; z < j; z++)
+            for (int z = 0; z < jj; z++)
             {
                 zz = array[z];
 
@@ -63,7 +64,7 @@ void sin_test(){
     printf("Initialization finished\n");
 
     int iter = 1000; 
-    double grid_s = (double)(2.0/((double)(j-1)));
+    double grid_s = (double)(2.0/((double)(jj-1)));
 
     printf("Entering Jacobi loop\n");
     for (int i = 0; i < iter; i++)

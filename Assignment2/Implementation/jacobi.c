@@ -12,12 +12,14 @@
 // TODO:
 // Does not yet compile, as the type signature doesn't match
 // Also, the calculations are not correct yet
-void jacobi(double*** f, double*** u, double*** u_next, int edge_point_count, double delta) {
+void jacobi(double*** f, double*** u, double*** u_next, int N, double delta) {
     // f: Cube of function values -> Second derivatives of temperature
     // u: Cube of temperature estimates of previous iteration
     // u_next: Cube to hold new temperature estimates
     // edge_point_count: Number of points along an axis
     // delta: Distance between two neighbor points along an axis
+
+    int edge_point_count = N + 2; 
 
     for (int i = 1; i < edge_point_count - 1; i++) {
         for (int j = 1; j < edge_point_count - 1; j++) {

@@ -1,4 +1,6 @@
 #include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 // Function for initializing f, u, and u_next according to given initial conditions
 void init(double*** f, double*** u, double*** u_next, int N, double start_T) {
@@ -9,7 +11,7 @@ void init(double*** f, double*** u, double*** u_next, int N, double start_T) {
 
     double edge_width = 2.0;  // edge_width: Physical width of an edge (-1..1 = 2)
     int min_point = 0;
-    int edge_point_count = N; 
+    int edge_point_count = N + 2; 
     int max_point = edge_point_count - 1;
     
 
@@ -39,13 +41,16 @@ void init(double*** f, double*** u, double*** u_next, int N, double start_T) {
         }
     }
 
-    // Initialize f (based on radiator)
     int x_min = 0;
-    int x_max = (int)floor((-3.0/8.0 + 1.0)/edge_width * ((double)max_point)); // -1..1 = 0..2 => -1..-3/8 = 0..-3/8 + 8/8 = 0..5/8
+    int x_max = (int)(floor(((double)(edge_point_count/2.0))*(5.0/8.0)));
     int y_min = 0;
-    int y_max = (int)floor((-1.0/2.0 + 1.0)/edge_width * ((double)max_point));
-    int z_min = (int)ceil((-2.0/3.0 + 1.0)/edge_width * ((double)max_point));
-    int z_max = max_point;
+    int y_max = (int)(floor(((double)(edge_point_count/2.0))*(1.0/2.0)));
+    int z_min = (int)(ceil(((double)(edge_point_count/2.0))*(1.0/3.0)));
+    int z_max = (int)floor((edge_point_count/2));
+
+
+    //printf("printing: %d \n", (int)(floor(((double)(edge_point_count/2.0))*(1.0/3.0))));
+    //printf("printing: [%d %d] [%d %d] [%d %d] \n", x_min,x_max,y_min,y_max,z_min,z_max);
 
     for (int x = 0; x < edge_point_count; x++) {
         for (int y = 0; y < edge_point_count; y++) {
@@ -61,5 +66,17 @@ void init(double*** f, double*** u, double*** u_next, int N, double start_T) {
             }
         }
     }
+
+    /*
+    for (int x = 0; x < edge_point_count; x++) {
+        for (int y = 0; y < edge_point_count; y++) {
+            for (int z = 0; z < edge_point_count; z++) {
+                printf("printing f: [%d %d %d] %.3f \n", x,y,z,f[x][y][z]);
+            }
+        }
+    }
+    */
+
+
 
 }

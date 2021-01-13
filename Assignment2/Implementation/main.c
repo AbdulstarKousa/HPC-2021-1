@@ -48,36 +48,35 @@ main(int argc, char *argv[]) {
 
     printf("Allocating memory for u\n");
 
+    int N2 = N + 2; 
+
     // allocate memory
-    if ( (u = d_malloc_3d(N, N, N)) == NULL ) {
+    if ( (u = d_malloc_3d(N2, N2, N2)) == NULL ) {
         perror("array u: allocation failed");
         exit(-1);
     }
-    if ( (u_next = d_malloc_3d(N, N, N)) == NULL ) {
+    if ( (u_next = d_malloc_3d(N2, N2, N2)) == NULL ) {
         perror("array u_next: allocation failed");
         exit(-1);
     }
-    if ( (f = d_malloc_3d(N, N, N)) == NULL ) {
+    if ( (f = d_malloc_3d(N2, N2, N2)) == NULL ) {
         perror("array f: allocation failed");
         exit(-1);
     }
 
     printf("Done allocating memory for matrices\n");
 
-    /*
-     * fill in your code here 
-     */
+
+    // TEST
+    //printf("Starting sin test\n");
+    //sin_test();
+    //printf("Done with sin test\n");
 
     //call init function: void init(double*** f, double*** u, double*** u_next, int N, double start_T)
+    init(f, u, u_next, N, start_T); 
 
     //call colletor: collector(double *** f, double *** u, double *** u_next, int N, int iter_max, double tolerance, double start_T)
-
-
-     // TEST
-     printf("Starting sin test\n");
-     sin_test();
-     printf("Done with sin test\n");
-
+    collector(f, u, u_next, N, iter_max, tolerance, start_T); 
 
 
 
