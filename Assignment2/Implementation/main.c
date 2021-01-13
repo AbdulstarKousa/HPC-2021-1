@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include "alloc3d.h"
 #include "print.h"
+#include "sin_test.h"
+//#include "init.h"
 
 #ifdef _JACOBI
 #include "jacobi.h"
@@ -51,6 +53,9 @@ main(int argc, char *argv[]) {
      *
      *
      */
+
+
+
 
     // dump  results if wanted 
     switch(output_type) {

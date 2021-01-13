@@ -3,7 +3,9 @@
  */
 #include <math.h>
 
-int gauss_seidel(double ***, double ***, double ***, int, int, double *); {
+int gauss_seidel(double *** d, double *** f, double *** g, int hej, int hej2, double * h){
     // fill in your code here
+    int mæh = 1+1; 
+    return 0; 
 }
 
