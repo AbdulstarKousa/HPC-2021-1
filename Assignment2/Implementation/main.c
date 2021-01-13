@@ -32,6 +32,8 @@ main(int argc, char *argv[]) {
     char        *output_ext    = "";
     char	output_filename[FILENAME_MAX];
     double 	***u = NULL;
+    double 	***u_next = NULL;
+    double 	***f = NULL;
 
 
     /* get the paramters from the command line */
@@ -50,6 +52,14 @@ main(int argc, char *argv[]) {
         perror("array u: allocation failed");
         exit(-1);
     }
+    if ( (u_next = d_malloc_3d(N, N, N)) == NULL ) {
+        perror("array u_next: allocation failed");
+        exit(-1);
+    }
+    if ( (f = d_malloc_3d(N, N, N)) == NULL ) {
+        perror("array f: allocation failed");
+        exit(-1);
+    }
 
     printf("Done allocating memory for u\n");
 
@@ -59,6 +69,10 @@ main(int argc, char *argv[]) {
      *
      *
      */
+
+
+
+
 
      // TEST
      printf("Starting sin test\n");
