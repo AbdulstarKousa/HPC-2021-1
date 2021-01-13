@@ -1,3 +1,7 @@
+#ifndef M_PI
+    #define M_PI 3.14159265358979323846
+#endif
+
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,6 +23,8 @@ void sin_test(){
     double *** u_next = d_malloc_3d(m, n, k);   
     double *** correct = d_malloc_3d(m, n, k);   
 
+    printf("Initializing matrices\n");
+
     for (int x = 0; x < j; x++)
     {
         for (int y = 0; y < j; y++)
@@ -35,10 +41,12 @@ void sin_test(){
         
     }
 
+    printf("Initialization finished\n");
 
     int iter = 20; 
     double grid_s = (double)(2.0/j);
 
+    printf("Entering Jacobi loop\n");
     for (int i = 0; i < iter; i++)
     {
 
@@ -49,6 +57,8 @@ void sin_test(){
         u_next = temp; 
         
     }
+
+    printf("Done with Jacobi loop\n");
 
 
     for (int x = 0; x < j; x++)
@@ -63,9 +73,14 @@ void sin_test(){
         }
         
     }
-    
-    
 
+    printf("Done with printing results\n");
+    
+    
+    free(f); 
+    free(u);
+    free(u_next);
+    free(correct);   
 
     
 

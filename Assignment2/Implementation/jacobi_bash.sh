@@ -17,7 +17,7 @@
 # valid values: matmult_c.studio, matmult_f.studio, matmult_c.gcc or
 # matmult_f.gcc
 #
-EXECUTABLE=main_j.o
+EXECUTABLE=poisson_j
 LOGEXT=test_jacobi.dat
 
 # define the mkn values in the MKN variable
@@ -51,11 +51,11 @@ LOGEXT=test_jacobi.dat
     # LOGEXT+="${OPT}"
     # LOGEXT+="_.dat"
     # LOGEXT="$OPT_matmult_.dat"
-    /bin/rm -f $LOGEXT
+/bin/rm -f $LOGEXT
 
     # make clean
     # MAKEOPTIONS="OPT=-g ${OPT} -std=c11"
     # make $MAKEOPTIONS
     # make OPT=-g $OPT -std=c11
 
-    ./$EXECUTABLE | grep -v CPU >> $LOGEXT
+./$EXECUTABLE 10 5 5 5 | grep -v CPU >> $LOGEXT
