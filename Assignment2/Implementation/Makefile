@@ -22,7 +22,7 @@ CC		= gcc
 # DEFS	= -D_JACOBI
 # DEFS	= -D_JACOBI_OMP
 # DEFS	= -D_GAUSS_SEIDEL
-# DEFS	= -D_GAUSS_SEIDEL_OMP
+# DEFS	= -D_GAUSS_SEIDEL_OMP 
 OPT		= -g -std=c11 -fopenmp -Ofast
 IPO		= 
 ISA		= 
@@ -71,8 +71,6 @@ main_gs.o: main.c print.h gauss_seidel.h sin_test.h jacobi.h collector.h
 main_gs_omp.o: main.c print.h gauss_seidelOMP.h sin_test.h jacobi.h collector.h 
 print.o: print.h
 sin_test.o: sin_test.h jacobi.h
-#Norm_Fro.o: Norm_Fro.h
 init.o: init.h 
-collector.o: print.h jacobi.h gauss_seidel.h gauss_seidelOMP.h init.h 
-#jacobi.o: 
-#gauss_seidel.o: 
+
+

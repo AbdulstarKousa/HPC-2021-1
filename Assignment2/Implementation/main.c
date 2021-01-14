@@ -8,10 +8,6 @@
 #include "print.h"
 #include "sin_test.h"
 #include "init.h"
-#include "collector.h"
-
-#include "gauss_seidel.h"
-#include "gauss_seidelOMP.h"
 
 #ifdef _JACOBI
 #include "jacobi.h"
@@ -34,8 +30,6 @@
 int
 main(int argc, char *argv[]) {
 
-    // printf("Entering main\n");
-
     int 	N = N_DEFAULT;
     int 	iter_max = 1000;
     double	tolerance;
@@ -47,6 +41,7 @@ main(int argc, char *argv[]) {
     double 	***u = NULL;
     double 	***f = NULL;
     double 	***u_next = NULL;
+    int * m = NULL;
 
 
     /* get the paramters from the command line */
@@ -58,10 +53,7 @@ main(int argc, char *argv[]) {
 	output_type = atoi(argv[5]);  // ouput type
     }
 
-    // printf("Allocating memory for u\n");
-
     int N2 = N + 2; 
-
     // allocate memory
     if ( (u = d_malloc_3d(N2, N2, N2)) == NULL ) {
         perror("array u: allocation failed");
@@ -76,53 +68,49 @@ main(int argc, char *argv[]) {
         exit(-1);
     }
 
-    printf("Done allocating memory for u\n");
-
-
-    // TEST
-    //printf("Starting sin test\n");
-    //sin_test();
-    //printf("Done with sin test\n");
-
-    printf("Running Gauss \n");
+    //Iniliazie matrices 
     init(f, u, u_next, N, start_T); 
 
-    //call colletor: collector(double *** f, double *** u, double *** u_next, int N, int iter_max, double tolerance, double start_T)
-    //collector(f, u, u_next, N, iter_max, tolerance, start_T); 
 
     #ifdef _JACOBI
-        double start = omp_get_wtime();
-        // double norm_check = jacobi(f, u, u_next, N, tolerance, iter_max); 
-        double end = omp_get_wtime();
-        printf("Wall time %f \n", (end-start) );
-        // printf("Norm result from collector: %e\n",norm_check);
+    printf("Running jacobi sequential\n");
+    double start = omp_get_wtime();
+    double norm_check = jacobi(f, u, u_next, N, tolerance, iter_max); 
+    double end = omp_get_wtime();
+    printf("Wall time %f \n", (end-start) );
+    printf("Number of iterations run: %d \n", m);
+    printf("Norm result from norm %e\n",norm_check);
     #endif
 
     #ifdef _JACOBI_OMP
+    printf("Running Jacobi OMP\n");
     double start = omp_get_wtime();
-    // double norm_check = jacobiOMP(f, u, u_next, N, tolerance, iter_max); 
+    double norm_check = jacobiOMP(f, u, u_next, N, tolerance, iter_max); 
     double end = omp_get_wtime();
     printf("Wall time %f \n", (end-start) );
-    printf("Norm result from collector: %e\n",norm_check);
+    printf("Number of iterations run: %d \n", m);
+    printf("Norm result from norm %e\n",norm_check);
     #endif
 
     #ifdef _GAUSS_SEIDEL
+    printf("Running Gauss sequential\n");
     double start = omp_get_wtime();
     double norm_check = gauss_seidel(f, u, N, tolerance, iter_max); 
     double end = omp_get_wtime();
     printf("Wall time %f \n", (end-start) );
-    printf("Norm result from collector: %e\n",norm_check);
+    printf("Number of iterations run: %d \n", m);
+    printf("Norm result from norm %e\n",norm_check);
     #endif
 
     #ifdef _GAUSS_SEIDEL_OMP
+    printf("Running Gauss OMP \n");
     double start = omp_get_wtime();
     double norm_check = gauss_seidelOMP(f, u, N, tolerance, iter_max); 
     double end = omp_get_wtime();
     printf("Wall time %f \n", (end-start) );
-    printf("Norm result from collector: %e\n",norm_check);
+    printf("Number of iterations run: %d \n", m);
+    printf("Norm result from norm %e\n",norm_check);
     #endif
-
-
 
 
     // dump  results if wanted 

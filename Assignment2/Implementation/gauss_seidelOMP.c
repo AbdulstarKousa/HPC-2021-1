@@ -3,21 +3,19 @@
  */
 #include <math.h>
 #include <stdio.h>
-#include <stdlib.h>
 
-double gauss_seidelOMP(double*** f, double*** u, int N, double tolerance, int iter_max){
 
-    // fill in your code here:
-    // double tolerance   = 1.0e-3;
+double gauss_seidelOMP(double*** f, double*** u, int N, double tolerance, int iter_max, int * m){
+
     double norm_result = tolerance + 0.01 ;
-    int m = 0;
+    m = 0;
     double delta= (double)(2.0/((double)(N+1)));
     double d_squared = delta*delta;
     double inv = 1.0/6.0;
     int edge_point_count = N + 2; 
     double u_old;
 
-    // k = i 
+    // k = m 
     // kmax = iter
     // threshold = tolerance
     // d = norm_result
@@ -37,7 +35,6 @@ double gauss_seidelOMP(double*** f, double*** u, int N, double tolerance, int it
         m++;
     }
 
-    printf("Norm result from collector: %e\n", norm_result);
     return norm_result; 
 }
 

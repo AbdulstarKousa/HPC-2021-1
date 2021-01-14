@@ -5,10 +5,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-double gauss_seidel(double*** f, double*** u, int N, double tolerance, int iter_max){
+double gauss_seidel(double*** f, double*** u, int N, double tolerance, int iter_max, int * m){
 
     double norm_result = tolerance + 0.01 ;
-    int m = 0;
+    m = 0;
     double delta= (double)(2.0/((double)(N+1)));
     double d_squared = delta*delta;
     double inv = 1.0/6.0;
@@ -34,9 +34,6 @@ double gauss_seidel(double*** f, double*** u, int N, double tolerance, int iter_
         norm_result = sqrt(norm_result);
         m++;
     }
-
-    printf("Norm result: %e\n", norm_result);
-    printf("Finished after %d iterations\n", m);
 
     return norm_result; 
 }

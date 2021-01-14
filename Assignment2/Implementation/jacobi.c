@@ -6,10 +6,10 @@
 #include <stdlib.h>
 
 
-double jacobi(double*** f, double*** u, double *** u_next, int N, double tolerance, int iter_max){
+double jacobi(double*** f, double*** u, double *** u_next, int N, double tolerance, int iter_max, int * m){
 
     double norm_result = tolerance + 0.1;
-    int m = 0;
+    m = 0;
     double delta= (double)(2.0/((double)(N+1)));
     double d_squared = delta*delta;
     double inv = 1.0/6.0;
@@ -38,9 +38,6 @@ double jacobi(double*** f, double*** u, double *** u_next, int N, double toleran
         norm_result = sqrt(norm_result);
         m++;
     }
-
-    printf("Norm result: %e\n", norm_result);
-    printf("Finished after %d iterations\n", m);
 
     return norm_result; 
 }
