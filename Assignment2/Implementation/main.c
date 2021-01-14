@@ -36,11 +36,12 @@ main(int argc, char *argv[]) {
     double	start_T;
     int		output_type = 0;
     char	*output_prefix = "poisson_res";
-    char        *output_ext    = "";
+    char    *output_ext    = "";
     char	output_filename[FILENAME_MAX];
     double 	***u = NULL;
     double 	***f = NULL;
     double 	***u_next = NULL;
+    int m;
 
 
 
@@ -75,41 +76,45 @@ main(int argc, char *argv[]) {
     #ifdef _JACOBI
     printf("Running jacobi sequential\n");
     double start = omp_get_wtime();
-    double norm_check = jacobi(f, u, u_next, N, tolerance, iter_max); 
+    double norm_check = jacobi(f, u, u_next, N, tolerance, iter_max, &m); 
     double end = omp_get_wtime();
     printf("Wall time %f \n", (end-start) );
     //printf("Number of iterations run: %d \n", p);
     printf("Norm result from norm %e\n",norm_check);
+    printf("#Nr. iterations= %d\n",m);
     #endif
 
     #ifdef _JACOBI_OMP
     printf("Running Jacobi OMP\n");
     double start = omp_get_wtime();
-    double norm_check = jacobiOMP(f, u, u_next, N, tolerance, iter_max); 
+    double norm_check = jacobiOMP(f, u, u_next, N, tolerance, iter_max, &m); 
     double end = omp_get_wtime();
     printf("Wall time %f \n", (end-start) );
     //printf("Number of iterations run: %d \n", p);
     printf("Norm result from norm %e\n",norm_check);
+    printf("#Nr. iterations= %d\n",m);
     #endif
 
     #ifdef _GAUSS_SEIDEL
     printf("Running Gauss sequential\n");
     double start = omp_get_wtime();
-    double norm_check = gauss_seidel(f, u, N, tolerance, iter_max); 
+    double norm_check = gauss_seidel(f, u, N, tolerance, iter_max, &m); 
     double end = omp_get_wtime();
     printf("Wall time %f \n", (end-start) );
     //printf("Number of iterations run: %d \n", p);
     printf("Norm result from norm %e\n",norm_check);
+    printf("#Nr. iterations= %d\n",m);
     #endif
 
     #ifdef _GAUSS_SEIDEL_OMP
     printf("Running Gauss OMP \n");
     double start = omp_get_wtime();
-    double norm_check = gauss_seidelOMP(f, u, N, tolerance, iter_max); 
+    double norm_check = gauss_seidelOMP(f, u, N, tolerance, iter_max, &m); 
     double end = omp_get_wtime();
     printf("Wall time %f \n", (end-start) );
     //printf("Number of iterations run: %d \n", p);
     printf("Norm result from norm %e\n",norm_check);
+    printf("#Nr. iterations= %d\n",m);
     #endif
 
 
