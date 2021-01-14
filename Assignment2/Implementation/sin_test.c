@@ -12,8 +12,12 @@
 
 void sin_test(){
     
+<<<<<<< HEAD
     int j = 66; //size of the cube 
     int jj = j + 2; 
+=======
+    int j = 258; //size of the cube 
+>>>>>>> 343b4dc46b0aa4c6c2a93dc2f3e6e5cd503d5d2d
 
     int k = j + 2; 
     int m = j + 2; 
@@ -84,6 +88,10 @@ void sin_test(){
         
     }
 
+<<<<<<< HEAD
+=======
+    double end = omp_get_wtime();
+>>>>>>> 343b4dc46b0aa4c6c2a93dc2f3e6e5cd503d5d2d
 
     //subtract matrices
 
@@ -101,11 +109,20 @@ void sin_test(){
             
         }
         
+<<<<<<< HEAD
     }
 
     //printf("Done with printing results\n");
 
     //double norm_result = wrapper_norm(u, u_next, j); 
+=======
+    // }
+
+    // printf("Done with printing results\n");
+
+    printf("Wall time %f \n", (end-start) );
+    double norm_result = wrapper_norm(u, u_next, j); 
+>>>>>>> 343b4dc46b0aa4c6c2a93dc2f3e6e5cd503d5d2d
 
     //printf("Done with printing results: %e\n",norm_result);
     

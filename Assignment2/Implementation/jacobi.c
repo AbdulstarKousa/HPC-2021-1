@@ -21,17 +21,24 @@ double jacobi(double*** f, double*** u, double*** u_next, int N, double delta) {
     // edge_point_count: Number of points along an axis
     // delta: Distance between two neighbor points along an axis
 
+<<<<<<< HEAD
+=======
+    double d_squared = delta*delta;
+    double inv = 1.0/6.0;
+    
+>>>>>>> 343b4dc46b0aa4c6c2a93dc2f3e6e5cd503d5d2d
     int edge_point_count = N + 2; 
     double nrm = 0.0;
 
     for (int i = 1; i < edge_point_count - 1; i++) {
         for (int j = 1; j < edge_point_count - 1; j++) {
             for (int k = 1; k < edge_point_count - 1; k++) {
-
-                u_next[i][j][k] = 1.0/6.0 * (u[i-1][j][k] + u[i+1][j][k] + u[i][j-1][k] + u[i][j+1][k] + u[i][j][k-1] + u[i][j][k+1] + ((delta*delta) * f[i][j][k]));
-            
+                u_next[i][j][k] = inv * (u[i-1][j][k] + u[i+1][j][k] + u[i][j-1][k] + u[i][j+1][k] + u[i][j][k-1] + u[i][j][k+1] + d_squared * f[i][j][k]);
                 nrm += (((u[i][j][k]) - (u_next[i][j][k]))*((u[i][j][k]) - (u_next[i][j][k])));
+<<<<<<< HEAD
             
+=======
+>>>>>>> 343b4dc46b0aa4c6c2a93dc2f3e6e5cd503d5d2d
             }
         }
     }

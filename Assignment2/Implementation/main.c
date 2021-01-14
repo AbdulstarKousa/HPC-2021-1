@@ -64,7 +64,11 @@ main(int argc, char *argv[]) {
         exit(-1);
     }
 
+<<<<<<< HEAD
     printf("Done allocating memory for matrices\n");
+=======
+    // printf("Done allocating memory for u\n");
+>>>>>>> 343b4dc46b0aa4c6c2a93dc2f3e6e5cd503d5d2d
 
 
     // TEST
