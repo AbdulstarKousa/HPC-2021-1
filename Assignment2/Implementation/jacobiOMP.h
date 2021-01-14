@@ -7,6 +7,6 @@
 #define _JACOBI_H
 
 // int jacobi(double ***, double ***, double ***, int, int, double *);
-double jacobiOMP(double*** f, double*** u, double *** u_next, int N, double tolerance, int iter_max, int * m);
+double jacobiOMP(double*** f, double*** u, double *** u_next, int N, double tolerance, int iter_max);
 
 #endif

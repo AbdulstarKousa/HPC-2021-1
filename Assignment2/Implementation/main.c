@@ -41,7 +41,7 @@ main(int argc, char *argv[]) {
     double 	***u = NULL;
     double 	***f = NULL;
     double 	***u_next = NULL;
-    int * m = NULL;
+
 
 
     /* get the paramters from the command line */
@@ -75,40 +75,40 @@ main(int argc, char *argv[]) {
     #ifdef _JACOBI
     printf("Running jacobi sequential\n");
     double start = omp_get_wtime();
-    double norm_check = jacobi(f, u, u_next, N, tolerance, iter_max, m); 
+    double norm_check = jacobi(f, u, u_next, N, tolerance, iter_max); 
     double end = omp_get_wtime();
     printf("Wall time %f \n", (end-start) );
-    printf("Number of iterations run: %d \n", m);
+    //printf("Number of iterations run: %d \n", p);
     printf("Norm result from norm %e\n",norm_check);
     #endif
 
     #ifdef _JACOBI_OMP
     printf("Running Jacobi OMP\n");
     double start = omp_get_wtime();
-    double norm_check = jacobiOMP(f, u, u_next, N, tolerance, iter_max, m); 
+    double norm_check = jacobiOMP(f, u, u_next, N, tolerance, iter_max); 
     double end = omp_get_wtime();
     printf("Wall time %f \n", (end-start) );
-    printf("Number of iterations run: %d \n", m);
+    //printf("Number of iterations run: %d \n", p);
     printf("Norm result from norm %e\n",norm_check);
     #endif
 
     #ifdef _GAUSS_SEIDEL
     printf("Running Gauss sequential\n");
     double start = omp_get_wtime();
-    double norm_check = gauss_seidel(f, u, N, tolerance, iter_max, m); 
+    double norm_check = gauss_seidel(f, u, N, tolerance, iter_max); 
     double end = omp_get_wtime();
     printf("Wall time %f \n", (end-start) );
-    printf("Number of iterations run: %d \n", m);
+    //printf("Number of iterations run: %d \n", p);
     printf("Norm result from norm %e\n",norm_check);
     #endif
 
     #ifdef _GAUSS_SEIDEL_OMP
     printf("Running Gauss OMP \n");
     double start = omp_get_wtime();
-    double norm_check = gauss_seidelOMP(f, u, N, tolerance, iter_max, m); 
+    double norm_check = gauss_seidelOMP(f, u, N, tolerance, iter_max); 
     double end = omp_get_wtime();
     printf("Wall time %f \n", (end-start) );
-    printf("Number of iterations run: %d \n", m);
+    //printf("Number of iterations run: %d \n", p);
     printf("Norm result from norm %e\n",norm_check);
     #endif
 
