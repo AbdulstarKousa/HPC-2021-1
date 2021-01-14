@@ -13,11 +13,11 @@
 
 void sin_test(){
     
-    int j = 258; //size of the cube 
+    int N = 256; //size of the cube 
 
-    int k = j + 2; 
-    int m = j + 2; 
-    int n = j + 2; 
+    int k = N + 2; 
+    int m = N + 2; 
+    int n = N + 2; 
 
     double *** f = d_malloc_3d(m, n, k); 
     double *** u = d_malloc_3d(m, n, k); 
@@ -30,7 +30,7 @@ void sin_test(){
     double yy = -1.0; 
     double zz = -1.0; 
 
-    double grid_space = 2.0/((double)(j+1)); 
+    double grid_space = 2.0/((double)(N+1)); 
     double array[j];
 
     array[0] = -1.0; 
@@ -40,13 +40,13 @@ void sin_test(){
     }
 
 
-    for (int x = 0; x < jj; x++)
+    for (int x = 0; x < N+2; x++)
     {
         xx = array[x];
-        for (int y = 0; y < jj; y++)
+        for (int y = 0; y < N+2; y++)
         {
             yy = array[y];
-            for (int z = 0; z < jj; z++)
+            for (int z = 0; z < N+2; z++)
             {
                 zz = array[z];
 
