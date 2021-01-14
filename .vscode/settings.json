@@ -1,3 +1,6 @@
 {
-    "python.pythonPath": "Assignment 1/Implementation/functions.c"
+    "python.pythonPath": "Assignment 1/Implementation/functions.c",
+    "files.associations": {
+        "jacobi.h": "c"
+    }
 }

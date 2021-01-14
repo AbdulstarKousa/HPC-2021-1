@@ -7,8 +7,6 @@
 
 double gauss_seidel(double*** f, double*** u, int N, double tolerance, int iter_max){
 
-    // fill in your code here:
-    // double tolerance   = 1.0e-3;
     double norm_result = tolerance + 0.01 ;
     int m = 0;
     double delta= (double)(2.0/((double)(N+1)));
@@ -17,7 +15,7 @@ double gauss_seidel(double*** f, double*** u, int N, double tolerance, int iter_
     int edge_point_count = N + 2; 
     double u_old;
 
-    // k = i 
+    // k = m 
     // kmax = iter
     // threshold = tolerance
     // d = norm_result
@@ -37,7 +35,9 @@ double gauss_seidel(double*** f, double*** u, int N, double tolerance, int iter_
         m++;
     }
 
-    printf("Norm result from collector: %e\n", norm_result);
+    printf("Norm result: %e\n", norm_result);
+    printf("Finished after %d iterations\n", m);
+
     return norm_result; 
 }
 

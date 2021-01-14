@@ -7,13 +7,12 @@
 #include <stdlib.h>
 #include <omp.h>
 
-#include "jacobiOMP.h"
+#include "jacobi.h"
 #include "alloc3d.h"
-#include "Norm_Fro.h"
 
 void sin_test(){
     
-    int N = 256; //size of the cube 
+    int N = 50; //size of the cube 
 
     int k = N + 2; 
     int m = N + 2; 
@@ -63,29 +62,15 @@ void sin_test(){
 
     // printf("Initialization finished\n");
 
-    int iter = 1000; 
+    int iter_max = 1000; 
+    double tolerance = 1.0e-3; 
     double grid_s = (double)(2.0/((double)(N+1)));
     double norm_result = 0.0; 
 
     // printf("Entering Jacobi loop\n");
     double start = omp_get_wtime();
-    
-    for (int i = 0; i < iter; i++)
-    {
 
-        norm_result = jacobi(f, u, u_next, N, grid_s);
-
-        double *** temp = u; 
-        u = u_next; 
-        u_next = temp; 
-
-        //printf("Done with printing results\n");
-
-        //double norm_result = wrapper_norm(u, u_next, j); 
-
-        //printf("Done with printing results: %e\n",norm_result);
-        
-    }
+    norm_result = jacobi(f, u, u_next, N, tolerance, iter_max);
 
     double end = omp_get_wtime();
 

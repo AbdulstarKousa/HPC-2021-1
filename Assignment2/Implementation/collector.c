@@ -31,7 +31,7 @@ void collector(double *** f, double *** u, double *** u_next, int N, int iter_ma
     while (norm_check > tolerance && kk < iter_max){
 
         //call Jacobi 
-        norm_check = jacobi(f, u, u_next, N, grid_space);
+        //norm_check = jacobi(f, u, u_next, N, grid_space);
         //printf("Norm result from collector: %e\n",norm_check);
 
         //call Fro Norm function
