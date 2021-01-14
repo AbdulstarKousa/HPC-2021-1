@@ -2,9 +2,41 @@
  *
  */
 #include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-int gauss_seidel(double *** d, double *** f, double *** g, int hej, int hej2, double * h){
-    // fill in your code here
-    return 0; 
+double gauss_seidel(double*** f, double*** u, int N, double tolerance, int iter_max){
+
+    // fill in your code here:
+    // double tolerance   = 1.0e-3;
+    double norm_result = tolerance + 0.01 ;
+    int m = 0;
+    double delta= (double)(2.0/((double)(N+1)));
+    double d_squared = delta*delta;
+    double inv = 1.0/6.0;
+    int edge_point_count = N + 2; 
+
+    // k = i 
+    // kmax = iter
+    // threshold = tolerance
+    // d = norm_result
+    while ( m < iter_max && norm_result > tolerance ) {
+        norm_result = 0.0;
+        for (int i = 1; i < edge_point_count - 1; i++) {
+            for (int j = 1; j < edge_point_count - 1; j++) {
+                for (int k = 1; k < edge_point_count - 1; k++) {
+                    double u_old = u[i][j][k];
+                    u[i][j][k] = inv * (u[i-1][j][k] + u[i+1][j][k] + u[i][j-1][k] + u[i][j+1][k] + u[i][j][k-1] + u[i][j][k+1] + d_squared * f[i][j][k]);
+                    norm_result += (((u[i][j][k]) - (u_old))*((u[i][j][k]) - (u_old)));
+                }
+            }
+        }
+
+        norm_result = sqrt(norm_result);
+        m++;
+    }
+
+    printf("Norm result from collector: %e\n", norm_result);
+    return norm_result; 
 }
 

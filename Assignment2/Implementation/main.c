@@ -9,6 +9,8 @@
 #include "init.h"
 #include "collector.h"
 
+#include "gauss_seidel.h"
+
 #ifdef _JACOBI
 #include "jacobi.h"
 #endif
@@ -76,7 +78,9 @@ main(int argc, char *argv[]) {
     init(f, u, u_next, N, start_T); 
 
     //call colletor: collector(double *** f, double *** u, double *** u_next, int N, int iter_max, double tolerance, double start_T)
-    collector(f, u, u_next, N, iter_max, tolerance, start_T); 
+    //collector(f, u, u_next, N, iter_max, tolerance, start_T); 
+
+    gauss_seidel(f, u, N, tolerance, iter_max); 
 
 
 

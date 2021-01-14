@@ -23,14 +23,17 @@ double jacobi(double*** f, double*** u, double*** u_next, int N, double delta) {
 
     int edge_point_count = N + 2; 
     double nrm = 0.0;
+    double deltadelta = delta*delta; 
+
+    double div = 1.0/6.0;
 
     for (int i = 1; i < edge_point_count - 1; i++) {
         for (int j = 1; j < edge_point_count - 1; j++) {
             for (int k = 1; k < edge_point_count - 1; k++) {
 
-                u_next[i][j][k] = 1.0/6.0 * (u[i-1][j][k] + u[i+1][j][k] + u[i][j-1][k] + u[i][j+1][k] + u[i][j][k-1] + u[i][j][k+1] + ((delta*delta) * f[i][j][k]));
+                u_next[i][j][k] = div * (u[i-1][j][k] + u[i+1][j][k] + u[i][j-1][k] + u[i][j+1][k] + u[i][j][k-1] + u[i][j][k+1] + ( deltadelta * f[i][j][k]));
             
-                nrm += (((u[i][j][k]) - (u_next[i][j][k]))*((u[i][j][k]) - (u_next[i][j][k])));
+                nrm += (u_next[i][j][k] - u[i][j][k])*(u_next[i][j][k] - u[i][j][k]);
             
             }
         }
@@ -38,6 +41,5 @@ double jacobi(double*** f, double*** u, double*** u_next, int N, double delta) {
 
     nrm = sqrt(nrm);
     
-
     return nrm; 
 }
