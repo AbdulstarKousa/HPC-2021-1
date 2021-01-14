@@ -6,7 +6,8 @@
 #include "alloc3d.h"
 #include "print.h"
 #include "sin_test.h"
-//#include "init.h"
+#include "init.h"
+#include "collector.h"
 
 #ifdef _JACOBI
 #include "jacobi.h"
@@ -21,7 +22,7 @@
 int
 main(int argc, char *argv[]) {
 
-    // printf("Entering main\n");
+    printf("Entering main\n");
 
     int 	N = N_DEFAULT;
     int 	iter_max = 1000;
@@ -32,6 +33,8 @@ main(int argc, char *argv[]) {
     char        *output_ext    = "";
     char	output_filename[FILENAME_MAX];
     double 	***u = NULL;
+    double 	***f = NULL;
+    double 	***u_next = NULL;
 
 
     /* get the paramters from the command line */
@@ -43,28 +46,37 @@ main(int argc, char *argv[]) {
 	output_type = atoi(argv[5]);  // ouput type
     }
 
-    // printf("Allocating memory for u\n");
+    printf("Allocating memory for u\n");
+
+    int N2 = N + 2; 
 
     // allocate memory
-    if ( (u = d_malloc_3d(N, N, N)) == NULL ) {
+    if ( (u = d_malloc_3d(N2, N2, N2)) == NULL ) {
         perror("array u: allocation failed");
         exit(-1);
     }
+    if ( (u_next = d_malloc_3d(N2, N2, N2)) == NULL ) {
+        perror("array u_next: allocation failed");
+        exit(-1);
+    }
+    if ( (f = d_malloc_3d(N2, N2, N2)) == NULL ) {
+        perror("array f: allocation failed");
+        exit(-1);
+    }
 
-    // printf("Done allocating memory for u\n");
+    printf("Done allocating memory for matrices\n");
 
-    /*
-     *
-     * fill in your code here 
-     *
-     *
-     */
 
-     // TEST
-    //  printf("Starting sin test\n");
-     sin_test();
-    //  printf("Done with sin test\n");
+    // TEST
+    //printf("Starting sin test\n");
+    //sin_test();
+    //printf("Done with sin test\n");
 
+    //call init function: void init(double*** f, double*** u, double*** u_next, int N, double start_T)
+    init(f, u, u_next, N, start_T); 
+
+    //call colletor: collector(double *** f, double *** u, double *** u_next, int N, int iter_max, double tolerance, double start_T)
+    collector(f, u, u_next, N, iter_max, tolerance, start_T); 
 
 
 
@@ -75,15 +87,15 @@ main(int argc, char *argv[]) {
 	    break;
 	case 3:
 	    output_ext = ".bin";
-	    sprintf(output_filename, "%s_%d%s", output_prefix, N, output_ext);
+	    sprintf(output_filename, "%s_%d%s", output_prefix, N+2, output_ext);
 	    fprintf(stderr, "Write binary dump to %s: ", output_filename);
-	    print_binary(output_filename, N, u);
+	    print_binary(output_filename, N+2, u);
 	    break;
 	case 4:
 	    output_ext = ".vtk";
-	    sprintf(output_filename, "%s_%d%s", output_prefix, N, output_ext);
+	    sprintf(output_filename, "%s_%d%s", output_prefix, N+2, output_ext);
 	    fprintf(stderr, "Write VTK file to %s: ", output_filename);
-	    print_vtk(output_filename, N, u);
+	    print_vtk(output_filename, N+2, u);
 	    break;
 	default:
 	    fprintf(stderr, "Non-supported output type!\n");
@@ -92,6 +104,8 @@ main(int argc, char *argv[]) {
 
     // de-allocate memory
     free(u);
+    free(u_next);
+    free(f);
 
     return(0);
 }
