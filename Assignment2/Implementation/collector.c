@@ -5,7 +5,7 @@
 
 #include "jacobi.h"
 #include "alloc3d.h"
-#include "Norm_Fro.h"
+//#include "Norm_Fro.h"
 #include "init.h"
 
 
@@ -32,16 +32,15 @@ void collector(double *** f, double *** u, double *** u_next, int N, int iter_ma
     while (norm_check > tolerance && k < iter_max){
 
         //call Jacobi 
-        jacobi(f, u, u_next, N, grid_space);
+        norm_check = jacobi(f, u, u_next, N, grid_space);
+
+        //call Fro Norm function
+        //norm_check = wrapper_norm(u, u_next, N); 
 
         //reset matrices 
         double *** temp = u; 
         u = u_next; 
         u_next = temp; 
-    
-        //call Fro Norm function
-        norm_check = wrapper_norm(u, u_next, N); 
-
         //increment 
         k += 1; 
     }

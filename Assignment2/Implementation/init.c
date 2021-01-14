@@ -21,11 +21,15 @@ void init(double*** f, double*** u, double*** u_next, int N, double start_T) {
             for (int z = 0; z < edge_point_count; z++) {
                 // TODO: Not too sure about these boundary conditions
                 // Initializing the 5 walls to 20 degrees. Every other point becomes 0 degrees
-                if(
-                   y == max_point || x == max_point || x == min_point || z == min_point || z == max_point 
-                ) {
+                if( y == max_point || x == max_point || x == min_point || z == min_point || z == max_point ) 
+                {
                     u[x][y][z] = 20.0;
-                } else {
+                }
+                else if (y == min_point )
+                {
+                    u[x][y][z] = 0.0;
+                }
+                 else {
                     u[x][y][z] = start_T;
                 }
             }
@@ -46,7 +50,7 @@ void init(double*** f, double*** u, double*** u_next, int N, double start_T) {
     int y_min = 0;
     int y_max = (int)(floor(((double)(edge_point_count/2.0))*(1.0/2.0)));
     int z_min = (int)(ceil(((double)(edge_point_count/2.0))*(1.0/3.0)));
-    int z_max = (int)floor((edge_point_count/2));
+    int z_max = (int)floor((edge_point_count/2.0));
 
 
     //printf("printing: %d \n", (int)(floor(((double)(edge_point_count/2.0))*(1.0/3.0))));
@@ -55,10 +59,10 @@ void init(double*** f, double*** u, double*** u_next, int N, double start_T) {
     for (int x = 0; x < edge_point_count; x++) {
         for (int y = 0; y < edge_point_count; y++) {
             for (int z = 0; z < edge_point_count; z++) {
-                f[x][y][z] = start_T;
+                f[x][y][z] = 0.0;
                 if (x_min <= x && x <= x_max) {
                     if (y_min <= y && y <= y_max) {
-                        if (z <= z_min && z <= z_max) {
+                        if (z_min <= z && z <= z_max) {
                             f[x][y][z] = 200.0;
                         }
                     }

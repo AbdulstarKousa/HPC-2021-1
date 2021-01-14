@@ -70,13 +70,20 @@ void sin_test(){
     for (int i = 0; i < iter; i++)
     {
 
-        jacobi(f, u, u_next, j, grid_s);
+        double norm_result = jacobi(f, u, u_next, j, grid_s);
 
         double *** temp = u; 
         u = u_next; 
         u_next = temp; 
+
+        //printf("Done with printing results\n");
+
+        //double norm_result = wrapper_norm(u, u_next, j); 
+
+        //printf("Done with printing results: %e\n",norm_result);
         
     }
+
 
     //subtract matrices
 
@@ -96,11 +103,11 @@ void sin_test(){
         
     }
 
-    printf("Done with printing results\n");
+    //printf("Done with printing results\n");
 
-    double norm_result = wrapper_norm(u, u_next, j); 
+    //double norm_result = wrapper_norm(u, u_next, j); 
 
-    printf("Done with printing results: %e\n",norm_result);
+    //printf("Done with printing results: %e\n",norm_result);
     
     
     free(f); 
