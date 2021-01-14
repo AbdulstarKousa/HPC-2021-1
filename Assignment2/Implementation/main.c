@@ -123,7 +123,7 @@ main(int argc, char *argv[]) {
     #endif
 
     #ifdef _SIN_TEST
-    printf("Running sin_check \n")
+    printf("Running sin_check \n");
     printf("Results of sin_check = %lf\n",sin_check(u, N));
     #endif  
 

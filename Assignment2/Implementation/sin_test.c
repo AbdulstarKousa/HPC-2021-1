@@ -100,7 +100,7 @@ double sin_check(double*** u, int N) {
 
     free(correct);
 
-    return norm;
+    return sqrt(norm);
 }
 
 
