@@ -14,6 +14,7 @@ double jacobi(double*** f, double*** u, double *** u_next, int N, double toleran
     double d_squared = delta*delta;
     double inv = 1.0/6.0;
     int edge_point_count = N + 2; 
+    double *** temp; 
 
     while ( m < iter_max && norm_result > tolerance ) {
         norm_result = 0.0;
@@ -23,15 +24,16 @@ double jacobi(double*** f, double*** u, double *** u_next, int N, double toleran
                 
                     u_next[i][j][k] = inv * (u[i-1][j][k] + u[i+1][j][k] + u[i][j-1][k] + u[i][j+1][k] + u[i][j][k-1] + u[i][j][k+1] + d_squared * f[i][j][k]);
                     
-                    double temp = u[i][j][k]; 
-                    u[i][j][k] = u_next[i][j][k]; 
-                    u_next[i][j][k] = temp;
-                    
                     norm_result += (((u_next[i][j][k]) - (u[i][j][k]))*((u_next[i][j][k]) - (u[i][j][k])));
                     
                 }
             }
         }
+        
+        temp = u;
+        u = u_next; 
+        u_next = temp;
+        
 
         norm_result = sqrt(norm_result);
         m++;

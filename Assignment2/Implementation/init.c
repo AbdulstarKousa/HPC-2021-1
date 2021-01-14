@@ -24,23 +24,17 @@ void init(double*** f, double*** u, double*** u_next, int N, double start_T) {
                 if( y == max_point || x == max_point || x == min_point || z == min_point || z == max_point ) 
                 {
                     u[x][y][z] = 20.0;
+                    u_next[x][y][z] = 20.0; 
                 }
                 else if (y == min_point )
                 {
                     u[x][y][z] = 0.0;
+                    u_next[x][y][z] = 0.0; 
                 }
                  else {
                     u[x][y][z] = start_T;
+                    u_next[x][y][z] = start_T; 
                 }
-            }
-        }
-    }
-
-    // Initialize u_next to 0.0
-    for (int x = 0; x < edge_point_count; x++) {
-        for (int y = 0; y < edge_point_count; y++) {
-            for (int z = 0; z < edge_point_count; z++) {
-                u_next[x][y][z] = start_T;
             }
         }
     }

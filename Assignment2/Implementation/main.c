@@ -66,24 +66,21 @@ main(int argc, char *argv[]) {
         exit(-1);
     }
 
-    // printf("Done allocating memory for u\n");
+    printf("Done allocating memory for u\n");
 
 
     // TEST
     //printf("Starting sin test\n");
-    sin_test();
+    //sin_test();
     //printf("Done with sin test\n");
 
-    //call init function: void init(double*** f, double*** u, double*** u_next, int N, double start_T)
-    //init(f, u, u_next, N, start_T); 
-
-    //call colletor: collector(double *** f, double *** u, double *** u_next, int N, int iter_max, double tolerance, double start_T)
-    //collector(f, u, u_next, N, iter_max, tolerance, start_T); 
-
-    //gauss_seidel(f, u, N, tolerance, iter_max); 
-
-    //jacobi(f, u, u_next, N, tolerance, iter_max); 
-
+    printf("Running Gauss \n");
+    init(f, u, u_next, N, start_T); 
+    gauss_seidel(f, u, N, tolerance, iter_max); 
+   
+    printf("Running Jacobi \n");
+    init(f, u, u_next, N, start_T); 
+    jacobi(f, u, u_next, N, tolerance, iter_max); 
 
 
 
