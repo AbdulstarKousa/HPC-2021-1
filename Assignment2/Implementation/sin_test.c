@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <omp.h>
 
-#include "jacobiOMP.h"
+#include "jacobi.h"
 #include "alloc3d.h"
 #include "Norm_Fro.h"
 

@@ -3,6 +3,7 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
+#include<omp.h>
 #include "alloc3d.h"
 #include "print.h"
 #include "sin_test.h"
@@ -10,13 +11,22 @@
 #include "collector.h"
 
 #include "gauss_seidel.h"
+#include "gauss_seidelOMP.h"
 
 #ifdef _JACOBI
 #include "jacobi.h"
 #endif
 
+#ifdef _JACOBI_OMP
+#include "jacobiOMP.h"
+#endif
+
 #ifdef _GAUSS_SEIDEL
 #include "gauss_seidel.h"
+#endif
+
+#ifdef _GAUSS_SEIDEL_OMP
+#include "gauss_seidelOMP.h"
 #endif
 
 #define N_DEFAULT 100
@@ -80,7 +90,38 @@ main(int argc, char *argv[]) {
     //call colletor: collector(double *** f, double *** u, double *** u_next, int N, int iter_max, double tolerance, double start_T)
     //collector(f, u, u_next, N, iter_max, tolerance, start_T); 
 
-    gauss_seidel(f, u, N, tolerance, iter_max); 
+    #ifdef _JACOBI
+        double start = omp_get_wtime();
+        // double norm_check = jacobi(f, u, u_next, N, tolerance, iter_max); 
+        double end = omp_get_wtime();
+        printf("Wall time %f \n", (end-start) );
+        // printf("Norm result from collector: %e\n",norm_check);
+    #endif
+
+    #ifdef _JACOBI_OMP
+    double start = omp_get_wtime();
+    // double norm_check = jacobiOMP(f, u, u_next, N, tolerance, iter_max); 
+    double end = omp_get_wtime();
+    printf("Wall time %f \n", (end-start) );
+    printf("Norm result from collector: %e\n",norm_check);
+    #endif
+
+    #ifdef _GAUSS_SEIDEL
+    double start = omp_get_wtime();
+    double norm_check = gauss_seidel(f, u, N, tolerance, iter_max); 
+    double end = omp_get_wtime();
+    printf("Wall time %f \n", (end-start) );
+    printf("Norm result from collector: %e\n",norm_check);
+    #endif
+
+    #ifdef _GAUSS_SEIDEL_OMP
+    double start = omp_get_wtime();
+    double norm_check = gauss_seidelOMP(f, u, N, tolerance, iter_max); 
+    double end = omp_get_wtime();
+    printf("Wall time %f \n", (end-start) );
+    printf("Norm result from collector: %e\n",norm_check);
+    #endif
+
 
 
 
