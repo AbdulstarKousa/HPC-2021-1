@@ -2,6 +2,11 @@
     #define M_PI 3.14159265358979323846
 #endif
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include "alloc3d.h"
+
 
 void sin_init(double*** f, double*** u, double*** u_next, int N) {
     // f: Cube where function values will be stored
@@ -94,6 +99,7 @@ double sin_check(double*** u, int N) {
     }
 
     free(correct);
+
     return norm;
 }
 

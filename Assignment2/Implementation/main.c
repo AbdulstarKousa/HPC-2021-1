@@ -75,7 +75,7 @@ main(int argc, char *argv[]) {
     #ifdef _JACOBI
     printf("Running jacobi sequential\n");
     double start = omp_get_wtime();
-    double norm_check = jacobi(f, u, u_next, N, tolerance, iter_max); 
+    double norm_check = jacobi(f, u, u_next, N, tolerance, iter_max, m); 
     double end = omp_get_wtime();
     printf("Wall time %f \n", (end-start) );
     printf("Number of iterations run: %d \n", m);
@@ -85,7 +85,7 @@ main(int argc, char *argv[]) {
     #ifdef _JACOBI_OMP
     printf("Running Jacobi OMP\n");
     double start = omp_get_wtime();
-    double norm_check = jacobiOMP(f, u, u_next, N, tolerance, iter_max); 
+    double norm_check = jacobiOMP(f, u, u_next, N, tolerance, iter_max, m); 
     double end = omp_get_wtime();
     printf("Wall time %f \n", (end-start) );
     printf("Number of iterations run: %d \n", m);
@@ -95,7 +95,7 @@ main(int argc, char *argv[]) {
     #ifdef _GAUSS_SEIDEL
     printf("Running Gauss sequential\n");
     double start = omp_get_wtime();
-    double norm_check = gauss_seidel(f, u, N, tolerance, iter_max); 
+    double norm_check = gauss_seidel(f, u, N, tolerance, iter_max, m); 
     double end = omp_get_wtime();
     printf("Wall time %f \n", (end-start) );
     printf("Number of iterations run: %d \n", m);
@@ -105,7 +105,7 @@ main(int argc, char *argv[]) {
     #ifdef _GAUSS_SEIDEL_OMP
     printf("Running Gauss OMP \n");
     double start = omp_get_wtime();
-    double norm_check = gauss_seidelOMP(f, u, N, tolerance, iter_max); 
+    double norm_check = gauss_seidelOMP(f, u, N, tolerance, iter_max, m); 
     double end = omp_get_wtime();
     printf("Wall time %f \n", (end-start) );
     printf("Number of iterations run: %d \n", m);

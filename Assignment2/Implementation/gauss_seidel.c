@@ -8,7 +8,7 @@
 double gauss_seidel(double*** f, double*** u, int N, double tolerance, int iter_max, int * m){
 
     double norm_result = tolerance + 0.01 ;
-    m = 0;
+    *m = 0;
     double delta= (double)(2.0/((double)(N+1)));
     double d_squared = delta*delta;
     double inv = 1.0/6.0;
@@ -19,7 +19,7 @@ double gauss_seidel(double*** f, double*** u, int N, double tolerance, int iter_
     // kmax = iter
     // threshold = tolerance
     // d = norm_result
-    while ( m < iter_max && norm_result > tolerance ) {
+    while ( *m < iter_max && norm_result > tolerance ) {
         norm_result = 0.0;
         for (int i = 1; i < edge_point_count - 1; i++) {
             for (int j = 1; j < edge_point_count - 1; j++) {
