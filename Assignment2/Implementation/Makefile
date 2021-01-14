@@ -15,6 +15,7 @@ OBJS_GS	= $(MAIN_GS) gauss_seidel.o sin_test.o jacobi.o init.o collector.o
 CC	= gcc -std=c11 -fopenmp -ofast
 DEFS	= -D_JACOBI -D_GAUSS_SEIDEL
 OPT	= -g 
+OPT	= -g -Ofast -fopenmp
 IPO	= 
 ISA	= 
 CHIP	= 
