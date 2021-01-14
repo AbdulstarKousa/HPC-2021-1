@@ -41,5 +41,3 @@ do
 done
 
 echo size $SIZE_N iterations $ITER tolerance $TOLE initial guess $START_T  |  grep -v CPU >>$LOGEXT
-
-

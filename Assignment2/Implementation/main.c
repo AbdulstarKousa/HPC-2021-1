@@ -3,7 +3,7 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
-#include<omp.h>
+#include <omp.h>
 #include "alloc3d.h"
 #include "print.h"
 #include "sin_test.h"
@@ -70,7 +70,12 @@ main(int argc, char *argv[]) {
     }
 
     //Iniliazie matrices 
-    init(f, u, u_next, N, start_T); 
+    #ifdef _SIN_TEST
+    printf("Running sin_test \n");
+    sin_init(f, u, u_next, N);
+    #else
+    init(f, u, u_next, N, start_T);
+    #endif
 
 
     #ifdef _JACOBI
@@ -117,6 +122,10 @@ main(int argc, char *argv[]) {
     printf("#Nr. iterations= %d\n",m);
     #endif
 
+    #ifdef _SIN_TEST
+    printf("Running sin_check \n")
+    printf("Results of sin_check = %lf\n",sin_check(u, N));
+    #endif  
 
     // dump  results if wanted 
     switch(output_type) {
