@@ -65,6 +65,7 @@ void sin_test(){
 
     int iter = 1000; 
     double grid_s = (double)(2.0/((double)(jj-1)));
+    double norm_result = 0.0; 
 
     // printf("Entering Jacobi loop\n");
     double start = omp_get_wtime();
@@ -72,7 +73,7 @@ void sin_test(){
     for (int i = 0; i < iter; i++)
     {
 
-        double norm_result = jacobi(f, u, u_next, j, grid_s);
+        norm_result = jacobi(f, u, u_next, j, grid_s);
 
         double *** temp = u; 
         u = u_next; 
@@ -111,7 +112,7 @@ void sin_test(){
     printf("Wall time %f \n", (end-start) );
     double norm_result = wrapper_norm(u, u_next, j); 
 
-    //printf("Done with printing results: %e\n",norm_result);
+    printf("Done with printing results: %lf \n", norm_result);
     
     
     free(f); 
