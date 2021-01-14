@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-double jacobiOMP(double*** f, double*** u, double *** u_next, int N, double tolerance, int iter_max, int * m) {
 
 /* 
 jacobiOMP:
