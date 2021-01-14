@@ -30,7 +30,7 @@ void sin_test(){
     double yy = -1.0; 
     double zz = -1.0; 
 
-    double grid_space = 2.0/((double)(jj-1)); 
+    double grid_space = 2.0/((double)(j+1)); 
     double array[j];
 
     array[0] = -1.0; 
