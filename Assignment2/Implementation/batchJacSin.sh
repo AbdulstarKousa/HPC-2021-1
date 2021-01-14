@@ -18,11 +18,12 @@ EXECUTABLE=poisson_j
 
 THREADS="12 8 4 2 1"
 
-SCHEDULE="static static,5 static,10 dynamic dynamic,5 dynamic,25 guided guided,5"
+# SCHEDULE="static static,5 static,10 dynamic dynamic,5 dynamic,25 guided guided,5"
+SCHEDULE="static"
 
 LOGEXT=../Results/datjacobOPMsinTest.dat
 
-SIZE_N="1000"
+SIZE_N="500"
 ITER="10000"
 TOLE="0.001"
 START_T="0"
@@ -35,7 +36,7 @@ do
 		{ OMP_SCHEDULE=$S OMP_NUM_THREADS=$T ./$EXECUTABLE $SIZE_N $ITER $TOLE $START_T $IMG; } |& grep -v CPU >>$LOGEXT
 		echo $T |  grep -v CPU >>$LOGEXT
 		echo $S |  grep -v CPU >>$LOGEXT
-		
+	
 	done
 done
 

@@ -38,6 +38,6 @@ double jacobi(double*** f, double*** u, double *** u_next, int N, double toleran
         norm_result = sqrt(norm_result);
         m++;
     }
-
+    printf("Number of iterations run: %d \n", m);
     return norm_result; 
 }
