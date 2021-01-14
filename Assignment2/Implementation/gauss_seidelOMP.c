@@ -17,16 +17,15 @@ double gauss_seidelOMP( double*** f,      /* 3D matrix "Cube" of function values
                         int N,            /* #nr. interior grid points */
                         double tolerance, /* threshold */
                         int iter_max,     /* maximum nr. of iterations */
-                        int * m){         /* #nr. the iteration needed to get a suciently small diference*/
+                        int * mp){         /* #nr. the iteration needed to get a suciently small diference*/
 
-    m = 0;
     double norm_result = tolerance + 0.01 ;      // to make sure that we enter the while loop below we add 0.01
     double delta= (double)(2.0/((double)(N+1))); // the grid spacing.
     double d_squared = delta*delta;
     double inv = 1.0/6.0;
     int edge_point_count = N + 2; 
     double u_old; // to store u old.
-    int i,j,k;
+    int i,j,k,m = 0;
 
     // alg. from the slides show "Assignment 2: The Poisson Problem" p 14. 
     while ( m < iter_max && norm_result > tolerance ) {
@@ -45,5 +44,6 @@ double gauss_seidelOMP( double*** f,      /* 3D matrix "Cube" of function values
         m++;
     }
 
+    *mp = m;
     return norm_result; 
 }

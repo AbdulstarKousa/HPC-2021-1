@@ -19,16 +19,15 @@ double jacobiOMP(   double*** f,       /* 3D matrix "Cube" of function values, S
                     int N,             /* #nr. interior grid points */
                     double tolerance,  /* threshold */
                     int iter_max,      /* maximum nr. of iterations */
-                    int * m) {         /* #nr. the iteration needed to get a suciently small diference*/
+                    int * mp) {         /* #nr. the iteration needed to get a suciently small diference*/
 
-    m = 0;
     double norm_result = tolerance + 0.1;        // to make sure that we enter the while loop below we add 0.01
     double delta= (double)(2.0/((double)(N+1))); // the grid spacing.
     double d_squared = delta*delta;
     double inv = 1.0/6.0;
     int edge_point_count = N + 2; 
     double *** temp;   // to swipe between u and u_next.
-    int i, j,k;
+    int i, j,k, m = 0;
 
     //#pragma omp parallel for schedule(runtime)\
 	//shared(f, u, edge_point_count, inv, d_squared) private(i,j,k,temp)
@@ -55,6 +54,6 @@ double jacobiOMP(   double*** f,       /* 3D matrix "Cube" of function values, S
         m++;
     }
 
+    *mp = m;
     return norm_result; 
-
 }
