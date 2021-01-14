@@ -18,7 +18,7 @@ EXECUTABLE=poisson_j
 
 THREADS="12 8 4 2 1"
 
-SCHEDULE="static dynamic guided"
+SCHEDULE="static static,5 static,10 dynamic dynamic,5 dynamic,25 guided guided,5"
 
 LOGEXT=../Results/datjacobOPMsinTest.dat
 

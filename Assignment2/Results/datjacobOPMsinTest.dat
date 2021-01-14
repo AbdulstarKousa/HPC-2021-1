@@ -43,3 +43,63 @@ Done with printing results: 3.229558e-01
 Wall time 49.649192 
 Done with printing results: 3.229558e-01
 1
+Wall time 11.515345 
+Done with printing results: 3.229558e-01
+12
+static
+Wall time 9.438760 
+Done with printing results: 3.229558e-01
+12
+dynamic
+Wall time 11.394058 
+Done with printing results: 3.229558e-01
+12
+guided
+Wall time 10.689501 
+Done with printing results: 3.229558e-01
+8
+static
+Wall time 10.125803 
+Done with printing results: 3.229558e-01
+8
+dynamic
+Wall time 10.760663 
+Done with printing results: 3.229558e-01
+8
+guided
+Wall time 14.289414 
+Done with printing results: 3.229558e-01
+4
+static
+Wall time 14.751856 
+Done with printing results: 3.229558e-01
+4
+dynamic
+Wall time 14.343999 
+Done with printing results: 3.229558e-01
+4
+guided
+Wall time 25.941238 
+Done with printing results: 3.229558e-01
+2
+static
+Wall time 27.483618 
+Done with printing results: 3.229558e-01
+2
+dynamic
+Wall time 25.697883 
+Done with printing results: 3.229558e-01
+2
+guided
+Wall time 49.187545 
+Done with printing results: 3.229558e-01
+1
+static
+Wall time 49.112863 
+Done with printing results: 3.229558e-01
+1
+dynamic
+Wall time 49.013405 
+Done with printing results: 3.229558e-01
+1
+guided
