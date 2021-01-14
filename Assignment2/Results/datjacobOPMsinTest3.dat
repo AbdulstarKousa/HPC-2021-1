@@ -1,0 +1,15 @@
+Write VTK file to poisson_res_102.vtk: Running jacobi sequential
+Wall time 28.629000 
+Norm result from norm 4.845213e-02
+12
+static,10
+Write VTK file to poisson_res_102.vtk: Running jacobi sequential
+Wall time 28.591936 
+Norm result from norm 4.845213e-02
+12
+dynamic,10
+Write VTK file to poisson_res_102.vtk: Running jacobi sequential
+Wall time 28.596693 
+Norm result from norm 4.845213e-02
+8
+static,10

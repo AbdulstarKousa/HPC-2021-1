@@ -18,11 +18,12 @@ EXECUTABLE=poisson_j
 
 THREADS="12 8 4 2 1"
 
-SCHEDULE="static static,5 static,10 dynamic dynamic,5 dynamic,25 guided guided,5"
+#SCHEDULE="static static,5 static,10 dynamic dynamic,5 dynamic,25 guided guided,5"
+SCHEDULE="static,10 dynamic,10"
 
-LOGEXT=../Results/datjacobOPMsinTest.dat
+LOGEXT=../Results/datjacobOPMsinTest3.dat
 
-SIZE_N="1000"
+SIZE_N="100"
 ITER="10000"
 TOLE="0.001"
 START_T="0"

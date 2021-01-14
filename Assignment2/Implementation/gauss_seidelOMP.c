@@ -3,6 +3,7 @@
  */
 #include <math.h>
 #include <stdio.h>
+#include <omp.h>
 
 
 double gauss_seidelOMP(double*** f, double*** u, int N, double tolerance, int iter_max){

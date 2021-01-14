@@ -1,0 +1,51 @@
+Write VTK file to poisson_res_102.vtk: Running jacobi sequential
+Wall time 2.861992 
+Norm result from norm 4.489506e+00
+12
+static,10
+Write VTK file to poisson_res_102.vtk: Running jacobi sequential
+Wall time 2.866470 
+Norm result from norm 4.489506e+00
+12
+dynamic,10
+Write VTK file to poisson_res_102.vtk: Running jacobi sequential
+Wall time 2.865434 
+Norm result from norm 4.489506e+00
+8
+static,10
+Write VTK file to poisson_res_102.vtk: Running jacobi sequential
+Wall time 2.869668 
+Norm result from norm 4.489506e+00
+8
+dynamic,10
+Write VTK file to poisson_res_102.vtk: Running jacobi sequential
+Wall time 2.861930 
+Norm result from norm 4.489506e+00
+4
+static,10
+Write VTK file to poisson_res_102.vtk: Running jacobi sequential
+Wall time 2.861204 
+Norm result from norm 4.489506e+00
+4
+dynamic,10
+Write VTK file to poisson_res_102.vtk: Running jacobi sequential
+Wall time 2.866533 
+Norm result from norm 4.489506e+00
+2
+static,10
+Write VTK file to poisson_res_102.vtk: Running jacobi sequential
+Wall time 2.861600 
+Norm result from norm 4.489506e+00
+2
+dynamic,10
+Write VTK file to poisson_res_102.vtk: Running jacobi sequential
+Wall time 2.860592 
+Norm result from norm 4.489506e+00
+1
+static,10
+Write VTK file to poisson_res_102.vtk: Running jacobi sequential
+Wall time 2.870187 
+Norm result from norm 4.489506e+00
+1
+dynamic,10
+size 100 iterations 1000 tolerance 0.001 initial guess 0
