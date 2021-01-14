@@ -2,8 +2,6 @@
  * 
  */
 #include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 
 // Expected type signature: 
@@ -14,7 +12,7 @@
 // TODO:
 // Does not yet compile, as the type signature doesn't match
 // Also, the calculations are not correct yet
-double jacobi(double*** f, double*** u, double*** u_next, int N, double delta) {
+void jacobiOMP(double*** f, double*** u, double*** u_next, int edge_point_count, double delta) {
     // f: Cube of function values -> Second derivatives of temperature
     // u: Cube of temperature estimates of previous iteration
     // u_next: Cube to hold new temperature estimates
@@ -23,21 +21,16 @@ double jacobi(double*** f, double*** u, double*** u_next, int N, double delta) {
 
     double d_squared = delta*delta;
     double inv = 1.0/6.0;
-    
-    int edge_point_count = N + 2; 
-    double nrm = 0.0;
-
-    for (int i = 1; i < edge_point_count - 1; i++) {
-        for (int j = 1; j < edge_point_count - 1; j++) {
-            for (int k = 1; k < edge_point_count - 1; k++) {
-                u_next[i][j][k] = inv * (u[i-1][j][k] + u[i+1][j][k] + u[i][j-1][k] + u[i][j+1][k] + u[i][j][k-1] + u[i][j][k+1] + d_squared * f[i][j][k]);
-                nrm += (((u[i][j][k]) - (u_next[i][j][k]))*((u[i][j][k]) - (u_next[i][j][k])));
+    int i, j, k;
+    double temp;
+    #pragma omp parallel for schedule(runtime)\
+	shared(f, u, edge_point_count, inv, d_squared) private(i,j,k,temp)
+    for (i = 1; i < edge_point_count - 1; i++) {
+        for (j = 1; j < edge_point_count - 1; j++) {
+            for (k = 1; k < edge_point_count - 1; k++) {
+                temp = inv * (u[i-1][j][k] + u[i+1][j][k] + u[i][j-1][k] + u[i][j+1][k] + u[i][j][k-1] + u[i][j][k+1] + d_squared * f[i][j][k]);
+                u_next[i][j][k] = temp;
             }
         }
     }
-
-    nrm = sqrt(nrm);
-    
-
-    return nrm; 
 }
