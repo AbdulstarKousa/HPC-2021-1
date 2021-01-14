@@ -31,11 +31,11 @@ void sin_test(){
     double zz = -1.0; 
 
     double grid_space = 2.0/((double)(N+1)); 
-    double array[j];
+    double array[N];
 
     array[0] = -1.0; 
-    array[j-1] = 1.0; 
-    for(int i = 1; i < j; i++){
+    array[N-1] = 1.0; 
+    for(int i = 1; i < N; i++){
         array[i] = array[i-1] + grid_space; 
     }
 
@@ -64,7 +64,7 @@ void sin_test(){
     // printf("Initialization finished\n");
 
     int iter = 1000; 
-    double grid_s = (double)(2.0/((double)(jj-1)));
+    double grid_s = (double)(2.0/((double)(N+1)));
     double norm_result = 0.0; 
 
     // printf("Entering Jacobi loop\n");
@@ -73,7 +73,7 @@ void sin_test(){
     for (int i = 0; i < iter; i++)
     {
 
-        norm_result = jacobi(f, u, u_next, j, grid_s);
+        norm_result = jacobi(f, u, u_next, N, grid_s);
 
         double *** temp = u; 
         u = u_next; 
@@ -110,7 +110,6 @@ void sin_test(){
     // printf("Done with printing results\n");
 
     printf("Wall time %f \n", (end-start) );
-    double norm_result = wrapper_norm(u, u_next, j); 
 
     printf("Done with printing results: %lf \n", norm_result);
     

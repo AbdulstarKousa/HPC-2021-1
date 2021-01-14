@@ -15,6 +15,7 @@ double gauss_seidel(double*** f, double*** u, int N, double tolerance, int iter_
     double d_squared = delta*delta;
     double inv = 1.0/6.0;
     int edge_point_count = N + 2; 
+    double u_old;
 
     // k = i 
     // kmax = iter
@@ -25,7 +26,7 @@ double gauss_seidel(double*** f, double*** u, int N, double tolerance, int iter_
         for (int i = 1; i < edge_point_count - 1; i++) {
             for (int j = 1; j < edge_point_count - 1; j++) {
                 for (int k = 1; k < edge_point_count - 1; k++) {
-                    double u_old = u[i][j][k];
+                    u_old = u[i][j][k];
                     u[i][j][k] = inv * (u[i-1][j][k] + u[i+1][j][k] + u[i][j-1][k] + u[i][j+1][k] + u[i][j][k-1] + u[i][j][k+1] + d_squared * f[i][j][k]);
                     norm_result += (((u[i][j][k]) - (u_old))*((u[i][j][k]) - (u_old)));
                 }
