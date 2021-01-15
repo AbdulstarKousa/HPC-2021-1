@@ -42,7 +42,7 @@ main(int argc, char *argv[]) {
     double 	***f = NULL;
     double 	***u_next = NULL;
 
-    // omp_set_num_threads(8);
+    omp_set_num_threads(1);
 
     /* get the paramters from the command line */
     N         = atoi(argv[1]);	// grid size

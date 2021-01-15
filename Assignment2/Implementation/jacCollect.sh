@@ -8,7 +8,7 @@
 #BSUB -J opmJ_batch
 #BSUB -o opmJ_batch_%J.out
 #BSUB -q hpcintro
-#BSUB -n 12
+#BSUB -n 24
 #BSUB -R "span[hosts=1]"
 #BSUB -R "rusage[mem=2048]"
 #BSUB -W 15
@@ -17,8 +17,8 @@ module load studio
 
 EXECUTABLE=poisson_j_omp
 
-# THREADS="12 8 4 2 1"
-THREADS="8"
+# THREADS="24 16 12 8 4 2 1"
+THREADS="12"
 
 # SCHEDULE="static static,5 static,10  static,25 dynamic dynamic,5 dynamic,25 guided guided,5"
 # SCHEDULE="static static,4 static,8 static,10"
@@ -36,11 +36,17 @@ IMG="0"  #image disabled -> 0
 #
 export MFLOPS_MAX_IT=1000
 export MATMULT_COMPARE=0
+export OMP_NUM_THREADS=${THREADS}
+export OMP_PLACES=cores
+export OMP_PROC_BIND=spread
+
+
+LOGEXT=../Results/er12Threads0812.dat
 
 # experiment name 
 #
 JID=${LSB_JOBID}
-EXPOUT="../Results/$LSB_JOBNAME.${JID}thr${THREADS}_JAC_ReducTHIS.er"
+EXPOUT="../Results/$LSB_JOBNAME.${JID}thr${THREADS}_JAC_Reduc150121.er"
 
 # uncomment the HWCOUNT line, if you want to use hardware counters
 # define an option string for the harwdware counters (see output of
@@ -52,4 +58,4 @@ EXPOUT="../Results/$LSB_JOBNAME.${JID}thr${THREADS}_JAC_ReducTHIS.er"
 HWCOUNT="-h dch,on,dcm,on,l2h,on,l2m,on"
 
 # start the collect command with the above settings
-collect -o $EXPOUT $HWCOUNT ./$EXECUTABLE $SIZE_N $ITER $TOLE $START_T $IMG;
+collect -o $EXPOUT $HWCOUNT ./$EXECUTABLE $SIZE_N $ITER $TOLE $START_T $IMG
