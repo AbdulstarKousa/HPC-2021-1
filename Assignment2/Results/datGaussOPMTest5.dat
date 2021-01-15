@@ -1,0 +1,102 @@
+Running Gauss OMP 
+Wall time 7.401644 
+Norm result from norm 9.995031e-04
+12
+static
+Running Gauss OMP 
+Wall time 7.396382 
+Norm result from norm 9.995023e-04
+12
+dynamic
+Running Gauss OMP 
+Wall time 10.611512 
+Norm result from norm 9.995488e-04
+8
+static
+Running Gauss OMP 
+Wall time 10.615432 
+Norm result from norm 9.995488e-04
+8
+dynamic
+Running Gauss OMP 
+Wall time 20.341788 
+Norm result from norm 9.996047e-04
+4
+static
+Running Gauss OMP 
+Wall time 20.343505 
+Norm result from norm 9.996047e-04
+4
+dynamic
+Running Gauss OMP 
+Wall time 40.618826 
+Norm result from norm 9.996064e-04
+2
+static
+Running Gauss OMP 
+Wall time 40.612994 
+Norm result from norm 9.996064e-04
+2
+dynamic
+Running Gauss OMP 
+Wall time 81.160973 
+Norm result from norm 9.996092e-04
+1
+static
+Running Gauss OMP 
+Wall time 81.166277 
+Norm result from norm 9.996092e-04
+1
+dynamic
+size 100 iterations 10000 tolerance 0.001 initial guess 0.0
+Running Gauss OMP 
+Wall time 0.001242 
+Norm result from norm 9.722281e-04
+12
+static
+Running Gauss OMP 
+Wall time 0.001214 
+Norm result from norm 9.640316e-04
+12
+dynamic
+Running Gauss OMP 
+Wall time 0.000931 
+Norm result from norm 9.973387e-04
+8
+static
+Running Gauss OMP 
+Wall time 0.000875 
+Norm result from norm 9.555775e-04
+8
+dynamic
+Running Gauss OMP 
+Wall time 0.000660 
+Norm result from norm 9.812070e-04
+4
+static
+Running Gauss OMP 
+Wall time 0.000662 
+Norm result from norm 9.806362e-04
+4
+dynamic
+Running Gauss OMP 
+Wall time 0.000686 
+Norm result from norm 9.943881e-04
+2
+static
+Running Gauss OMP 
+Wall time 0.000696 
+Norm result from norm 9.943881e-04
+2
+dynamic
+Running Gauss OMP 
+Wall time 0.000892 
+Norm result from norm 9.214607e-04
+1
+static
+Running Gauss OMP 
+Wall time 0.000891 
+Norm result from norm 9.214607e-04
+1
+dynamic
+size 10 iterations 10000 tolerance 0.001 initial guess 0.0

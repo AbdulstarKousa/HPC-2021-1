@@ -1,0 +1,151 @@
+Running Gauss OMP 
+Wall time 0.275498 
+Norm result from norm 9.962930e-04
+12
+static
+Running Gauss OMP 
+Wall time 0.274288 
+Norm result from norm 9.962934e-04
+12
+static,5
+Running Gauss OMP 
+Wall time 0.275870 
+Norm result from norm 9.962930e-04
+12
+static,10
+Running Gauss OMP 
+Wall time 0.275332 
+Norm result from norm 9.962930e-04
+12
+dynamic
+Running Gauss OMP 
+Wall time 0.283499 
+Norm result from norm 9.963381e-04
+12
+dynamic,5
+Running Gauss OMP 
+Wall time 0.273999 
+Norm result from norm 9.962930e-04
+12
+dynamic,25
+Running Gauss OMP 
+Wall time 0.371638 
+Norm result from norm 9.964688e-04
+8
+static
+Running Gauss OMP 
+Wall time 0.371438 
+Norm result from norm 9.964688e-04
+8
+static,5
+Running Gauss OMP 
+Wall time 0.371669 
+Norm result from norm 9.964688e-04
+8
+static,10
+Running Gauss OMP 
+Wall time 0.372616 
+Norm result from norm 9.964688e-04
+8
+dynamic
+Running Gauss OMP 
+Wall time 0.372266 
+Norm result from norm 9.964688e-04
+8
+dynamic,5
+Running Gauss OMP 
+Wall time 0.371689 
+Norm result from norm 9.964688e-04
+8
+dynamic,25
+Running Gauss OMP 
+Wall time 0.676224 
+Norm result from norm 9.967180e-04
+4
+static
+Running Gauss OMP 
+Wall time 0.675863 
+Norm result from norm 9.967180e-04
+4
+static,5
+Running Gauss OMP 
+Wall time 0.675838 
+Norm result from norm 9.967180e-04
+4
+static,10
+Running Gauss OMP 
+Wall time 0.676759 
+Norm result from norm 9.967180e-04
+4
+dynamic
+Running Gauss OMP 
+Wall time 0.675133 
+Norm result from norm 9.967180e-04
+4
+dynamic,5
+Running Gauss OMP 
+Wall time 0.675052 
+Norm result from norm 9.967180e-04
+4
+dynamic,25
+Running Gauss OMP 
+Wall time 1.291772 
+Norm result from norm 9.968766e-04
+2
+static
+Running Gauss OMP 
+Wall time 1.289993 
+Norm result from norm 9.968766e-04
+2
+static,5
+Running Gauss OMP 
+Wall time 1.290586 
+Norm result from norm 9.968766e-04
+2
+static,10
+Running Gauss OMP 
+Wall time 1.290223 
+Norm result from norm 9.968766e-04
+2
+dynamic
+Running Gauss OMP 
+Wall time 1.289785 
+Norm result from norm 9.968766e-04
+2
+dynamic,5
+Running Gauss OMP 
+Wall time 1.290660 
+Norm result from norm 9.968766e-04
+2
+dynamic,25
+Running Gauss OMP 
+Wall time 2.570462 
+Norm result from norm 9.969300e-04
+1
+static
+Running Gauss OMP 
+Wall time 2.569798 
+Norm result from norm 9.969300e-04
+1
+static,5
+Running Gauss OMP 
+Wall time 2.570321 
+Norm result from norm 9.969300e-04
+1
+static,10
+Running Gauss OMP 
+Wall time 2.570517 
+Norm result from norm 9.969300e-04
+1
+dynamic
+Running Gauss OMP 
+Wall time 2.569428 
+Norm result from norm 9.969300e-04
+1
+dynamic,5
+Running Gauss OMP 
+Wall time 2.570049 
+Norm result from norm 9.969300e-04
+1
+dynamic,25
+size 50 iterations 10000 tolerance 0.001 initial guess 0.0
