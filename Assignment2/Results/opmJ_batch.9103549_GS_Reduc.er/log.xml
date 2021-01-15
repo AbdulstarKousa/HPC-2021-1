@@ -1,0 +1,355 @@
+<experiment version="12.4">
+<collector>Studio 12.6 Performance Analyzer 12.6 Linux_x64 2017/05/24</collector>
+</experiment>
+<system hostname="n-62-21-78" arch="x86_64" os="Linux 3.10.0-1160.11.1.el7.x86_64" pagesz="4096" npages="65891564">
+  <cpu id="0" clk="2199"/>
+  <cpu id="1" clk="2200"/>
+  <cpu id="2" clk="2200"/>
+  <cpu id="3" clk="2199"/>
+  <cpu id="4" clk="2200"/>
+  <cpu id="5" clk="2200"/>
+  <cpu id="6" clk="2199"/>
+  <cpu id="7" clk="2199"/>
+  <cpu id="8" clk="2198"/>
+  <cpu id="9" clk="2198"/>
+  <cpu id="10" clk="2200"/>
+  <cpu id="11" clk="2199"/>
+  <cpu id="12" clk="2202"/>
+  <cpu id="13" clk="2200"/>
+  <cpu id="14" clk="2199"/>
+  <cpu id="15" clk="2199"/>
+  <cpu id="16" clk="2200"/>
+  <cpu id="17" clk="2200"/>
+  <cpu id="18" clk="2199"/>
+  <cpu id="19" clk="2200"/>
+  <cpu id="20" clk="2203"/>
+  <cpu id="21" clk="2199"/>
+  <cpu id="22" clk="2204"/>
+  <cpu id="23" clk="2202"/>
+</system>
+<process pid="25791"></process>
+<process ppid="25661"></process>
+<process pgrp="25656"></process>
+<process sid="2430"></process>
+<process cwd="/zhome/79/f/127798/HPC-2021-1/Assignment2/Implementation"></process>
+<process wsize="64"></process>
+<process stackbase="0x7ffe6d0e9c80"></process>
+<process>./poisson_gs_omp 500 2000 0.001 0.0 0</process>
+<profile name="profile" ptimer="10007" numstates="1">
+  <profdata fname="profile"/>
+  <profpckt kind="8" uname="Clock profiling data">
+    <field name="LWPID" uname="Lightweight process id" offset="8" type="INT64"/>
+    <field name="THRID" uname="Thread number" offset="16" type="INT64"/>
+    <field name="CPUID" uname="CPU id" offset="24" type="INT32"/>
+    <field name="TSTAMP" uname="High resolution timestamp" offset="32" type="INT64"/>
+    <field name="FRINFO" offset="40" type="INT64"/>
+    <field name="MSTATE" uname="Thread state" offset="48" type="INT32"/>
+    <field name="NTICK" uname="Duration" offset="52" type="INT32"/>
+  </profpckt>
+</profile>
+<profdata fname="hwcounters"/>
+<profpckt kind="3" uname="Hardware counter profiling data">
+    <field name="LWPID" uname="Lightweight process id" offset="8" type="INT64"/>
+    <field name="THRID" uname="Thread number" offset="16" type="INT64"/>
+    <field name="CPUID" uname="CPU id" offset="24" type="INT32"/>
+    <field name="TSTAMP" uname="High resolution timestamp" offset="32" type="INT64"/>
+    <field name="FRINFO" offset="40" type="INT64"/>
+    <field name="HWCTAG" uname="Hardware counter index" offset="48" type="INT32"/>
+    <field name="HWCINT" uname="Hardware counter interval" offset="56" type="INT64"/>
+</profpckt>
+<profile name="hwcounter" cpuver="2070" hwcname="dch" int_name="mem_load_uops_retired.l1_hit" interval="10010001" tag="0" memop="0"/>
+<profile name="hwcounter" cpuver="2070" hwcname="dcm" int_name="mem_load_uops_retired.l1_miss" interval="3201001" tag="1" memop="0"/>
+<profile name="hwcounter" cpuver="2070" hwcname="l2h" int_name="mem_load_uops_retired.l2_hit" interval="3201001" tag="2" memop="0"/>
+<profile name="hwcounter" cpuver="2070" hwcname="l2m" int_name="mem_load_uops_retired.l2_miss" interval="1001001" tag="3" memop="0"/>
+<dataptr name="frameinfo" format="binary"/>
+<setting sample_period="1"/>
+<setting linetrace="fork|exec|combo"/>
+<setting collenv="SP_COLLECTOR_FOUNDER=0"/>
+<setting collenv="SP_COLLECTOR_ORIGIN_COLLECT=1"/>
+<event kind="run" tstamp="1714990.321702217" time="1610706172" tm_zone="-3600"/>
+<event kind="sample" tstamp="0.000062991" id="0" label="collector_open_experiment"/>
+<event kind="sample" tstamp="1.009213677" id="1" label="periodic"/>
+<event kind="sample" tstamp="2.000949845" id="2" label="periodic"/>
+<event kind="sample" tstamp="3.002950567" id="3" label="periodic"/>
+<event kind="sample" tstamp="4.003946881" id="4" label="periodic"/>
+<event kind="sample" tstamp="5.001944084" id="5" label="periodic"/>
+<event kind="sample" tstamp="6.000939232" id="6" label="periodic"/>
+<event kind="sample" tstamp="7.000937264" id="7" label="periodic"/>
+<event kind="sample" tstamp="8.000937518" id="8" label="periodic"/>
+<event kind="sample" tstamp="9.000932395" id="9" label="periodic"/>
+<event kind="sample" tstamp="10.000928182" id="10" label="periodic"/>
+<event kind="sample" tstamp="11.001927532" id="11" label="periodic"/>
+<event kind="sample" tstamp="12.000925382" id="12" label="periodic"/>
+<event kind="sample" tstamp="13.001927373" id="13" label="periodic"/>
+<event kind="sample" tstamp="14.000918116" id="14" label="periodic"/>
+<event kind="sample" tstamp="15.000914211" id="15" label="periodic"/>
+<event kind="sample" tstamp="16.001912759" id="16" label="periodic"/>
+<event kind="sample" tstamp="17.000910512" id="17" label="periodic"/>
+<event kind="sample" tstamp="18.000907468" id="18" label="periodic"/>
+<event kind="sample" tstamp="19.000902921" id="19" label="periodic"/>
+<event kind="sample" tstamp="20.004901248" id="20" label="periodic"/>
+<event kind="sample" tstamp="21.001897227" id="21" label="periodic"/>
+<event kind="sample" tstamp="22.000895128" id="22" label="periodic"/>
+<event kind="sample" tstamp="23.001893490" id="23" label="periodic"/>
+<event kind="sample" tstamp="24.000897704" id="24" label="periodic"/>
+<event kind="sample" tstamp="25.004889863" id="25" label="periodic"/>
+<event kind="sample" tstamp="26.000892377" id="26" label="periodic"/>
+<event kind="sample" tstamp="27.001882471" id="27" label="periodic"/>
+<event kind="sample" tstamp="28.000877786" id="28" label="periodic"/>
+<event kind="sample" tstamp="29.000877114" id="29" label="periodic"/>
+<event kind="sample" tstamp="30.001873894" id="30" label="periodic"/>
+<event kind="sample" tstamp="31.000873171" id="31" label="periodic"/>
+<event kind="sample" tstamp="32.000868776" id="32" label="periodic"/>
+<event kind="sample" tstamp="33.001865401" id="33" label="periodic"/>
+<event kind="sample" tstamp="34.000863716" id="34" label="periodic"/>
+<event kind="sample" tstamp="35.001861218" id="35" label="periodic"/>
+<event kind="sample" tstamp="36.000855908" id="36" label="periodic"/>
+<event kind="sample" tstamp="37.000853596" id="37" label="periodic"/>
+<event kind="sample" tstamp="38.000851991" id="38" label="periodic"/>
+<event kind="sample" tstamp="39.000848646" id="39" label="periodic"/>
+<event kind="sample" tstamp="40.002847226" id="40" label="periodic"/>
+<event kind="sample" tstamp="41.000845005" id="41" label="periodic"/>
+<event kind="sample" tstamp="42.002840752" id="42" label="periodic"/>
+<event kind="sample" tstamp="43.000838962" id="43" label="periodic"/>
+<event kind="sample" tstamp="44.000836097" id="44" label="periodic"/>
+<event kind="sample" tstamp="45.000832746" id="45" label="periodic"/>
+<event kind="sample" tstamp="46.001829871" id="46" label="periodic"/>
+<event kind="sample" tstamp="47.002827646" id="47" label="periodic"/>
+<event kind="sample" tstamp="48.005824332" id="48" label="periodic"/>
+<event kind="sample" tstamp="49.000821327" id="49" label="periodic"/>
+<event kind="sample" tstamp="50.000820404" id="50" label="periodic"/>
+<event kind="sample" tstamp="51.002818358" id="51" label="periodic"/>
+<event kind="sample" tstamp="52.004814043" id="52" label="periodic"/>
+<event kind="sample" tstamp="53.000809978" id="53" label="periodic"/>
+<event kind="sample" tstamp="54.000808030" id="54" label="periodic"/>
+<event kind="sample" tstamp="55.002805809" id="55" label="periodic"/>
+<event kind="sample" tstamp="56.000802014" id="56" label="periodic"/>
+<event kind="sample" tstamp="57.000800481" id="57" label="periodic"/>
+<event kind="sample" tstamp="58.002795846" id="58" label="periodic"/>
+<event kind="sample" tstamp="59.000791946" id="59" label="periodic"/>
+<event kind="sample" tstamp="60.001792557" id="60" label="periodic"/>
+<event kind="sample" tstamp="61.000787528" id="61" label="periodic"/>
+<event kind="sample" tstamp="62.002785002" id="62" label="periodic"/>
+<event kind="sample" tstamp="63.004784403" id="63" label="periodic"/>
+<event kind="sample" tstamp="64.002779248" id="64" label="periodic"/>
+<event kind="sample" tstamp="65.000777930" id="65" label="periodic"/>
+<event kind="sample" tstamp="66.001774331" id="66" label="periodic"/>
+<event kind="sample" tstamp="67.001771330" id="67" label="periodic"/>
+<event kind="sample" tstamp="68.001767580" id="68" label="periodic"/>
+<event kind="sample" tstamp="69.000765993" id="69" label="periodic"/>
+<event kind="sample" tstamp="70.002763972" id="70" label="periodic"/>
+<event kind="sample" tstamp="71.000766384" id="71" label="periodic"/>
+<event kind="sample" tstamp="72.001757066" id="72" label="periodic"/>
+<event kind="sample" tstamp="73.003754652" id="73" label="periodic"/>
+<event kind="sample" tstamp="74.000752114" id="74" label="periodic"/>
+<event kind="sample" tstamp="75.002751803" id="75" label="periodic"/>
+<event kind="sample" tstamp="76.000746490" id="76" label="periodic"/>
+<event kind="sample" tstamp="77.000743443" id="77" label="periodic"/>
+<event kind="sample" tstamp="78.000740735" id="78" label="periodic"/>
+<event kind="sample" tstamp="79.000739163" id="79" label="periodic"/>
+<event kind="sample" tstamp="80.003745682" id="80" label="periodic"/>
+<event kind="sample" tstamp="81.000732952" id="81" label="periodic"/>
+<event kind="sample" tstamp="82.000729398" id="82" label="periodic"/>
+<event kind="sample" tstamp="83.001733889" id="83" label="periodic"/>
+<event kind="sample" tstamp="84.001724195" id="84" label="periodic"/>
+<event kind="sample" tstamp="85.003723759" id="85" label="periodic"/>
+<event kind="sample" tstamp="86.004719142" id="86" label="periodic"/>
+<event kind="sample" tstamp="87.006717189" id="87" label="periodic"/>
+<event kind="sample" tstamp="88.000714163" id="88" label="periodic"/>
+<event kind="sample" tstamp="89.000711163" id="89" label="periodic"/>
+<event kind="sample" tstamp="90.000708356" id="90" label="periodic"/>
+<event kind="sample" tstamp="91.000703809" id="91" label="periodic"/>
+<event kind="sample" tstamp="92.004702605" id="92" label="periodic"/>
+<event kind="sample" tstamp="93.000699169" id="93" label="periodic"/>
+<event kind="sample" tstamp="94.000694695" id="94" label="periodic"/>
+<event kind="sample" tstamp="95.000700693" id="95" label="periodic"/>
+<event kind="sample" tstamp="96.000689604" id="96" label="periodic"/>
+<event kind="sample" tstamp="97.002689091" id="97" label="periodic"/>
+<event kind="sample" tstamp="98.000685908" id="98" label="periodic"/>
+<event kind="sample" tstamp="99.000682852" id="99" label="periodic"/>
+<event kind="sample" tstamp="100.000680886" id="100" label="periodic"/>
+<event kind="sample" tstamp="101.002676573" id="101" label="periodic"/>
+<event kind="sample" tstamp="102.000675433" id="102" label="periodic"/>
+<event kind="sample" tstamp="103.001671240" id="103" label="periodic"/>
+<event kind="sample" tstamp="104.000669053" id="104" label="periodic"/>
+<event kind="sample" tstamp="105.002669134" id="105" label="periodic"/>
+<event kind="sample" tstamp="106.001664265" id="106" label="periodic"/>
+<event kind="sample" tstamp="107.001661199" id="107" label="periodic"/>
+<event kind="sample" tstamp="108.000656630" id="108" label="periodic"/>
+<event kind="sample" tstamp="109.000655867" id="109" label="periodic"/>
+<event kind="sample" tstamp="110.002653744" id="110" label="periodic"/>
+<event kind="sample" tstamp="111.003651848" id="111" label="periodic"/>
+<event kind="sample" tstamp="112.005649331" id="112" label="periodic"/>
+<event kind="sample" tstamp="113.005645744" id="113" label="periodic"/>
+<event kind="sample" tstamp="114.007645447" id="114" label="periodic"/>
+<event kind="sample" tstamp="115.000637340" id="115" label="periodic"/>
+<event kind="sample" tstamp="116.003637534" id="116" label="periodic"/>
+<event kind="sample" tstamp="117.000631930" id="117" label="periodic"/>
+<event kind="sample" tstamp="118.001633287" id="118" label="periodic"/>
+<event kind="sample" tstamp="119.001627598" id="119" label="periodic"/>
+<event kind="sample" tstamp="120.002624855" id="120" label="periodic"/>
+<event kind="sample" tstamp="121.004623035" id="121" label="periodic"/>
+<event kind="sample" tstamp="122.001619333" id="122" label="periodic"/>
+<event kind="sample" tstamp="123.002615922" id="123" label="periodic"/>
+<event kind="sample" tstamp="124.003614963" id="124" label="periodic"/>
+<event kind="sample" tstamp="125.005611789" id="125" label="periodic"/>
+<event kind="sample" tstamp="126.001608187" id="126" label="periodic"/>
+<event kind="sample" tstamp="127.000604856" id="127" label="periodic"/>
+<event kind="sample" tstamp="128.002603639" id="128" label="periodic"/>
+<event kind="sample" tstamp="129.003600155" id="129" label="periodic"/>
+<event kind="sample" tstamp="130.000597401" id="130" label="periodic"/>
+<event kind="sample" tstamp="131.002594454" id="131" label="periodic"/>
+<event kind="sample" tstamp="132.000592321" id="132" label="periodic"/>
+<event kind="sample" tstamp="133.000588802" id="133" label="periodic"/>
+<event kind="sample" tstamp="134.000585085" id="134" label="periodic"/>
+<event kind="sample" tstamp="135.000583393" id="135" label="periodic"/>
+<event kind="sample" tstamp="136.000580264" id="136" label="periodic"/>
+<event kind="sample" tstamp="137.000579125" id="137" label="periodic"/>
+<event kind="sample" tstamp="138.000575928" id="138" label="periodic"/>
+<event kind="sample" tstamp="139.000570452" id="139" label="periodic"/>
+<event kind="sample" tstamp="140.000569301" id="140" label="periodic"/>
+<event kind="sample" tstamp="141.000566775" id="141" label="periodic"/>
+<event kind="sample" tstamp="142.000565077" id="142" label="periodic"/>
+<event kind="sample" tstamp="143.000559585" id="143" label="periodic"/>
+<event kind="sample" tstamp="144.004557732" id="144" label="periodic"/>
+<event kind="sample" tstamp="145.000555365" id="145" label="periodic"/>
+<event kind="sample" tstamp="146.001552541" id="146" label="periodic"/>
+<event kind="sample" tstamp="147.000550451" id="147" label="periodic"/>
+<event kind="sample" tstamp="148.001547443" id="148" label="periodic"/>
+<event kind="sample" tstamp="149.000545485" id="149" label="periodic"/>
+<event kind="sample" tstamp="150.000542006" id="150" label="periodic"/>
+<event kind="sample" tstamp="151.001541168" id="151" label="periodic"/>
+<event kind="sample" tstamp="152.002535953" id="152" label="periodic"/>
+<event kind="sample" tstamp="153.000533998" id="153" label="periodic"/>
+<event kind="sample" tstamp="154.000532785" id="154" label="periodic"/>
+<event kind="sample" tstamp="155.000527094" id="155" label="periodic"/>
+<event kind="sample" tstamp="156.000525199" id="156" label="periodic"/>
+<event kind="sample" tstamp="157.003524689" id="157" label="periodic"/>
+<event kind="sample" tstamp="158.000519312" id="158" label="periodic"/>
+<event kind="sample" tstamp="159.002517833" id="159" label="periodic"/>
+<event kind="sample" tstamp="160.000513578" id="160" label="periodic"/>
+<event kind="sample" tstamp="161.000511747" id="161" label="periodic"/>
+<event kind="sample" tstamp="162.002510100" id="162" label="periodic"/>
+<event kind="sample" tstamp="163.000506357" id="163" label="periodic"/>
+<event kind="sample" tstamp="164.000503243" id="164" label="periodic"/>
+<event kind="sample" tstamp="165.002500492" id="165" label="periodic"/>
+<event kind="sample" tstamp="166.000499414" id="166" label="periodic"/>
+<event kind="sample" tstamp="167.001493639" id="167" label="periodic"/>
+<event kind="sample" tstamp="168.002492699" id="168" label="periodic"/>
+<event kind="sample" tstamp="169.004488827" id="169" label="periodic"/>
+<event kind="sample" tstamp="170.000487822" id="170" label="periodic"/>
+<event kind="sample" tstamp="171.000483483" id="171" label="periodic"/>
+<event kind="sample" tstamp="172.001479682" id="172" label="periodic"/>
+<event kind="sample" tstamp="173.002477616" id="173" label="periodic"/>
+<event kind="sample" tstamp="174.000475936" id="174" label="periodic"/>
+<event kind="sample" tstamp="175.000472157" id="175" label="periodic"/>
+<event kind="sample" tstamp="176.000472225" id="176" label="periodic"/>
+<event kind="sample" tstamp="177.000468229" id="177" label="periodic"/>
+<event kind="sample" tstamp="178.000465636" id="178" label="periodic"/>
+<event kind="sample" tstamp="179.000461416" id="179" label="periodic"/>
+<event kind="sample" tstamp="180.000458923" id="180" label="periodic"/>
+<event kind="sample" tstamp="181.000456163" id="181" label="periodic"/>
+<event kind="sample" tstamp="182.003454199" id="182" label="periodic"/>
+<event kind="sample" tstamp="183.004452635" id="183" label="periodic"/>
+<event kind="sample" tstamp="184.000448266" id="184" label="periodic"/>
+<event kind="sample" tstamp="185.000446105" id="185" label="periodic"/>
+<event kind="sample" tstamp="186.000441506" id="186" label="periodic"/>
+<event kind="sample" tstamp="187.000440286" id="187" label="periodic"/>
+<event kind="sample" tstamp="188.000435706" id="188" label="periodic"/>
+<event kind="sample" tstamp="189.000435397" id="189" label="periodic"/>
+<event kind="sample" tstamp="190.000431153" id="190" label="periodic"/>
+<event kind="sample" tstamp="191.003429706" id="191" label="periodic"/>
+<event kind="sample" tstamp="192.000426055" id="192" label="periodic"/>
+<event kind="sample" tstamp="193.002425029" id="193" label="periodic"/>
+<event kind="sample" tstamp="194.001418896" id="194" label="periodic"/>
+<event kind="sample" tstamp="195.003417340" id="195" label="periodic"/>
+<event kind="sample" tstamp="196.000413902" id="196" label="periodic"/>
+<event kind="sample" tstamp="197.001412043" id="197" label="periodic"/>
+<event kind="sample" tstamp="198.000408847" id="198" label="periodic"/>
+<event kind="sample" tstamp="199.000406273" id="199" label="periodic"/>
+<event kind="sample" tstamp="200.000404086" id="200" label="periodic"/>
+<event kind="sample" tstamp="201.003401029" id="201" label="periodic"/>
+<event kind="sample" tstamp="202.000397725" id="202" label="periodic"/>
+<event kind="sample" tstamp="203.000394785" id="203" label="periodic"/>
+<event kind="sample" tstamp="204.000393001" id="204" label="periodic"/>
+<event kind="sample" tstamp="205.001389792" id="205" label="periodic"/>
+<event kind="sample" tstamp="206.006388504" id="206" label="periodic"/>
+<event kind="sample" tstamp="207.000383535" id="207" label="periodic"/>
+<event kind="sample" tstamp="208.000381414" id="208" label="periodic"/>
+<event kind="sample" tstamp="209.000380117" id="209" label="periodic"/>
+<event kind="sample" tstamp="210.000375117" id="210" label="periodic"/>
+<event kind="sample" tstamp="211.000373826" id="211" label="periodic"/>
+<event kind="sample" tstamp="212.002369921" id="212" label="periodic"/>
+<event kind="sample" tstamp="213.000368206" id="213" label="periodic"/>
+<event kind="sample" tstamp="214.000363266" id="214" label="periodic"/>
+<event kind="sample" tstamp="215.002362563" id="215" label="periodic"/>
+<event kind="sample" tstamp="216.004358447" id="216" label="periodic"/>
+<event kind="sample" tstamp="217.000355707" id="217" label="periodic"/>
+<event kind="sample" tstamp="218.000353539" id="218" label="periodic"/>
+<event kind="sample" tstamp="219.000350505" id="219" label="periodic"/>
+<event kind="sample" tstamp="220.000349527" id="220" label="periodic"/>
+<event kind="sample" tstamp="221.000346959" id="221" label="periodic"/>
+<event kind="sample" tstamp="222.003342028" id="222" label="periodic"/>
+<event kind="sample" tstamp="223.001339778" id="223" label="periodic"/>
+<event kind="sample" tstamp="224.000336156" id="224" label="periodic"/>
+<event kind="sample" tstamp="225.002334398" id="225" label="periodic"/>
+<event kind="sample" tstamp="226.003331806" id="226" label="periodic"/>
+<event kind="sample" tstamp="227.000329050" id="227" label="periodic"/>
+<event kind="sample" tstamp="228.000327879" id="228" label="periodic"/>
+<event kind="sample" tstamp="229.001323903" id="229" label="periodic"/>
+<event kind="sample" tstamp="230.003318931" id="230" label="periodic"/>
+<event kind="sample" tstamp="231.000319335" id="231" label="periodic"/>
+<event kind="sample" tstamp="232.000315856" id="232" label="periodic"/>
+<event kind="sample" tstamp="233.001311890" id="233" label="periodic"/>
+<event kind="sample" tstamp="234.000310135" id="234" label="periodic"/>
+<event kind="sample" tstamp="235.000310520" id="235" label="periodic"/>
+<event kind="sample" tstamp="236.000303269" id="236" label="periodic"/>
+<event kind="sample" tstamp="237.001300341" id="237" label="periodic"/>
+<event kind="sample" tstamp="238.002296824" id="238" label="periodic"/>
+<event kind="sample" tstamp="239.000295575" id="239" label="periodic"/>
+<event kind="sample" tstamp="240.000293133" id="240" label="periodic"/>
+<event kind="sample" tstamp="241.000289828" id="241" label="periodic"/>
+<event kind="sample" tstamp="242.000287022" id="242" label="periodic"/>
+<event kind="sample" tstamp="243.000284805" id="243" label="periodic"/>
+<event kind="sample" tstamp="244.000280854" id="244" label="periodic"/>
+<event kind="sample" tstamp="245.000279630" id="245" label="periodic"/>
+<event kind="sample" tstamp="246.000277278" id="246" label="periodic"/>
+<event kind="sample" tstamp="247.000273723" id="247" label="periodic"/>
+<event kind="sample" tstamp="248.002270977" id="248" label="periodic"/>
+<event kind="sample" tstamp="249.005268464" id="249" label="periodic"/>
+<event kind="sample" tstamp="250.000265595" id="250" label="periodic"/>
+<event kind="sample" tstamp="251.000263565" id="251" label="periodic"/>
+<event kind="sample" tstamp="252.000260198" id="252" label="periodic"/>
+<event kind="sample" tstamp="253.000257818" id="253" label="periodic"/>
+<event kind="sample" tstamp="254.001258123" id="254" label="periodic"/>
+<event kind="sample" tstamp="255.001252820" id="255" label="periodic"/>
+<event kind="sample" tstamp="256.000246995" id="256" label="periodic"/>
+<event kind="sample" tstamp="257.000246115" id="257" label="periodic"/>
+<event kind="sample" tstamp="258.000242848" id="258" label="periodic"/>
+<event kind="sample" tstamp="259.003241252" id="259" label="periodic"/>
+<event kind="sample" tstamp="260.000241210" id="260" label="periodic"/>
+<event kind="sample" tstamp="261.000236562" id="261" label="periodic"/>
+<event kind="sample" tstamp="262.000232402" id="262" label="periodic"/>
+<event kind="sample" tstamp="263.002230815" id="263" label="periodic"/>
+<event kind="sample" tstamp="264.003226440" id="264" label="periodic"/>
+<event kind="sample" tstamp="265.000222302" id="265" label="periodic"/>
+<event kind="sample" tstamp="266.000221770" id="266" label="periodic"/>
+<event kind="sample" tstamp="267.001216810" id="267" label="periodic"/>
+<event kind="sample" tstamp="268.002215116" id="268" label="periodic"/>
+<event kind="sample" tstamp="269.000212104" id="269" label="periodic"/>
+<event kind="sample" tstamp="270.003212875" id="270" label="periodic"/>
+<event kind="sample" tstamp="271.000206273" id="271" label="periodic"/>
+<event kind="sample" tstamp="272.002204859" id="272" label="periodic"/>
+<event kind="sample" tstamp="273.003203391" id="273" label="periodic"/>
+<event kind="sample" tstamp="274.000199800" id="274" label="periodic"/>
+<event kind="sample" tstamp="275.000196915" id="275" label="periodic"/>
+<event kind="sample" tstamp="276.001193293" id="276" label="periodic"/>
+<event kind="sample" tstamp="277.004189530" id="277" label="periodic"/>
+<event kind="sample" tstamp="278.001188926" id="278" label="periodic"/>
+<event kind="sample" tstamp="279.000183660" id="279" label="periodic"/>
+<event kind="sample" tstamp="280.000183263" id="280" label="periodic"/>
+<event kind="sample" tstamp="280.337688588" id="281" label="collector_close_experiment"/>
+<event kind="run" tstamp="1714990.321702217" time="1610706172" tm_zone="-3600"/>
+<event kind="exit" tstamp="280.336490064"/>
+<event kind="comment" id="400">Archive command ` /opt/oracle/developerstudio12.6/bin/../bin/er_archive -n -O /zhome/79/f/127798/HPC-2021-1/Assignment2/Implementation/../Results/opmJ_batch.9103549_GS_Reduc.er/er_archive.log /zhome/79/f/127798/HPC-2021-1/Assignment2/Implementation/../Results/opmJ_batch.9103549_GS_Reduc.er'</event>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
