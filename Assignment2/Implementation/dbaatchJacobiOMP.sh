@@ -23,7 +23,7 @@ THREADS="12 8 4 2 1"
 # SCHEDULE="static static,4 static,8 static,10"
 SCHEDULE="static"
 
-LOGEXT=../Results/datJacOMP_outerloop_mixedThreads100x.dat
+LOGEXT=../Results/datJacOMP_CollectMainReductionReal.dat
 
 SIZE_N="100"
 ITER="2000"
@@ -31,12 +31,13 @@ TOLE="0.001"
 START_T="0"
 IMG="0"  #image disabled -> 0 
 
-export OMP_NUM_THREADS=${THREADS}
+
 export OMP_PLACES=cores
 export OMP_PROC_BIND=spread
 
 for T in $THREADS
 do
+	export OMP_NUM_THREADS=${T}
 	for S in $SCHEDULE
 	do
 		{ OMP_SCHEDULE=$S ./$EXECUTABLE $SIZE_N $ITER $TOLE $START_T $IMG; } |& grep -v CPU >>$LOGEXT

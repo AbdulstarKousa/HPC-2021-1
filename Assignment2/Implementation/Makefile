@@ -48,7 +48,7 @@ $(TARGET_GS_OMP): $(OBJECTS) $(OBJS_GS_OMP)
 	$(CC) -o $@ $(CFLAGS) $(OBJS_GS_OMP) $(OBJECTS) $(LDFLAGS)
 
 $(MAIN_J):
-	$(CC) -o $@ $(SIN) -D_JACOBI $(CFLAGS) -c main.c 
+	$(CC) -o $@ -D_JACOBI $(CFLAGS) -c main.c 
 
 $(MAIN_J_OMP):
 	$(CC) -o $@ -D_JACOBI_OMP $(CFLAGS) -c main.c 
