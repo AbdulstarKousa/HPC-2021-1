@@ -12,11 +12,11 @@
 #BSUB -n 24
 #BSUB -R "span[hosts=1]"
 #BSUB -R "rusage[mem=2048]"
-#BSUB -W 15
+#BSUB -W 59
 
 EXECUTABLE=poisson_j_omp
 
-THREADS="24 16 12 8 4 2 1"
+THREADS="24"
 # THREADS="12"
 
 # SCHEDULE="static static,5 static,10  static,25 dynamic dynamic,5 dynamic,25 guided guided,5"
@@ -26,10 +26,10 @@ SCHEDULE="static"
 
 
 SIZE_N="500"
-ITER="100"
+ITER="100000"
 TOLE="0.001"
 START_T="0"
-IMG="0"  #image disabled -> 0 
+IMG="4"  #image disabled -> 0 
 
 
 
