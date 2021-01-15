@@ -47,7 +47,7 @@ export OMP_NUM_THREADS=${THREADS}
 # experiment name 
 #
 JID=${LSB_JOBID}
-EXPOUT="../Results/$LSB_JOBNAME.${JID}thr${THREADS}_code_sub_${SIZE_N}_${ITER}.er"
+EXPOUT="../Results/$LSB_JOBNAME.${JID}thr${THREADS}_parallel_region_${SIZE_N}_${ITER}.er"
 
 # uncomment the HWCOUNT line, if you want to use hardware counters
 # define an option string for the harwdware counters (see output of
