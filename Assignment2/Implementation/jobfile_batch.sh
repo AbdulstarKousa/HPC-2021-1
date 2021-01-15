@@ -25,7 +25,7 @@ SCHEDULE="static,1"
 
 
 
-SIZE_N="500"
+SIZE_N="150"
 ITER="100000"
 TOLE="0.001"
 START_T="0"

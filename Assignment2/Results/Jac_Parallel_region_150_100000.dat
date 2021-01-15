@@ -1,0 +1,12 @@
+Write VTK file to poisson_res_152.vtk: Running Jacobi OMP
+Wall time 41.982501 
+Norm result from norm 9.998807e-04
+#Nr. iterations= 39355
+threads: 24
+size 150 iterations 100000 tolerance 0.001 initial guess 0
+Write VTK file to poisson_res_152.vtk: Running Gauss OMP 
+Wall time 455.691959 
+Norm result from norm 9.997720e-04
+#Nr. iterations= 21286
+threads: 24
+size 150 iterations 100000 tolerance 0.001 initial guess 0
