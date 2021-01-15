@@ -25,7 +25,7 @@ SCHEDULE="static"
 
 LOGEXT=../Results/datJacOMP_CollectMainReductionwithTA.dat
 
-SIZE_N="100"
+SIZE_N="500"
 ITER="2000"
 TOLE="0.001"
 START_T="0"
