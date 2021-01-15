@@ -1,12 +1,4 @@
 # Makefile
-#
-# DONE 6: -O3 -funroll-loops 
-# DONE 7: -O3 -flto
-# DONE 8: -O3 -funroll-loops -flto
-# DONE 9: -Ofast
-# DONE 10: -Ofast -funroll-loops 
-# DONE 11: -Ofast -flto
-# DONE 12: -Ofast -funroll-loops -flto
 
 TARGET_J  = poisson_j		# Jacobi
 TARGET_J_OMP  = poisson_j_omp		# JacobiOMP
