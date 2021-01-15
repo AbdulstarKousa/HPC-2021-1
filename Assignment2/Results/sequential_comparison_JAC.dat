@@ -1,20 +1,29 @@
 Running jacobi sequential
-Wall time 0.000909 
+Wall time 0.001025 
 Norm result from norm 9.843027e-04
 #Nr. iterations= 239
 Running jacobi sequential
-Wall time 0.161181 
+Wall time 0.151019 
 Norm result from norm 9.952313e-04
 #Nr. iterations= 1813
 Running jacobi sequential
-Wall time 1.830489 
+Wall time 1.638289 
 Norm result from norm 9.986815e-04
 #Nr. iterations= 4776
 Running jacobi sequential
-Wall time 9.230721 
+Wall time 8.235289 
 Norm result from norm 9.994569e-04
 #Nr. iterations= 9087
 Running jacobi sequential
-Wall time 58.309874 
+Wall time 45.551910 
 Norm result from norm 9.997341e-04
 #Nr. iterations= 18021
+Running jacobi sequential
+Wall time 401.598445 
+Norm result from norm 9.998807e-04
+#Nr. iterations= 39355
+Running jacobi sequential
+Wall time 1617.817627 
+Norm result from norm 9.999882e-04
+#Nr. iterations= 68559
+sizes 10 30 50 70 100 150 200 iterations 100000 tolerance 0.001 initial guess 0
