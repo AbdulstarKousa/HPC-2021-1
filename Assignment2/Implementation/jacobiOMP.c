@@ -5,6 +5,9 @@
 #include <stdio.h>
 
 
+double jacobiOMP(double*** f, double*** u, double *** u_next, int N, double tolerance, int iter_max, 
+    int * mp){          
+
     double norm_result = tolerance + 0.1;
     int m = 0;
     double delta= (double)(2.0/((double)(N+1)));
