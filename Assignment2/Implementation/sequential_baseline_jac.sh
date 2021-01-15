@@ -1,8 +1,8 @@
 #!/bin/bash
 # Script running experiments and collecting data to compare sequential implementations of Jacobi and Gauss-Seidel
 
-#BSUB -J sequential_comparison_jac_gcc9
-#BSUB -o sequential_comparison_jac_gcc9_%J.out
+#BSUB -J sequential_baseline_gcc9_jac
+#BSUB -o sequential_baseline_gcc9_jac_%J.out
 #BSUB -q hpcintro
 #BSUB -n 1
 #BSUB -R "span[hosts=1]"
@@ -11,10 +11,10 @@
 
 JACOBI=poisson_j
 
-LOG_JACOBI=../Results/sequential_comparison_gcc9_JAC.dat
+LOG_JACOBI=../Results/sequential_baseline_gcc9_JAC.dat
 
-PROBLEM_SIZES="10 30 50 70 100 150 200"
-ITER="100000"
+PROBLEM_SIZES="150"
+ITER="1000"
 TOLE="0.001"
 START_T="0"
 IMG="0"  #image disabled -> 0 
