@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 first_data_point = 1 # Skip the first x data points when plotting
+plot_names = ["Iterations per second", "Iterations to converge", "Wall time log", "Wall time"]
 
 file_jac = r"sequential_comparison_JAC.dat"
 file_gs = r"sequential_comparison_GS.dat"
@@ -34,12 +35,6 @@ for (fi, file) in enumerate(files):
     content = np.split(content, np.where(content == content[0])[0])
     content = content[1:]
 
-    # test = content_jac[0]
-    #
-    # time = float(test[1].split(' ')[-1])
-    # norm = float(test[2].split(' ')[-1])
-    # iterations = int(test[3].split(' ')[-1])
-
     # Build data frame from data
     data = pd.DataFrame(columns=["run_time", "iterations", "norm"])
 
@@ -54,46 +49,38 @@ for (fi, file) in enumerate(files):
 
     # plt.plot(sizes, data["iterations/second"], label = name)
     # Excluding size 10
-    plt.figure(0)
+    plt.figure(plot_names[0])
     plt.plot(sizes[first_data_point:], data["iterations/second"][first_data_point:], label = name)
     plt.yscale("log")
     plt.legend()
     plt.xlabel("Problem size: N")
     plt.ylabel("Iterations/second")
 
-    plt.figure(1)
+    plt.figure(plot_names[1])
     plt.plot(sizes[first_data_point:], data["iterations"][first_data_point:], label = name)
     plt.yscale("log")
     plt.legend()
     plt.xlabel("Problem size: N")
     plt.ylabel("Iterations to converge")
 
-    plt.figure(2)
+    plt.figure(plot_names[2])
     plt.plot(sizes[first_data_point:], data["run_time"][first_data_point:], label = name)
     plt.yscale("log")
     plt.legend()
     plt.xlabel("Problem size: N")
     plt.ylabel("Wall time [s]")
 
-# plt.legend()
-# plt.xlabel("N")
-# plt.ylabel("Iterations/second")
+    plt.figure(plot_names[3])
+    plt.plot(sizes[first_data_point:], data["run_time"][first_data_point:], label = name)
+    # plt.yscale("log")
+    plt.legend()
+    plt.xlabel("Problem size: N")
+    plt.ylabel("Wall time [s]")
 
 
-data["iterations/second"][1:]
-
-
-
-
-
-
-
-
-
-data
-
-data["iterations/second"] = data["iterations"]/data["run_time"]
-plt.plot(sizes, data["iterations/second"])
+for plot_name in plot_names:
+    plt.figure(plot_name)
+    plt.savefig("Sequential comparison - " + plot_name, bbox_inches='tight', dpi=300)
 
 
 
@@ -111,24 +98,4 @@ plt.plot(sizes, data["iterations/second"])
 
 
 
-
-
-
-# run_settings.split("iterations")[0]
-
-
-
-
-sizes
-
-
-run_settings
-
-
-
-test
-
-
-
-
-content_jac
+#
