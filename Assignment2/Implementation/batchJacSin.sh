@@ -14,26 +14,25 @@
 #BSUB -R "rusage[mem=2048]"
 #BSUB -W 15
 
-EXECUTABLE=poisson_j
+EXECUTABLE=poisson_gs_omp
 
 THREADS="12 8 4 2 1"
 
 # SCHEDULE="static static,5 static,10 dynamic dynamic,5 dynamic,25 guided guided,5"
 SCHEDULE="static"
 
-LOGEXT=../Results/datjacobOPMsinTest3.dat
 
 SIZE_N="500"
 ITER="10000"
 TOLE="0.001"
-START_T="0"
-IMG="4"  #image disabled -> 0 
+START_T="0.0"
+IMG="0"  #image disabled -> 0 
 
 for T in $THREADS
 do
 	for S in $SCHEDULE
 	do
-		{ OMP_SCHEDULE=$S OMP_NUM_THREADS=$T ./$EXECUTABLE $SIZE_N $ITER $TOLE $START_T $IMG; } |& grep -v CPU >>$LOGEXT
+		{ OMP_SCHEDULE=$S OMP_NUM_THREADS=$T ./$EXECUTABLE $SIZE_N $ITER $TOLE $START_T $IMG; } |& grep -v CPU >>$LOGEXT  
 		echo $T |  grep -v CPU >>$LOGEXT
 		echo $S |  grep -v CPU >>$LOGEXT
 	

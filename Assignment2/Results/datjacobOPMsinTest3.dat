@@ -13,3 +13,39 @@ Wall time 28.596693
 Norm result from norm 4.845213e-02
 8
 static,10
+Write VTK file to poisson_res_102.vtk: Running jacobi sequential
+Wall time 28.588491 
+Norm result from norm 4.845213e-02
+8
+dynamic,10
+Write VTK file to poisson_res_102.vtk: Running jacobi sequential
+Wall time 28.655585 
+Norm result from norm 4.845213e-02
+4
+static,10
+Write VTK file to poisson_res_102.vtk: Running jacobi sequential
+Wall time 28.666091 
+Norm result from norm 4.845213e-02
+4
+dynamic,10
+Write VTK file to poisson_res_102.vtk: Running jacobi sequential
+Wall time 28.700350 
+Norm result from norm 4.845213e-02
+2
+static,10
+Write VTK file to poisson_res_102.vtk: Running jacobi sequential
+Wall time 28.588983 
+Norm result from norm 4.845213e-02
+2
+dynamic,10
+Write VTK file to poisson_res_102.vtk: Running jacobi sequential
+Wall time 28.489932 
+Norm result from norm 4.845213e-02
+1
+static,10
+Write VTK file to poisson_res_102.vtk: Running jacobi sequential
+Wall time 28.555901 
+Norm result from norm 4.845213e-02
+1
+dynamic,10
+size 100 iterations 10000 tolerance 0.001 initial guess 0

@@ -1,0 +1,52 @@
+Running Gauss OMP 
+Wall time 1.751999 
+Norm result from norm 1.119228e+00
+12
+static
+Running Gauss OMP 
+Wall time 1.752104 
+Norm result from norm 1.119228e+00
+8
+static
+Running Gauss OMP 
+Wall time 1.752270 
+Norm result from norm 1.119228e+00
+4
+static
+Running Gauss OMP 
+Wall time 1.752297 
+Norm result from norm 1.119228e+00
+2
+static
+Running Gauss OMP 
+Wall time 1.752066 
+Norm result from norm 1.119228e+00
+1
+static
+size 60 iterations 1000 tolerance 0.001 initial guess 0.0
+Running Gauss OMP 
+Wall time 4.321483 
+Norm result from norm 1.128099e+00
+12
+static
+Running Gauss OMP 
+Wall time 1.156025 
+Norm result from norm 1.120388e+00
+8
+static
+Running Gauss OMP 
+Wall time 0.441735 
+Norm result from norm 1.119209e+00
+4
+static
+Running Gauss OMP 
+Wall time 0.878425 
+Norm result from norm 1.119219e+00
+2
+static
+Running Gauss OMP 
+Wall time 1.751754 
+Norm result from norm 1.119228e+00
+1
+static
+size 60 iterations 1000 tolerance 0.001 initial guess 0.0
