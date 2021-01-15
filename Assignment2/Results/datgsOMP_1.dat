@@ -1,0 +1,32 @@
+
+Running Gauss OMP 
+Wall time 13.705303 
+Norm result from norm 1.775132e+00
+#Nr. iterations= 2000
+12
+
+Running Gauss OMP 
+Wall time 13.694367 
+Norm result from norm 1.775132e+00
+#Nr. iterations= 2000
+8
+
+Running Gauss OMP 
+Wall time 13.696854 
+Norm result from norm 1.775132e+00
+#Nr. iterations= 2000
+4
+
+Running Gauss OMP 
+Wall time 13.698441 
+Norm result from norm 1.775132e+00
+#Nr. iterations= 2000
+2
+
+Running Gauss OMP 
+Wall time 13.697157 
+Norm result from norm 1.775132e+00
+#Nr. iterations= 2000
+1
+
+size 100 iterations 2000 tolerance 0.001 initial guess 0.0
