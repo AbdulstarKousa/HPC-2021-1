@@ -23,17 +23,19 @@ THREADS="24 16 12 8 4 2 1"
 # SCHEDULE="static static,4 static,8 static,10"
 SCHEDULE="static"
 
-LOGEXT=../Results/datJacOMP_CollectMainReductionwithTA.dat
+
 
 SIZE_N="500"
-ITER="2000"
+ITER="100"
 TOLE="0.001"
 START_T="0"
 IMG="0"  #image disabled -> 0 
 
+LOGEXT=../Results/Jac_OMP_NUMA_TA_Speed_${SIZE_N}_${ITER}.dat
 
 export OMP_PLACES=cores
 export OMP_PROC_BIND=spread
+export OMP_WAIT_POLICY=active
 
 for T in $THREADS
 do

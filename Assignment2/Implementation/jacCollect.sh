@@ -18,14 +18,14 @@ module load studio
 EXECUTABLE=poisson_j_omp
 
 # THREADS="24 16 12 8 4 2 1"
-THREADS="12"
+THREADS="24"
 
 # SCHEDULE="static static,5 static,10  static,25 dynamic dynamic,5 dynamic,25 guided guided,5"
 # SCHEDULE="static static,4 static,8 static,10"
 SCHEDULE="static"
 
-SIZE_N="100"
-ITER="2000"
+SIZE_N="150"
+ITER="1000"
 TOLE="0.001"
 START_T="0.0"
 IMG="0"  #image disabled -> 0 
@@ -46,7 +46,7 @@ LOGEXT=../Results/er12Threads0812.dat
 # experiment name 
 #
 JID=${LSB_JOBID}
-EXPOUT="../Results/$LSB_JOBNAME.${JID}thr${THREADS}_JAC_Reduc150121.er"
+EXPOUT="../Results/$LSB_JOBNAME.${JID}thr${THREADS}_NUMA_${SIZE_N}_${ITER}.er"
 
 # uncomment the HWCOUNT line, if you want to use hardware counters
 # define an option string for the harwdware counters (see output of
