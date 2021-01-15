@@ -18,7 +18,7 @@ module load studio
 EXECUTABLE=poisson_gs_omp
 
 # THREADS="12 8 4 2 1"
-THREADS="8"
+THREADS="4"
 
 # SCHEDULE="static static,5 static,10  static,25 dynamic dynamic,5 dynamic,25 guided guided,5"
 # SCHEDULE="static static,4 static,8 static,10"

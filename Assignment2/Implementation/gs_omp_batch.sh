@@ -23,10 +23,10 @@ THREADS="24 16 12 8 4 2 1"
 # SCHEDULE="static static,4 static,8 static,10"
 #SCHEDULE="static,1"
 
-LOGEXT=../Results/gs_OPM_data_6.dat
+LOGEXT=../Results/gs_OPM_data_16.dat
 
-SIZE_N="150"
-ITER="1000"
+SIZE_N="500"
+ITER="500"
 TOLE="0.001"
 START_T="0.0"
 IMG="0"  #image disabled -> 0 
@@ -42,6 +42,6 @@ do
 	  echo $S |  grep -v CPU >>$LOGEXT
 done
 
-echo size $SIZE_N iterations $ITER tolerance $TOLE initial guess $START_T run dynamic,1 |  grep -v CPU >>$LOGEXT
+echo size $SIZE_N iterations $ITER tolerance $TOLE initial guess $START_T run static,1 |  grep -v CPU >>$LOGEXT
 
 

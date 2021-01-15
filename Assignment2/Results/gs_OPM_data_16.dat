@@ -1,0 +1,36 @@
+Running Gauss OMP 
+Wall time 25.227974 
+Norm result from norm 5.012686e+01
+#Nr. iterations= 500
+threads: 24
+
+Running Gauss OMP 
+Wall time 34.656231 
+Norm result from norm 5.012686e+01
+#Nr. iterations= 500
+threads: 16
+
+Running Gauss OMP 
+Wall time 45.294800 
+Norm result from norm 5.012686e+01
+#Nr. iterations= 500
+threads: 12
+
+Running Gauss OMP 
+Wall time 67.627422 
+Norm result from norm 5.012686e+01
+#Nr. iterations= 500
+threads: 8
+
+Running Gauss OMP 
+Wall time 139.649428 
+Norm result from norm 5.012686e+01
+#Nr. iterations= 500
+threads: 4
+
+Running Gauss OMP 
+Wall time 329.539313 
+Norm result from norm 5.012686e+01
+#Nr. iterations= 500
+threads: 2
+
