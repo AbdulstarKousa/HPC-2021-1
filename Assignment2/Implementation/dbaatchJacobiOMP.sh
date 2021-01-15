@@ -25,23 +25,23 @@ SCHEDULE="static"
 
 
 
-SIZE_N="100"
-ITER="2000"
+SIZE_N="300"
+ITER="300"
 TOLE="0.001"
 START_T="0"
 IMG="0"  #image disabled -> 0 
 
 
 
-# export OMP_PLACES=cores
-# export OMP_PROC_BIND=spread
-# export OMP_WAIT_POLICY=active
+export OMP_PLACES=cores
+export OMP_PROC_BIND=spread
+export OMP_WAIT_POLICY=active
 
 for T in $THREADS
 do
 	for S in $SIZE_N
 	do
-		LOGEXT=../Results/Jac_simple_${S}_${ITER}.dat
+		LOGEXT=../Results/Jac_code_sub_${S}_${ITER}.dat
 		{ OMP_NUM_THREADS=${T} ./$EXECUTABLE $S $ITER $TOLE $START_T $IMG; } |& grep -v CPU >>$LOGEXT
 		echo threads: $T |  grep -v CPU >>$LOGEXT
 		echo size $S iterations $ITER tolerance $TOLE initial guess $START_T  |  grep -v CPU >>$LOGEXT
