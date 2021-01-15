@@ -1,29 +1,24 @@
 Running Gauss sequential
-Wall time 0.000576 
+Wall time 0.000575 
 Norm result from norm 9.214607e-04
 #Nr. iterations= 130
 Running Gauss sequential
-Wall time 0.141246 
+Wall time 0.140555 
 Norm result from norm 9.955677e-04
 #Nr. iterations= 976
 Running Gauss sequential
-Wall time 1.830292 
+Wall time 1.828868 
 Norm result from norm 9.969300e-04
 #Nr. iterations= 2574
 Running Gauss sequential
-Wall time 9.719150 
+Wall time 9.692122 
 Norm result from norm 9.998823e-04
 #Nr. iterations= 4901
 Running Gauss sequential
-Wall time 56.756421 
+Wall time 56.669476 
 Norm result from norm 9.996092e-04
 #Nr. iterations= 9732
 Running Gauss sequential
-Wall time 424.382309 
+Wall time 423.893551 
 Norm result from norm 9.997720e-04
 #Nr. iterations= 21286
-Running Gauss sequential
-Wall time 1760.431681 
-Norm result from norm 9.999449e-04
-#Nr. iterations= 37126
-size 10 30 50 70 100 150 200 iterations 100000 tolerance 0.001 initial guess 0
