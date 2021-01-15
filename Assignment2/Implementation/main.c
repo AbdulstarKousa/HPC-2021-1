@@ -14,7 +14,7 @@
 #endif
 
 #ifdef _JACOBI_OMP
-#include "jacobiOMP.h"
+#include "jacobi_omp.h"
 #endif
 
 #ifdef _GAUSS_SEIDEL
@@ -22,7 +22,7 @@
 #endif
 
 #ifdef _GAUSS_SEIDEL_OMP
-#include "gauss_seidelOMP.h"
+#include "gauss_seidel_omp.h"
 #endif
 
 #define N_DEFAULT 100

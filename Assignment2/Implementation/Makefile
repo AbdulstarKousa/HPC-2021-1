@@ -5,16 +5,16 @@ TARGET_J_OMP  = poisson_j_omp		# JacobiOMP
 TARGET_GS = poisson_gs		# Gauss-Seidel
 TARGET_GS_OMP = poisson_gs_omp		# Gauss-SeidelOMP
 
-SOURCES	= main.c print.c alloc3d.c jacobi.c jacobiOMP.c gauss_seidel.c gauss_seidelOMP.c sin_test.c init.c
+SOURCES	= main.c print.c alloc3d.c jacobi.c jacobi_omp.c gauss_seidel.c gauss_seidel_omp.c sin_test.c init.c
 OBJECTS	= print.o alloc3d.o init.o sin_test.o
 MAIN_J	= main_j.o
 MAIN_J_OMP	= main_j_omp.o
 MAIN_GS = main_gs.o
 MAIN_GS_OMP = main_gs_omp.o
 OBJS_J	= $(MAIN_J) jacobi.o 
-OBJS_J_OMP	= $(MAIN_J_OMP) jacobiOMP.o 
+OBJS_J_OMP	= $(MAIN_J_OMP) jacobi_omp.o 
 OBJS_GS	= $(MAIN_GS) gauss_seidel.o
-OBJS_GS_OMP	= $(MAIN_GS_OMP) gauss_seidelOMP.o
+OBJS_GS_OMP	= $(MAIN_GS_OMP) gauss_seidel_omp.o
 
 # options and settings for the GCC compilers
 #
@@ -68,10 +68,11 @@ realclean: clean
 # DO NOT DELETE
 
 main_j.o: main.c print.h jacobi.h sin_test.h 
-main_gs.o: main.c print.h gauss_seidel.h sin_test.h jacobi.h 
-main_gs_omp.o: main.c print.h gauss_seidelOMP.h sin_test.h jacobi.h 
+main_j_omp: main.c print.h jacobi_omp.h sin_test.h
+main_gs.o: main.c print.h gauss_seidel.h sin_test.h
+main_gs_omp.o: main.c print.h gauss_seidel_omp.h sin_test.h
 print.o: print.h
-sin_test.o: sin_test.h jacobi.h
+sin_test.o: sin_test.h
 init.o: init.h 
 
 
