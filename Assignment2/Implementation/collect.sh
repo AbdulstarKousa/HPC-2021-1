@@ -18,14 +18,14 @@ module load studio
 EXECUTABLE=poisson_gs_omp
 
 # THREADS="12 8 4 2 1"
-THREADS="24"
+THREADS="8"
 
 # SCHEDULE="static static,5 static,10  static,25 dynamic dynamic,5 dynamic,25 guided guided,5"
 # SCHEDULE="static static,4 static,8 static,10"
-SCHEDULE="static"
+#SCHEDULE="static"
 
-SIZE_N="100"
-ITER="3000"
+SIZE_N="150"
+ITER="1000"
 TOLE="0.001"
 START_T="0.0"
 IMG="0"  #image disabled -> 0

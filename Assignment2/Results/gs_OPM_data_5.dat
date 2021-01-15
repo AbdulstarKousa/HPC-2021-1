@@ -1,0 +1,49 @@
+Running Gauss OMP 
+Wall time 1.920581 
+Norm result from norm 8.091205e+00
+#Nr. iterations= 1000
+threads: 24
+
+Running Gauss OMP 
+Wall time 2.386150 
+Norm result from norm 8.091205e+00
+#Nr. iterations= 1000
+threads: 16
+
+Running Gauss OMP 
+Wall time 3.166985 
+Norm result from norm 8.091205e+00
+#Nr. iterations= 1000
+threads: 12
+
+Running Gauss OMP 
+Wall time 5.333947 
+Norm result from norm 8.091205e+00
+#Nr. iterations= 1000
+threads: 8
+
+Running Gauss OMP 
+Wall time 8.475671 
+Norm result from norm 8.091205e+00
+#Nr. iterations= 1000
+threads: 4
+
+Running Gauss OMP 
+Wall time 20.448258 
+Norm result from norm 8.091205e+00
+#Nr. iterations= 1000
+threads: 2
+
+Running Gauss OMP 
+Wall time 22.242143 
+Norm result from norm 8.091205e+00
+#Nr. iterations= 1000
+threads: 1
+
+size 150 iterations 1000 tolerance 0.001 initial guess 0.0
+
+hpclogin2(s174385) $  ./poisson_gs 150 1000 1.0e-3 0.0 0
+Running Gauss sequential
+Wall time 19.155928 
+Norm result from norm 8.091205e+00
+threads = 1 SEQUENTIAL 
