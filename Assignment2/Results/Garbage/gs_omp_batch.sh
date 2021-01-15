@@ -9,29 +9,39 @@
 #BSUB -J opmJ_batch
 #BSUB -o opmJ_batch_%J.out
 #BSUB -q hpcintro
-#BSUB -n 12
+#BSUB -n 24
 #BSUB -R "span[hosts=1]"
 #BSUB -R "rusage[mem=2048]"
 #BSUB -W 15
 
 EXECUTABLE=poisson_gs_omp
 
-THREADS="12 8 4 2 1"
+THREADS="24 16 12 8 4 2 1"
+# THREADS="12"
 
-# SCHEDULE="static static,5 static,10 dynamic dynamic,5 dynamic,25 guided guided,5"
-LOGEXT=../Results/datgsOMP_1.dat
+# SCHEDULE="static static,5 static,10  static,25 dynamic dynamic,5 dynamic,25 guided guided,5"
+# SCHEDULE="static static,4 static,8 static,10"
+#SCHEDULE="static,1"
 
-SIZE_N="100"
-ITER="2000"
+LOGEXT=../Results/gs_OPM_data_16.dat
+
+SIZE_N="500"
+ITER="500"
 TOLE="0.001"
 START_T="0.0"
 IMG="0"  #image disabled -> 0 
 
+
+export OMP_PLACES=cores
+export OMP_PROC_BIND=spread
+
 for T in $THREADS
 do
-		{ OMP_NUM_THREADS=$T ./$EXECUTABLE $SIZE_N $ITER $TOLE $START_T $IMG; } |& grep -v CPU >>$LOGEXT  
-		echo $T |  grep -v CPU >>$LOGEXT
-		echo $S |  grep -v CPU >>$LOGEXT
+	{ OMP_NUM_THREADS=${T} ./$EXECUTABLE $SIZE_N $ITER $TOLE $START_T $IMG; } |& grep -v CPU >>$LOGEXT
+	  echo threads: $T |  grep -v CPU >>$LOGEXT
+	  echo $S |  grep -v CPU >>$LOGEXT
 done
 
-echo size $SIZE_N iterations $ITER tolerance $TOLE initial guess $START_T  |  grep -v CPU >>$LOGEXT
+echo size $SIZE_N iterations $ITER tolerance $TOLE initial guess $START_T run static,1 |  grep -v CPU >>$LOGEXT
+
+

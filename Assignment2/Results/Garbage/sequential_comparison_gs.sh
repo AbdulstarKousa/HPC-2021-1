@@ -1,8 +1,8 @@
 #!/bin/bash
 # Script running experiments and collecting data to compare sequential implementations of Jacobi and Gauss-Seidel
 
-#BSUB -J sequential_comparison_gs
-#BSUB -o sequential_comparison_gs_%J.out
+#BSUB -J sequential_comparison_gs_gcc9
+#BSUB -o sequential_comparison_gs_gcc9_%J.out
 #BSUB -q hpcintro
 #BSUB -n 1
 #BSUB -R "span[hosts=1]"
@@ -11,7 +11,7 @@
 
 GAUSSSEIDEL=poisson_gs
 
-LOG_GAUSSSEIDEL=../Results/sequential_comparison_GS.dat
+LOG_GAUSSSEIDEL=../Results/sequential_comparison_gcc9_GS.dat
 
 PROBLEM_SIZES="10 30 50 70 100 150 200"
 ITER="100000"

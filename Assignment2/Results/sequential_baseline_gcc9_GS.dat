@@ -1,0 +1,5 @@
+Running Gauss sequential
+Wall time 20.089843 
+Norm result from norm 8.091205e+00
+#Nr. iterations= 1000
+sizes 150 iterations 1000 tolerance 0.001 initial guess 0

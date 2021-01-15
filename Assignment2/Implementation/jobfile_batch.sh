@@ -12,40 +12,42 @@
 #BSUB -n 24
 #BSUB -R "span[hosts=1]"
 #BSUB -R "rusage[mem=2048]"
-#BSUB -W 15
+#BSUB -W 59
 
-EXECUTABLE=poisson_j_omp
+EXECUTABLE=poisson_gs_omp
 
-THREADS="24 16 12 8 4 2 1"
+THREADS="24"
 # THREADS="12"
 
 # SCHEDULE="static static,5 static,10  static,25 dynamic dynamic,5 dynamic,25 guided guided,5"
 # SCHEDULE="static static,4 static,8 static,10"
-SCHEDULE="static"
+SCHEDULE="static,1"
 
-LOGEXT=../Results/datJacOMP_CollectMainReductionwithTA.dat
+
 
 SIZE_N="500"
-ITER="2000"
+ITER="100000"
 TOLE="0.001"
 START_T="0"
-IMG="0"  #image disabled -> 0 
+IMG="4"  #image disabled -> 0 
+
 
 
 export OMP_PLACES=cores
 export OMP_PROC_BIND=spread
+export OMP_WAIT_POLICY=active
 
 for T in $THREADS
 do
-	for S in $SCHEDULE
+	for S in $SIZE_N
 	do
-		{ OMP_SCHEDULE=$S OMP_NUM_THREADS=${T} ./$EXECUTABLE $SIZE_N $ITER $TOLE $START_T $IMG; } |& grep -v CPU >>$LOGEXT
+		LOGEXT=../Results/Jac_Parallel_region_${S}_${ITER}.dat
+		{ OMP_NUM_THREADS=${T} ./$EXECUTABLE $S $ITER $TOLE $START_T $IMG; } |& grep -v CPU >>$LOGEXT
 		echo threads: $T |  grep -v CPU >>$LOGEXT
-		echo $S |  grep -v CPU >>$LOGEXT
-	
+		echo size $S iterations $ITER tolerance $TOLE initial guess $START_T  |  grep -v CPU >>$LOGEXT
 	done
 done
 
-echo size $SIZE_N iterations $ITER tolerance $TOLE initial guess $START_T  |  grep -v CPU >>$LOGEXT
+
 
 

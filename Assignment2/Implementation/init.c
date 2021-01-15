@@ -15,7 +15,8 @@ void init(double*** f, double*** u, double*** u_next, int N, double start_T) {
     int max_point = edge_point_count - 1;
     
     #pragma omp parrallel shared(u, u_next, f, start_T)
-    // Initialize u to 0 degrees everywhere except for the walls
+    {   
+    // // Initialize u to 0 degrees everywhere except for the walls
     #pragma omp for
     for (int x = 0; x < edge_point_count; x++) {
         for (int y = 0; y < edge_point_count; y++) {
@@ -65,6 +66,7 @@ void init(double*** f, double*** u, double*** u_next, int N, double start_T) {
             }
         }
     }
+    } //End parallel region
 
     /*
     for (int x = 0; x < edge_point_count; x++) {

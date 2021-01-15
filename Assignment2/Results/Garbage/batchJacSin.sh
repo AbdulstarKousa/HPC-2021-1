@@ -22,8 +22,8 @@ THREADS="12 8 4 2 1"
 SCHEDULE="static"
 
 
-SIZE_N="500"
-ITER="10000"
+SIZE_N="150"
+ITER="1000"
 TOLE="0.001"
 START_T="0.0"
 IMG="0"  #image disabled -> 0 

@@ -1,5 +1,5 @@
 # Makefile
-#
+
 TARGET_J  = poisson_j		# Jacobi
 TARGET_J_OMP  = poisson_j_omp		# JacobiOMP
 TARGET_GS = poisson_gs		# Gauss-Seidel
