@@ -1,0 +1,43 @@
+Running Jacobi OMP
+Wall time 5.049272 
+Norm result from norm 2.375921e+00
+#Nr. iterations= 2000
+threads: 24
+static
+Running Jacobi OMP
+Wall time 5.044986 
+Norm result from norm 2.375921e+00
+#Nr. iterations= 2000
+threads: 16
+static
+Running Jacobi OMP
+Wall time 5.040475 
+Norm result from norm 2.375921e+00
+#Nr. iterations= 2000
+threads: 12
+static
+Running Jacobi OMP
+Wall time 5.031565 
+Norm result from norm 2.375921e+00
+#Nr. iterations= 2000
+threads: 8
+static
+Running Jacobi OMP
+Wall time 5.057655 
+Norm result from norm 2.375921e+00
+#Nr. iterations= 2000
+threads: 4
+static
+Running Jacobi OMP
+Wall time 5.031766 
+Norm result from norm 2.375921e+00
+#Nr. iterations= 2000
+threads: 2
+static
+Running Jacobi OMP
+Wall time 5.028225 
+Norm result from norm 2.375921e+00
+#Nr. iterations= 2000
+threads: 1
+static
+size 100 iterations 2000 tolerance 0.001 initial guess 0

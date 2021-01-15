@@ -24,13 +24,11 @@ double jacobiOMP(double*** f, double*** u, double *** u_next, int N, double tole
         // shared(m, f, u, u_next)\
         // private(i,j,k,u_temp)\
         // reduction(+:norm_result)
-	// shared(norm_result, m, d_squared, inv, edge_point_count) private(i,j,k,temp)
     while ( m < iter_max && norm_result > tolerance ) {
         norm_result = 0.0;
         
         // #pragma omp for
         #pragma omp parallel for\
-        shared(f, u, u_next)\
         private(i,j,k,u_temp)\
         reduction(+:norm_result)
         for (i = 1; i < edge_point_count - 1; i++) {

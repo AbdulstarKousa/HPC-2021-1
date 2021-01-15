@@ -43,8 +43,6 @@ main(int argc, char *argv[]) {
     double 	***u_next = NULL;
     int m;
 
-    omp_set_num_threads(1);
-
     /* get the paramters from the command line */
     N         = atoi(argv[1]);	// grid size
     iter_max  = atoi(argv[2]);  // max. no. of iterations
