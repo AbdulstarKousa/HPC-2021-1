@@ -1,41 +1,41 @@
 Running Jacobi OMP
-Wall time 11.689324 
+Wall time 11.799707 
 Norm result from norm 1.484118e+01
 #Nr. iterations= 1000
 threads: 24
 static
 Running Jacobi OMP
-Wall time 12.738828 
+Wall time 12.724828 
 Norm result from norm 1.484118e+01
 #Nr. iterations= 1000
 threads: 16
 static
 Running Jacobi OMP
-Wall time 10.647115 
+Wall time 10.733238 
 Norm result from norm 1.484118e+01
 #Nr. iterations= 1000
 threads: 12
 static
 Running Jacobi OMP
-Wall time 12.438817 
+Wall time 12.424300 
 Norm result from norm 1.484118e+01
 #Nr. iterations= 1000
 threads: 8
 static
 Running Jacobi OMP
-Wall time 21.263349 
+Wall time 21.193917 
 Norm result from norm 1.484118e+01
 #Nr. iterations= 1000
 threads: 4
 static
 Running Jacobi OMP
-Wall time 40.268624 
+Wall time 40.146678 
 Norm result from norm 1.484118e+01
 #Nr. iterations= 1000
 threads: 2
 static
 Running Jacobi OMP
-Wall time 78.698240 
+Wall time 78.864786 
 Norm result from norm 1.484118e+01
 #Nr. iterations= 1000
 threads: 1
