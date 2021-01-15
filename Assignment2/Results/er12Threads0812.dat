@@ -1,0 +1,5 @@
+Creating experiment database ../Results/opmJ_batch.9102283thr12_JAC_Reduc150121.er (Process ID: 4290) ...
+Running Jacobi OMP
+Number of iterations run: 2000 
+Wall time 0.590849 
+Norm result from norm 2.375921e+00
