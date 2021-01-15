@@ -1,0 +1,2 @@
+threads: 24
+size 300 iterations 100000 tolerance 0.001 initial guess 0
