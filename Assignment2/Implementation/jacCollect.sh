@@ -24,8 +24,8 @@ THREADS="12"
 # SCHEDULE="static static,4 static,8 static,10"
 SCHEDULE="static"
 
-SIZE_N="100"
-ITER="2000"
+SIZE_N="300"
+ITER="300"
 TOLE="0.001"
 START_T="0.0"
 IMG="0"  #image disabled -> 0 
@@ -39,14 +39,15 @@ export MATMULT_COMPARE=0
 export OMP_NUM_THREADS=${THREADS}
 export OMP_PLACES=cores
 export OMP_PROC_BIND=spread
+export OMP_WAIT_POLICY=active
 
 
-LOGEXT=../Results/er12Threads0812.dat
+# LOGEXT=../Results/er12Threads0812.dat
 
 # experiment name 
 #
 JID=${LSB_JOBID}
-EXPOUT="../Results/$LSB_JOBNAME.${JID}thr${THREADS}_JAC_Reduc150121.er"
+EXPOUT="../Results/$LSB_JOBNAME.${JID}thr${THREADS}_parallel_region_${SIZE_N}_${ITER}.er"
 
 # uncomment the HWCOUNT line, if you want to use hardware counters
 # define an option string for the harwdware counters (see output of
