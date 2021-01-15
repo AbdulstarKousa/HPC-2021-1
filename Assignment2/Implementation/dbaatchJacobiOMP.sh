@@ -9,21 +9,21 @@
 #BSUB -J opmJ_batch
 #BSUB -o opmJ_batch_%J.out
 #BSUB -q hpcintro
-#BSUB -n 12
+#BSUB -n 24
 #BSUB -R "span[hosts=1]"
 #BSUB -R "rusage[mem=2048]"
 #BSUB -W 15
 
 EXECUTABLE=poisson_j_omp
 
-THREADS="12 8 4 2 1"
+THREADS="24 16 12 8 4 2 1"
 # THREADS="12"
 
 # SCHEDULE="static static,5 static,10  static,25 dynamic dynamic,5 dynamic,25 guided guided,5"
 # SCHEDULE="static static,4 static,8 static,10"
 SCHEDULE="static"
 
-LOGEXT=../Results/datJacOMP_outerloop_mixedThreads100x.dat
+LOGEXT=../Results/datJacOMP_CollectMainReductionwithTA.dat
 
 SIZE_N="100"
 ITER="2000"
@@ -31,7 +31,7 @@ TOLE="0.001"
 START_T="0"
 IMG="0"  #image disabled -> 0 
 
-export OMP_NUM_THREADS=${THREADS}
+
 export OMP_PLACES=cores
 export OMP_PROC_BIND=spread
 
@@ -39,7 +39,7 @@ for T in $THREADS
 do
 	for S in $SCHEDULE
 	do
-		{ OMP_SCHEDULE=$S ./$EXECUTABLE $SIZE_N $ITER $TOLE $START_T $IMG; } |& grep -v CPU >>$LOGEXT
+		{ OMP_SCHEDULE=$S OMP_NUM_THREADS=${T} ./$EXECUTABLE $SIZE_N $ITER $TOLE $START_T $IMG; } |& grep -v CPU >>$LOGEXT
 		echo threads: $T |  grep -v CPU >>$LOGEXT
 		echo $S |  grep -v CPU >>$LOGEXT
 	

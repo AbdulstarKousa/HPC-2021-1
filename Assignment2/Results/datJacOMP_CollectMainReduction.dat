@@ -1,0 +1,82 @@
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+Running Jacobi OMP
+Wall time 6.529696 
+Norm result from norm 2.375921e+00
+#Nr. iterations= 2000
+threads: 12
+static
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+Running Jacobi OMP
+Wall time 6.565877 
+Norm result from norm 2.375921e+00
+#Nr. iterations= 2000
+threads: 8
+static
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+Running Jacobi OMP
+Wall time 6.506032 
+Norm result from norm 2.375921e+00
+#Nr. iterations= 2000
+threads: 4
+static
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+Running Jacobi OMP
+Wall time 6.498668 
+Norm result from norm 2.375921e+00
+#Nr. iterations= 2000
+threads: 2
+static
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+Running Jacobi OMP
+Wall time 6.496380 
+Norm result from norm 2.375921e+00
+#Nr. iterations= 2000
+threads: 1
+static
+size 100 iterations 2000 tolerance 0.001 initial guess 0
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+Running Jacobi OMP
+Wall time 6.466426 
+Norm result from norm 2.375921e+00
+#Nr. iterations= 2000
+threads: 12
+static
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+Running Jacobi OMP
+Wall time 6.473625 
+Norm result from norm 2.375921e+00
+#Nr. iterations= 2000
+threads: 8
+static
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+Running Jacobi OMP
+Wall time 6.524435 
+Norm result from norm 2.375921e+00
+#Nr. iterations= 2000
+threads: 4
+static
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+Running Jacobi OMP
+Wall time 6.493109 
+Norm result from norm 2.375921e+00
+#Nr. iterations= 2000
+threads: 2
+static
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+Running Jacobi OMP
+Wall time 6.538375 
+Norm result from norm 2.375921e+00
+#Nr. iterations= 2000
+threads: 1
+static
+size 100 iterations 2000 tolerance 0.001 initial guess 0
