@@ -1,0 +1,11 @@
+### Start Fri Jan 15 15:50:57 2021
+# /opt/oracle/developerstudio12.6/bin/../bin/er_archive -n -O /zhome/42/6/81055/Repo/HPC-2021-1/Assignment2/Implementation/../Results/opmJ_batch.9104799thr12_parallel_region_300_300.er/er_archive.log /zhome/42/6/81055/Repo/HPC-2021-1/Assignment2/Implementation/../Results/opmJ_batch.9104799thr12_parallel_region_300_300.er
+Copying `/zhome/42/6/81055/Repo/HPC-2021-1/Assignment2/Implementation/poisson_j_omp'  to `/zhome/42/6/81055/Repo/HPC-2021-1/Assignment2/Implementation/../Results/opmJ_batch.9104799thr12_parallel_region_300_300.er/archives/poisson_j_omp_4CCMl5YNnnb'
+Copying `/usr/lib64/librt-2.17.so'  to `/zhome/42/6/81055/Repo/HPC-2021-1/Assignment2/Implementation/../Results/opmJ_batch.9104799thr12_parallel_region_300_300.er/archives/librt-2.17.so_OCEC1bthLm2'
+Copying `/usr/lib64/libdl-2.17.so'  to `/zhome/42/6/81055/Repo/HPC-2021-1/Assignment2/Implementation/../Results/opmJ_batch.9104799thr12_parallel_region_300_300.er/archives/libdl-2.17.so_OCEC1bthLm2'
+Copying `/usr/lib64/libc-2.17.so'  to `/zhome/42/6/81055/Repo/HPC-2021-1/Assignment2/Implementation/../Results/opmJ_batch.9104799thr12_parallel_region_300_300.er/archives/libc-2.17.so_OCEC1bthLm2'
+Copying `/usr/lib64/libpthread-2.17.so'  to `/zhome/42/6/81055/Repo/HPC-2021-1/Assignment2/Implementation/../Results/opmJ_batch.9104799thr12_parallel_region_300_300.er/archives/libpthread-2.17.so_OCEC1bthLm2'
+Copying `/appl/gcc/9.2.0/lib64/libgomp.so.1.0.0'  to `/zhome/42/6/81055/Repo/HPC-2021-1/Assignment2/Implementation/../Results/opmJ_batch.9104799thr12_parallel_region_300_300.er/archives/libgomp.so.1.0.0_v7o4tcVZBr5'
+Copying `/usr/lib64/libm-2.17.so'  to `/zhome/42/6/81055/Repo/HPC-2021-1/Assignment2/Implementation/../Results/opmJ_batch.9104799thr12_parallel_region_300_300.er/archives/libm-2.17.so_OCEC1bthLm2'
+Copying `/opt/oracle/developerstudio12.6/lib/analyzer/amd64/runtime/libcollector.so'  to `/zhome/42/6/81055/Repo/HPC-2021-1/Assignment2/Implementation/../Results/opmJ_batch.9104799thr12_parallel_region_300_300.er/archives/libcollector.so_-C8vWEvanQd'
+Copying `/usr/lib64/ld-2.17.so'  to `/zhome/42/6/81055/Repo/HPC-2021-1/Assignment2/Implementation/../Results/opmJ_batch.9104799thr12_parallel_region_300_300.er/archives/ld-2.17.so_OCEC1bthLm2'

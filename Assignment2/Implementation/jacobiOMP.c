@@ -81,7 +81,6 @@ double jacobiOMP(double*** f, double*** u, double *** u_next, int N, double tole
 //     double *** temp;
 //     double u_temp;
 //     int i; int j; int k; 
-//     double subtracted;
 
 //     while ( m < iter_max && norm_result > tolerance ) {
 
@@ -89,19 +88,15 @@ double jacobiOMP(double*** f, double*** u, double *** u_next, int N, double tole
         
 //         #pragma omp parallel for\
 //         shared(f, u, u_next)\
-//         private(i,j,k,u_temp,subtracted)\
+//         private(i,j,k,u_temp)\
 //         reduction(+:norm_result)
 //         for (i = 1; i < edge_point_count - 1; i++) {
 //             for (j = 1; j < edge_point_count - 1; j++) {
 //                 for (k = 1; k < edge_point_count - 1; k++) {
                 
-//                     u_temp = inv * (u[i-1][j][k] + u[i+1][j][k] + u[i][j-1][k] + u[i][j+1][k] + u[i][j][k-1] + u[i][j][k+1] + d_squared * f[i][j][k]);
+//                     u_next[i][j][k] = inv * (u[i-1][j][k] + u[i+1][j][k] + u[i][j-1][k] + u[i][j+1][k] + u[i][j][k-1] + u[i][j][k+1] + d_squared * f[i][j][k]);
                     
-//                     u_next[i][j][k] =u_temp;
-
-//                     subtracted = u_temp - u[i][j][k];
-                    
-//                     norm_result += subtracted*subtracted;
+//                     norm_result += (u_next[i][j][k] - u[i][j][k])*(u_next[i][j][k] - u[i][j][k]);
 //                 }
 //             }
 //         }

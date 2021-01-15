@@ -25,8 +25,8 @@ SCHEDULE="static"
 
 
 
-SIZE_N="100"
-ITER="2000"
+SIZE_N="500"
+ITER="100"
 TOLE="0.001"
 START_T="0"
 IMG="0"  #image disabled -> 0 

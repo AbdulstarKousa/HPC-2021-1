@@ -37,9 +37,9 @@ IMG="0"  #image disabled -> 0
 export MFLOPS_MAX_IT=1000
 export MATMULT_COMPARE=0
 export OMP_NUM_THREADS=${THREADS}
-# export OMP_PLACES=cores
-# export OMP_PROC_BIND=spread
-# export OMP_WAIT_POLICY=active
+export OMP_PLACES=cores
+export OMP_PROC_BIND=spread
+export OMP_WAIT_POLICY=active
 
 
 # LOGEXT=../Results/er12Threads0812.dat
