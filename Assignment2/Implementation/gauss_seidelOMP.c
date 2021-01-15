@@ -21,7 +21,7 @@ double gauss_seidelOMP(double*** f, double*** u, int N, double tolerance, int it
         norm_result = 0.0;
         
         #pragma omp parallel for ordered(2) private(u_old) \
-        reduction(+: norm_result) schedule(static,1)
+        reduction(+: norm_result) schedule(dynamic,10)
         for (i = 1; i < edge_point_count - 1; i++) {
             for (j = 1; j < edge_point_count - 1; j++) {
                 #pragma omp ordered depend(sink:i-1,j) depend(sink:i,j-1)
