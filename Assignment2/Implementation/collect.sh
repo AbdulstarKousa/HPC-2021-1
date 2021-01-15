@@ -18,16 +18,16 @@ module load studio
 EXECUTABLE=poisson_gs_omp
 
 # THREADS="12 8 4 2 1"
-THREADS="8"
+#THREADS="8"
 
 # SCHEDULE="static static,5 static,10  static,25 dynamic dynamic,5 dynamic,25 guided guided,5"
 # SCHEDULE="static static,4 static,8 static,10"
-SCHEDULE="static"
+SCHEDULE="static,1"
 
-SIZE_N="30"
-ITER="2000"
+SIZE_N="100"
+ITER="10000"
 TOLE="0.001"
-START_T="0"
+START_T="0.0"
 IMG="0"  #image disabled -> 0
 # define the max no. of iterations the driver should use - adjust to
 # get a reasonable run time.  You can get an estimate by trying this

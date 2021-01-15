@@ -66,6 +66,8 @@ double gauss_seidelOMP(double*** f, double*** u, int N, double tolerance, int it
     // kmax = iter
     // threshold = tolerance
     // d = norm_result
+
+    omp_set_num_threads(4);
     
     int i, j, k; 
 
