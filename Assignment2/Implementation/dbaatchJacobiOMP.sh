@@ -25,17 +25,17 @@ SCHEDULE="static"
 
 
 
-SIZE_N="300"
-ITER="300"
+SIZE_N="100"
+ITER="2000"
 TOLE="0.001"
 START_T="0"
 IMG="0"  #image disabled -> 0 
 
 
 
-export OMP_PLACES=cores
-export OMP_PROC_BIND=spread
-export OMP_WAIT_POLICY=active
+# export OMP_PLACES=cores
+# export OMP_PROC_BIND=spread
+# export OMP_WAIT_POLICY=active
 
 for T in $THREADS
 do
