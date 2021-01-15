@@ -8,7 +8,7 @@
 #BSUB -J opmJ_batch
 #BSUB -o opmJ_batch_%J.out
 #BSUB -q hpcintro
-#BSUB -n 12
+#BSUB -n 24
 #BSUB -R "span[hosts=1]"
 #BSUB -R "rusage[mem=2048]"
 #BSUB -W 15
@@ -18,16 +18,16 @@ module load studio
 EXECUTABLE=poisson_gs_omp
 
 # THREADS="12 8 4 2 1"
-THREADS="8"
+THREADS="24"
 
 # SCHEDULE="static static,5 static,10  static,25 dynamic dynamic,5 dynamic,25 guided guided,5"
 # SCHEDULE="static static,4 static,8 static,10"
 SCHEDULE="static"
 
-SIZE_N="30"
-ITER="2000"
+SIZE_N="100"
+ITER="3000"
 TOLE="0.001"
-START_T="0"
+START_T="0.0"
 IMG="0"  #image disabled -> 0
 # define the max no. of iterations the driver should use - adjust to
 # get a reasonable run time.  You can get an estimate by trying this
@@ -36,6 +36,9 @@ IMG="0"  #image disabled -> 0
 #
 export MFLOPS_MAX_IT=1000
 export MATMULT_COMPARE=0
+export OMP_NUM_THREADS=${THREADS}
+export OMP_PLACES=cores
+export OMP_PROC_BIND=spread
 
 # experiment name
 #
