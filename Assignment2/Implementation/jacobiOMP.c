@@ -3,44 +3,38 @@
  */
 #include <math.h>
 #include <stdio.h>
-#include <stdlib.h>
 
 
-/* 
-jacobiOMP:
-Purpose:
-    solves parallelly, using OMP, the given discretized problem (Poisson problem in 3d) using 3D Jacobi iterations alg.
-Return value:
-    the Frobenius norm when the diference is suciently small. 
-*/
-double jacobiOMP(   double*** f,       /* 3D matrix "Cube" of function values, Second derivatives of temperature  */
-                    double*** u,       /* 3D matrix "Cube" of temperature estimates */
-                    double *** u_next, /* 3D matrix "Cube" to hold new temperature estimates */
-                    int N,             /* #nr. interior grid points */
-                    double tolerance,  /* threshold */
-                    int iter_max,      /* maximum nr. of iterations */
-                    int * mp) {         /* #nr. the iteration needed to get a suciently small diference*/
+    double norm_result = tolerance + 0.1;
+    int m = 0;
+    double delta= (double)(2.0/((double)(N+1)));
+    
+    const double d_squared = delta*delta;
+    const double inv = 1.0/6.0;
+    const int edge_point_count = N + 2;
 
-    double norm_result = tolerance + 0.1;        // to make sure that we enter the while loop below we add 0.01
-    double delta= (double)(2.0/((double)(N+1))); // the grid spacing.
-    double d_squared = delta*delta;
-    double inv = 1.0/6.0;
-    int edge_point_count = N + 2; 
-    double *** temp;   // to swipe between u and u_next.
-    int i, j,k, m = 0;
-
-    //#pragma omp parallel for schedule(runtime)\
-	//shared(f, u, edge_point_count, inv, d_squared) private(i,j,k,temp)
+    double *** temp;
+    double u_temp;
+    int i; int j; int k; 
+    
+    // #pragma omp parallel for\
+	// shared(norm_result, m, d_squared, inv, edge_point_count) private(i,j,k,temp)
     while ( m < iter_max && norm_result > tolerance ) {
         norm_result = 0.0;
+        
+        #pragma omp parallel for\
+	    shared(f, u, u_next)\
+        private(i,j,k,u_temp)\
+        reduction(+:norm_result)
         for (i = 1; i < edge_point_count - 1; i++) {
             for (j = 1; j < edge_point_count - 1; j++) {
                 for (k = 1; k < edge_point_count - 1; k++) {
                 
-                    u_next[i][j][k] = inv * (u[i-1][j][k] + u[i+1][j][k] + u[i][j-1][k] + u[i][j+1][k] + u[i][j][k-1] + u[i][j][k+1] + d_squared * f[i][j][k]);
+                    u_temp = inv * (u[i-1][j][k] + u[i+1][j][k] + u[i][j-1][k] + u[i][j+1][k] + u[i][j][k-1] + u[i][j][k+1] + d_squared * f[i][j][k]);
+                    
+                    u_next[i][j][k] =u_temp;
                     
                     norm_result += (((u_next[i][j][k]) - (u[i][j][k]))*((u_next[i][j][k]) - (u[i][j][k])));
-                    
                 }
             }
         }

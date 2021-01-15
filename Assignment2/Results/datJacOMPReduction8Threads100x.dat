@@ -1,0 +1,7 @@
+Running Jacobi OMP
+Number of iterations run: 2000 
+Wall time 2.490676 
+Norm result from norm 2.375921e+00
+threads: 8
+static
+size 100 iterations 2000 tolerance 0.001 initial guess 0
