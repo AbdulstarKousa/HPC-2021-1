@@ -140,6 +140,7 @@ __global__
 void jacobi_kernel31(
     double*** d0_f,        /* 3D matrix "Cube" of function values, Second derivatives of temperature  */
     double*** d0_u,        /* 3D matrix "Cube" of temperature estimates */
+    double*** d1_u,
     double *** d0_u_next,  /* 3D matrix "Cube" to hold new temperature estimates */
     int N,                /* #nr. interior grid points */
     double d_squared, 
@@ -174,7 +175,14 @@ void jacobi_kernel32(
     int j = blockIdx.y * blockDim.y + threadIdx.y;
     int k = blockIdx.z * blockDim.z + threadIdx.z;
 
-    if(0 < i && 0 < j && 0 < k && i < N+1 && j < N+1 && k < N+1)
+    if (k == (N/2)) 
+    {
+        // Need to access memory of sister device
+    }
+
+
+    // if(0 < i && 0 < j && 0 < k && i < N+1 && j < N+1 && k < N+1)
+    if(0 < i && 0 < j && 0 < k && i < N+1 && j < N+1 && k < (N/2))
     {    
         d_u_next[i][j][k] = inv * (d_u[i-1][j][k] + d_u[i+1][j][k] + d_u[i][j-1][k] + d_u[i][j+1][k] + d_u[i][j][k-1] + d_u[i][j][k+1] + d_squared * d_f[i][j][k]);
     }
@@ -201,6 +209,7 @@ void jacobi_gpu_wrap3(  double*** d0_f,        /* 3D matrix "Cube" of function v
 
     // alg. from the slides show "Assignment 2: The Poisson Problem" p 14.
     
+    // TODO: Figure out whether we should actually have N blocks per thread
     int threads_blck = N; 
 
     dim3 dimBlock(threads_blck,threads_blck,threads_blck/2);// threads per block
