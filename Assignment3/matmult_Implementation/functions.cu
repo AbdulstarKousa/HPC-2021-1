@@ -1,12 +1,11 @@
-#include <helper_cuda.h> // checkCudaErrors
-#include <stdio.h>     // in-out purposes
-#include <stdlib.h>    // memory purposes
+#include <helper_cuda.h>    // checkCudaErrors
+#include "cublas_v2.h"      // cublas_dgemm
+#include <omp.h>            // parallel, timing , ..etc. 
+#include <stdio.h>          // in-out purposes
+#include <stdlib.h>         // memory purposes
 
-extern "C" { // c++ syntax purposes "in matmult_f.nvcc"
-    #include "cblas.h"     // cblas_dgemm Prototype
-    #include "cublas_v2.h" // cublas_dgemm
-    #include <omp.h>
-    
+extern "C" {                // c++ syntax purposes "in matmult_f.nvcc"
+    #include "cblas.h"      // cblas_dgemm Prototype
 
     void matmult_gpulib(int m,int n,int k,double *A,double *B,double *C){
        
@@ -61,13 +60,14 @@ extern "C" { // c++ syntax purposes "in matmult_f.nvcc"
         }
 
 
-    /*  Two functions for the first sequential implementation of matrix multiplication on the GPU, useing only a single thread:
-            - matmult_gpu1_kernel:  see the comment attached to the function below.
-            - matmult_gpu1:         see the comment attached to the function below. 
-    */    
-
-
-    // matmult_gpu1_kernel:  helper function, that takes care of the calculations, for the sequential single threaded matmult_gpu1 function.
+    
+    //  Two functions for the first sequential implementation of matrix multiplication on the GPU, useing only a single thread:
+    //         - matmult_gpu1_kernel:  see the comment attached to the function below.
+    //         - matmult_gpu1:         see the comment attached to the function below. 
+        
+    /*  matmult_gpu1_kernel:  
+            helper function, that takes care of the calculations, for the sequential single threaded matmult_gpu1 function.
+    */
     __global__ void matmult_gpu1_kernel(int m,int n,int k,double *A,double *B,double *C){
         // A: m x k 
         // B: k x n
@@ -87,8 +87,9 @@ extern "C" { // c++ syntax purposes "in matmult_f.nvcc"
         }
     }
 
-
-    // matmult_gpu1: sequential single threaded function to solve matrxi-matrix multiplication C=AB on the GPU.
+    /* matmult_gpu1: 
+            sequential single threaded function to solve matrxi-matrix multiplication C=AB on the GPU.
+    */
     void matmult_gpu1(int m,int n,int k,double *A,double *B,double *C){
 
         // Allocate host memory (here we don't need to allocate host memory as it's already givin as arguments)
@@ -98,19 +99,16 @@ extern "C" { // c++ syntax purposes "in matmult_f.nvcc"
         // cudaMallocHost((void**)&h_B, k*n*sizeof(double));
         // cudaMallocHost((void**)&h_C, m*n*sizeof(double));
         
-
         // Allocate device memory
         double *d_A, *d_B, *d_C;
         cudaMalloc((void**)&d_A, m*k*sizeof(double));
         cudaMalloc((void**)&d_B, k*n*sizeof(double));
         cudaMalloc((void**)&d_C, m*n*sizeof(double));        
 
-
         // Transfer data from host to device memory
         cudaMemcpy(d_A, A, m*k*sizeof(double), cudaMemcpyHostToDevice);
         cudaMemcpy(d_B, B, k*n*sizeof(double), cudaMemcpyHostToDevice);
         cudaMemcpy(d_C, C, m*n*sizeof(double), cudaMemcpyHostToDevice);
-
 
         // Executing kernel 
         matmult_gpu1_kernel<<<1,1>>>(m,n,k,d_A,d_B,d_C); //single threaded (1 block, 1 thread per block)
