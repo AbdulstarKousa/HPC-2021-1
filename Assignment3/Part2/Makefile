@@ -8,12 +8,13 @@ MAIN_J	= main_j.o
 
 OBJS_J	= $(MAIN_J) jacobi.o jacobi_gpu.o
 
+# numact1 --cpunodebind=0 
 
 OPT	= -g -O3 
-PIC	=
+PIC	= 
 XOPTS = -Xptxas=-v
 ARCH  = -arch=sm_80
-OMP   = -fopenmp
+OMP   = -fopenmp 
 
 CXX	= nvcc
 CXXFLAGS= --compiler-options "$(OPT) $(PIC) $(OMP)" $(ARCH) $(XOPTS) 

@@ -26,7 +26,7 @@ void jacobi_kernel(
             }
         }
     }
-    printf("Leaving kernel function\n");
+    //printf("Leaving kernel function\n");
 }
 
 void jacobi_gpu_wrap(  double*** d_f,        /* 3D matrix "Cube" of function values, Second derivatives of temperature  */

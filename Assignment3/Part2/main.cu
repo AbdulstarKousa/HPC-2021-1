@@ -13,12 +13,25 @@
 #include "init.h"
 #include "jacobi_gpu.h"
 
-
 #ifdef _JACOBI
 #include "jacobi.h"
 #endif
 
 #define N_DEFAULT 100
+
+void warmUp()
+{
+    const int device = 0;
+        
+    // Wake up GPU from power save state.
+    printf("Warming up device %i ... ", device); fflush(stdout);
+    double time = omp_get_wtime();
+    cudaSetDevice(device);           // Set the device to 0 or 1.
+    double *dummy_d;
+    cudaMalloc((void**)&dummy_d, 0); // We force the creation of context on the
+                                         // device by allocating a dummy variable.
+    printf("time = %lf seconds\n", omp_get_wtime() - time);
+}
 
 int
 main(int argc, char *argv[]) {
@@ -28,6 +41,7 @@ main(int argc, char *argv[]) {
     double	tolerance;
     double	start_T;
     int		output_type = 0;
+    int     jacobi_type = 0; 
     char	*output_prefix = "poisson_res";
     char    *output_ext    = "";
     char	output_filename[FILENAME_MAX];
@@ -45,8 +59,12 @@ main(int argc, char *argv[]) {
     tolerance = atof(argv[3]);  // tolerance
     start_T   = atof(argv[4]);  // start T for all inner grid points
     if (argc == 6) {
-    output_type = atoi(argv[5]);  // ouput type
+    jacobi_type = atoi(argv[5]);  // exercise number 
     }
+    if (argc == 7) {
+    output_type = atoi(argv[6]);  // ouput type
+    }
+
 
     //Allocate memory on HOST
     int N2 = N + 2; 
@@ -82,25 +100,64 @@ main(int argc, char *argv[]) {
     }
 
 
-    //Iniliazie matrices on HOST  
-    printf("Iniliazie matrices on HOST\n");
-    init(h_f, h_u, h_u_next, N, start_T);  
+    // Call different exercises 
+    switch(jacobi_type) {
+        case 11:
+            {
+            //warm up GPU
+            warmUp(); 
 
-    //Transfer data to DEVICE 
-    printf("Transfer data to DEVICE \n");
-    transfer_3d(d_u, h_u, N2, N2, N2, cudaMemcpyHostToDevice); 
-    transfer_3d(d_u_next, h_u_next, N2, N2, N2, cudaMemcpyHostToDevice); 
-    transfer_3d(d_f, h_f, N2, N2, N2, cudaMemcpyHostToDevice); 
+            //Iniliazie matrices on HOST  
+            printf("Iniliazie matrices on HOST\n");
+            init(h_f, h_u, h_u_next, N, start_T);  
 
-    jacobi_gpu_wrap(d_f,d_u,d_u_next,N,tolerance,iter_max,&m);
-    printf("Out of Jabobi\n");
+            double time_t = omp_get_wtime();
+            
+            //Transfer data to DEVICE 
+            printf("Transfer data to DEVICE \n");
+            transfer_3d(d_u, h_u, N2, N2, N2, cudaMemcpyHostToDevice); 
+            transfer_3d(d_u_next, h_u_next, N2, N2, N2, cudaMemcpyHostToDevice); 
+            transfer_3d(d_f, h_f, N2, N2, N2, cudaMemcpyHostToDevice); 
 
-    printf("Transfer data back to HOST \n");
-    transfer_3d(h_u,d_u, N2, N2, N2, cudaMemcpyDeviceToHost); 
-    transfer_3d( h_u_next,d_u_next, N2, N2, N2, cudaMemcpyDeviceToHost); 
-    transfer_3d( h_f, d_f,N2, N2, N2, cudaMemcpyDeviceToHost); 
 
-    
+            jacobi_gpu_wrap(d_f,d_u,d_u_next,N,tolerance,iter_max,&m);
+            printf("Out of Jabobi\n");
+            
+            printf("Transfer data back to HOST \n");
+            transfer_3d(h_u,d_u, N2, N2, N2, cudaMemcpyDeviceToHost); 
+            //transfer_3d( h_u_next,d_u_next, N2, N2, N2, cudaMemcpyDeviceToHost); 
+            //transfer_3d( h_f, d_f,N2, N2, N2, cudaMemcpyDeviceToHost); 
+            
+            printf("total time = %lf seconds, with N=%d and %d iterations \n", (omp_get_wtime() - time_t),N,iter_max);
+            
+            break;
+            }
+        
+        case 12: 
+            {
+            //Initialize matrices
+            init(h_f, h_u, h_u_next, N, start_T);  
+
+            //Call reference jacobi 
+            printf("Calling reference jacobi\n");
+            double time_t1 = omp_get_wtime();
+
+            jacobi_no_norm(h_f,h_u,h_u_next,N,tolerance,iter_max,&m);
+
+            printf("total time = %lf seconds, with N=%d and %d iterations \n", (omp_get_wtime() - time_t1),N,iter_max);
+            printf("Out of reference jacobi\n");
+
+            break;
+            } 
+        default:
+            fprintf(stderr, "Non-supported output type!\n");
+            break;
+        }
+
+
+
+
+
 
 
 
@@ -114,7 +171,8 @@ main(int argc, char *argv[]) {
         }
         printf("\n");
     }
-    *\
+    */
+    
 
 /*
     //Iniliazie matrices 
