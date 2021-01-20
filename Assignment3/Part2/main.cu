@@ -104,6 +104,8 @@ main(int argc, char *argv[]) {
     switch(jacobi_type) {
         case 11:
             {
+            printf("\n");
+            printf("Jacopi GPU ex5\n");
             //warm up GPU
             warmUp(); 
 
@@ -120,13 +122,11 @@ main(int argc, char *argv[]) {
             transfer_3d(d_f, h_f, N2, N2, N2, cudaMemcpyHostToDevice); 
 
 
-            jacobi_gpu_wrap(d_f,d_u,d_u_next,N,tolerance,iter_max,&m);
+            jacobi_gpu_wrap1(d_f,d_u,d_u_next,N,tolerance,iter_max,&m);
             printf("Out of Jabobi\n");
-            
+
             printf("Transfer data back to HOST \n");
             transfer_3d(h_u,d_u, N2, N2, N2, cudaMemcpyDeviceToHost); 
-            //transfer_3d( h_u_next,d_u_next, N2, N2, N2, cudaMemcpyDeviceToHost); 
-            //transfer_3d( h_f, d_f,N2, N2, N2, cudaMemcpyDeviceToHost); 
             
             printf("total time = %lf seconds, with N=%d and %d iterations \n", (omp_get_wtime() - time_t),N,iter_max);
             
@@ -135,6 +135,8 @@ main(int argc, char *argv[]) {
         
         case 12: 
             {
+            printf("\n");
+            printf("Jacopi CPU ex5\n");
             //Initialize matrices
             init(h_f, h_u, h_u_next, N, start_T);  
 
@@ -149,6 +151,37 @@ main(int argc, char *argv[]) {
 
             break;
             } 
+
+        case 21:
+            {
+            printf("\n");
+            printf("Jacopi GPU ex6\n");
+            //warm up GPU
+            warmUp(); 
+
+            //Iniliazie matrices on HOST  
+            printf("Iniliazie matrices on HOST\n");
+            init(h_f, h_u, h_u_next, N, start_T);  
+
+            double time_t2 = omp_get_wtime();
+            
+            //Transfer data to DEVICE 
+            printf("Transfer data to DEVICE \n");
+            transfer_3d(d_u, h_u, N2, N2, N2, cudaMemcpyHostToDevice); 
+            transfer_3d(d_u_next, h_u_next, N2, N2, N2, cudaMemcpyHostToDevice); 
+            transfer_3d(d_f, h_f, N2, N2, N2, cudaMemcpyHostToDevice); 
+
+
+            jacobi_gpu_wrap2(d_f,d_u,d_u_next,N,tolerance,iter_max,&m);
+            printf("Out of Jabobi exercise 6\n");
+
+            printf("Transfer data back to HOST \n");
+            transfer_3d(h_u,d_u, N2, N2, N2, cudaMemcpyDeviceToHost);  
+            
+            printf("total time = %lf seconds, with N=%d and %d iterations \n", (omp_get_wtime() - time_t2),N,iter_max);
+            
+            break;
+            }
         default:
             fprintf(stderr, "Non-supported output type!\n");
             break;
@@ -172,6 +205,7 @@ main(int argc, char *argv[]) {
         printf("\n");
     }
     */
+   
     
 
 /*
