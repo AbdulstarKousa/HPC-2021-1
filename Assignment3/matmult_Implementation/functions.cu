@@ -1,4 +1,4 @@
-#include <helper_cuda.h>    // checkCudaErrors
+#include <helper_cuda.h>    // checkCudaErrors command
 #include "cublas_v2.h"      // cublas_dgemm
 #include <omp.h>            // parallel, timing , ..etc. 
 #include <stdio.h>          // in-out purposes
@@ -60,7 +60,7 @@ void matmult_lib(int m,int n,int k,double *A,double *B,double *C) {
     }
 
 
-
+//  --------------------------------------------------------------------------
 //  Two functions for the first sequential implementation of matrix multiplication on the GPU, useing only a single thread:
 //         - matmult_gpu1_kernel:  see the comment attached to the function below.
 //         - matmult_gpu1:         see the comment attached to the function below. 
@@ -88,7 +88,11 @@ __global__ void matmult_gpu1_kernel(int m,int n,int k,double *A,double *B,double
 }
 
 /* matmult_gpu1: 
-        sequential single threaded function to solve matrxi-matrix multiplication C=AB on the GPU.
+        sequential single threaded function to solve matrxi-matrix multiplication, C= A*B, on the GPU.
+        Matrices Dimensions: 
+            A: m x k 
+            B: k x n
+            C: m x n
 */
 void matmult_gpu1(int m,int n,int k,double *A,double *B,double *C){
 
