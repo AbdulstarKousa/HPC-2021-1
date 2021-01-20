@@ -13,17 +13,17 @@
 #include "jacobi.h"
 #endif
 
-#ifdef _JACOBI_OMP
-#include "jacobi_omp.h"
-#endif
+////#ifdef _JACOBI_OMP
+///#include "jacobi_omp.h"
+//#endif
 
-#ifdef _GAUSS_SEIDEL
-#include "gauss_seidel.h"
-#endif
+//#ifdef _GAUSS_SEIDEL
+//#include "gauss_seidel.h"
+//#endif
 
-#ifdef _GAUSS_SEIDEL_OMP
-#include "gauss_seidel_omp.h"
-#endif
+//#ifdef _GAUSS_SEIDEL_OMP
+//#include "gauss_seidel_omp.h"
+//#endif
 
 #define N_DEFAULT 100
 
@@ -67,6 +67,7 @@ main(int argc, char *argv[]) {
         exit(-1);
     }
 
+   
     //Iniliazie matrices 
     #ifdef _SIN_TEST
     printf("Running sin_test \n");
@@ -74,6 +75,7 @@ main(int argc, char *argv[]) {
     #else
     init(f, u, u_next, N, start_T);
     #endif
+    
 
 
     #ifdef _JACOBI
@@ -87,6 +89,7 @@ main(int argc, char *argv[]) {
     printf("#Nr. iterations= %d\n",m);
     #endif
 
+/*
     #ifdef _JACOBI_OMP
     printf("Running Jacobi OMP\n");
     double start = omp_get_wtime();
@@ -124,6 +127,7 @@ main(int argc, char *argv[]) {
     printf("Running sin_check \n");
     printf("Results of sin_check = %lf\n",sin_check(u, N));
     #endif  
+*/
 
     // dump  results if wanted 
     switch(output_type) {
