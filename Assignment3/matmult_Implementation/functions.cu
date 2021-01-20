@@ -137,6 +137,117 @@ void matmult_gpu2(int m,int n,int k,double *A,double *B,double *C){
     cudaFree(d_C);
 }
 
+// __global__ void matmult_gpu3_kernel(int m,int n,int k,double *A,double *B,double *C){
+
+//     int j = blockIdx.x * blockDim.x + threadIdx.x;
+//     int i = 2*(blockIdx.y * blockDim.y + threadIdx.y);
+
+//     double sum1 =0.0;
+//     double sum2 =0.0;
+
+//     if (i < m && j < n){
+//         for (int l = 0; l < k; l++) {
+//             sum1 += A[i * k +l] * B[l * n + j];
+//             if (i+1 < m) 
+//             sum2 += A[(i+1) * k +l] * B[l * n + j];
+//         }
+//         C[i * n + j] = sum1;
+//         if (i+1 < m) 
+//         C[(i+1) * n + j] = sum2;
+//     }   
+// }    
+
+// void matmult_gpu3(int m,int n,int k,double *A,double *B,double *C){
+    
+//     double *d_A;
+//     double *d_B;
+//     double *d_C;
+
+//     int dimA = m * k * sizeof(double);
+//     int dimB = k * n * sizeof(double);
+//     int dimC = m * n * sizeof(double);
+
+//     cudaMalloc((void **)&d_A, dimA);
+//     cudaMalloc((void **)&d_B, dimB);
+//     cudaMalloc((void **)&d_C, dimC);
+
+//     cudaMemcpy(d_A, A, dimA, cudaMemcpyHostToDevice);
+//     cudaMemcpy(d_B, B, dimB, cudaMemcpyHostToDevice);
+
+//     int numThreads = 32;
+
+//     dim3 threadsPerBlock = dim3(numThreads,numThreads);
+//     dim3 blocks = dim3(n/numThreads+1, m/(numThreads*2)+1);
+
+//     double GPUstart = omp_get_wtime();
+
+//     matmult_gpu2_kernel<<<blocks,threadsPerBlock>>>(m, n, k, d_A, d_B, d_C);
+
+//     cudaDeviceSynchronize();
+
+//     cudaMemcpy(C, d_C, dimC, cudaMemcpyDeviceToHost);
+
+//     cudaFree(d_A); 
+//     cudaFree(d_B);
+//     cudaFree(d_C);
+// }
+
+__global__ void matmult_gpu3_kernel(int m,int n,int k,double *A,double *B,double *C){
+
+    int j = 2*(blockIdx.x * blockDim.x + threadIdx.x);
+    int i = blockIdx.y * blockDim.y + threadIdx.y;
+
+    double sum1 =0.0;
+    double sum2 =0.0;
+
+    if (i < m && j < n){
+        for (int l = 0; l < k; l++) {
+            sum1 += A[i * k +l] * B[l * n + j];
+            if (j+1 < n) 
+            sum2 += A[i * k +l] * B[l * n + (j+1)];
+        }
+        C[i * n + j] = sum1;
+        if (j+1 < n) 
+        C[i * n + (j+1)] = sum2;
+    }   
+}    
+
+void matmult_gpu3(int m,int n,int k,double *A,double *B,double *C){
+    
+    double *d_A;
+    double *d_B;
+    double *d_C;
+
+    int dimA = m * k * sizeof(double);
+    int dimB = k * n * sizeof(double);
+    int dimC = m * n * sizeof(double);
+
+    cudaMalloc((void **)&d_A, dimA);
+    cudaMalloc((void **)&d_B, dimB);
+    cudaMalloc((void **)&d_C, dimC);
+
+    cudaMemcpy(d_A, A, dimA, cudaMemcpyHostToDevice);
+    cudaMemcpy(d_B, B, dimB, cudaMemcpyHostToDevice);
+
+    int numThreads = 32;
+
+    dim3 threadsPerBlock = dim3(numThreads,numThreads);
+    
+    dim3 blocks = dim3(n/(numThreads*2)+1, m/numThreads+1);
+
+    double GPUstart = omp_get_wtime();
+
+    matmult_gpu2_kernel<<<blocks,threadsPerBlock>>>(m, n, k, d_A, d_B, d_C);
+
+    cudaDeviceSynchronize();
+
+    cudaMemcpy(C, d_C, dimC, cudaMemcpyDeviceToHost);
+
+    cudaFree(d_A); 
+    cudaFree(d_B);
+    cudaFree(d_C);
+}
+
 void matmult_gpulib(int m,int n,int k,double *A,double *B,double *C){
     double *d_A;
     double *d_B;
