@@ -1,4 +1,6 @@
+extern "C" {
 
+<<<<<<< HEAD
 #include "cublas_v2.h"
 
 void matmult_gpulib(int m,int n,int k,double *A,double *B,double *C){
@@ -39,5 +41,24 @@ void matmult_gpulib(int m,int n,int k,double *A,double *B,double *C){
     cudaFree(d_C);
     cublasDestroy(handle);
   }
+=======
+    #include <stdio.h>     // for in-out purposes
+    #include <stdlib.h>    // for memory purposes
+    #include "cblas.h"     // for cblas_dgemm Prototype
+
+    /* matmult_lib calls cblas_dgemm from cblas library */
+    void matmult_lib(int m,int n,int k,double *A,double *B,double *C) {
+        double alpha, beta;
+        alpha = 1.0; beta = 0.0;
+        cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, m, n, k, alpha, A, k, B, n, beta, C, n);
+        
+        }
+
+
+    void matmult_gpulib(int m,int n,int k,double *A,double *B,double *C){
+        
+    }
     
-}
+>>>>>>> 70abe9cc23653bb37dd4facdbb2f5b923f3677ab
+    
+} // end extern "C"    
