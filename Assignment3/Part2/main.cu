@@ -12,6 +12,7 @@
 #include "print.h"
 #include "sin_test.h"
 #include "init.h"
+#include "jacobi_gpu.h"
 
 
 #ifdef _JACOBI
@@ -114,7 +115,7 @@ main(int argc, char *argv[]) {
     init(f, u, u_next, N, start_T);
     #endif
     
-
+s
 
     #ifdef _JACOBI
     printf("Running jacobi sequential\n");

@@ -1,41 +1,18 @@
 # Makefile
 
 TARGET_J  = poisson_j		# Jacobi
-#TARGET_J_OMP  = poisson_j_omp		# JacobiOMP
-#TARGET_GS = poisson_gs		# Gauss-Seidel
-#TARGET_GS_OMP = poisson_gs_omp		# Gauss-SeidelOMP
+TARGET_J_GPU1 = poisson_j_gpu1
 
-SOURCES	= main.cu print.cu alloc3d.cu alloc3d_gpu.cu transfer3d_gpu.cu jacobi.cu sin_test.cu init.cu
+
+SOURCES	= main.cu print.cu alloc3d.cu alloc3d_gpu.cu transfer3d_gpu.cu jacobi.cu jacobi_gpu.cu sin_test.cu init.cu
 OBJECTS	= print.o alloc3d.o alloc3d_gpu.o transfer3d_gpu.o init.o sin_test.o
 MAIN_J	= main_j.o
-#MAIN_J_OMP	= main_j_omp.o
-#MAIN_GS = main_gs.o
-#MAIN_GS_OMP = main_gs_omp.o
+MAIN_J_GPU1	= main_j_gpu1.o
+
 OBJS_J	= $(MAIN_J) jacobi.o 
-#OBJS_J_OMP	= $(MAIN_J_OMP) jacobi_omp.o 
-#OBJS_GS	= $(MAIN_GS) gauss_seidel.o
-#OBJS_GS_OMP	= $(MAIN_GS_OMP) gauss_seidel_omp.o
+OBJS_J_GPU1	= $(MAIN_J_GPU1) jacobi_gpu.o 
 
 
-# options and settings for the GCC compilers
-#
-##CC		= nvcc 
-# DEFS	= -D_JACOBI
-# DEFS	= -D_JACOBI_OMP
-# DEFS	= -D_GAUSS_SEIDEL
-# DEFS	= -D_GAUSS_SEIDEL_OMP 
-#OPT		= #-g -std=c11 -fopenmp -Ofast 
-#IPO		= 
-#SIN		= -D_SIN_TEST
-#ISA		=
-#CHIP	= 
-#ARCH	= 
-#PARA	= 
-#CFLAGS	= $(ARCH) $(OPT) $(ISA) $(CHIP) $(IPO) $(PARA) $(XOPTS)
-#LDFLAGS = -lm 
-
-
-####
 OPT	= -g -O3 
 PIC	=
 XOPTS = -Xptxas=-v
@@ -48,7 +25,7 @@ CXXFLAGS= --compiler-options "$(OPT) $(PIC) $(OMP)" $(ARCH) $(XOPTS)
 CUDA_PATH ?= /appl/cuda/11.1
 INCLUDES = -I$(CUDA_PATH)/include -I$(CUDA_PATH)/samples/common/inc
 
-####
+
 
 SOFLAGS =
 XLIBS	= 
@@ -60,49 +37,31 @@ $(TARGET_J): $(OBJECTS) $(OBJS_J)
 .cu.o:
 	$(CXX) -o $*.o -c $*.cu $(CXXFLAGS) $(SOFLAGS) $(INCLUDES)
 
+#Jacobi GPU
+$(TARGET_J_GPU1): $(OBJECTS) $(OBJS_J_GPU1)
+	$(CXX) -o $@ $(CXXFLAGS) $(SOFLAGS) $(INCLUDES) $^ $(XLIBS) 
+
+	#$(CXX) -o $*.o -c $*.cu $(CXXFLAGS) $(SOFLAGS) $(INCLUDES)
+
 $(MAIN_J):
 	$(CXX) -o $@ -D_JACOBI $(CXXFLAGS) -c main.cu
 
-#all: $(TARGET_J) #$(TARGET_GS) $(TARGET_J_OMP) $(TARGET_GS_OMP) 
-
-#$(TARGET_J): $(OBJECTS) $(OBJS_J)
-#	$(CXX) -o $@ $(CXXFLAGS) $(OBJS_J) $(OBJECTS) $(LDFLAGS)
-
-##$(TARGET_J_OMP): $(OBJECTS) $(OBJS_J_OMP)
-#	$(CC) -o $@ $(CFLAGS) $(OBJS_J_OMP) $(OBJECTS) $(LDFLAGS)
-
-#$(TARGET_GS): $(OBJECTS) $(OBJS_GS)
-#	$(CC) -o $@ $(CFLAGS) $(OBJS_GS) $(OBJECTS) $(LDFLAGS)
-
-#$(TARGET_GS_OMP): $(OBJECTS) $(OBJS_GS_OMP)
-#	$(CC) -o $@ $(CFLAGS) $(OBJS_GS_OMP) $(OBJECTS) $(LDFLAGS)
-
-##$(MAIN_J):
-#	$(CXX) -o $@ -D_JACOBI $(CXXFLAGS) -c main.cu
-
-#$(MAIN_J_OMP):
-#	$(CC) -o $@ -D_JACOBI_OMP $(CFLAGS) -c main.c 
-
-#$(MAIN_GS):
-#	$(CC) -o $@ -D_GAUSS_SEIDEL $(CFLAGS) -c main.c 
-
-#$(MAIN_GS_OMP):
-#	$(CC) -o $@ -D_GAUSS_SEIDEL_OMP $(CFLAGS) -c main.c 
+$(MAIN_J_GPU1):
+	$(CXX) -o $@ $(CXXFLAGS) -c main.cu 
+	# -D_JACOBI
 
 clean:
 	@/bin/rm -f core *.o *~
 
 realclean: clean
-	@/bin/rm -f $(TARGET_J) 
+	@/bin/rm -f $(TARGET_J) $(TARGET_J_GPU1)
 
-#$(TARGET_GS)
 
 # DO NOT DELETE
 
 main_j.o: main.cu print.h jacobi.h sin_test.h
-#main_j_omp: main.c print.h jacobi_omp.h sin_test.h
-#main_gs.o: main.c print.h gauss_seidel.h sin_test.h
-#main_gs_omp.o: main.c print.h gauss_seidel_omp.h sin_test.h
+main_j_gpu1.o: main.cu print.h jacobi_gpu.h sin_test.h
+
 print.o: print.h
 sin_test.o: sin_test.h
 init.o: init.h 
