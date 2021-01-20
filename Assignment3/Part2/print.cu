@@ -1,6 +1,8 @@
 /* $Id: print.c,v 1.1 2019/12/12 15:03:38 gbarbd Exp gbarbd $ */
 #include <stdio.h>
 #include <inttypes.h>
+#include <cuda_runtime_api.h>
+#include <helper_cuda.h>
 
 static int
 is_little_endian(void) {

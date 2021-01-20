@@ -4,6 +4,8 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <cuda_runtime_api.h>
+#include <helper_cuda.h>
 
 /* 
 jacobi:
@@ -29,7 +31,8 @@ double jacobi(  double*** f,        /* 3D matrix "Cube" of function values, Seco
     int i,j,k, m = 0;
 
     // alg. from the slides show "Assignment 2: The Poisson Problem" p 14. 
-    while ( m < iter_max && norm_result > tolerance ) {
+    while ( m < iter_max) //&& norm_result > tolerance 
+    {
         norm_result = 0.0;
         for (i = 1; i < edge_point_count - 1; i++) {
             for (j = 1; j < edge_point_count - 1; j++) {
@@ -37,7 +40,7 @@ double jacobi(  double*** f,        /* 3D matrix "Cube" of function values, Seco
                 
                     u_next[i][j][k] = inv * (u[i-1][j][k] + u[i+1][j][k] + u[i][j-1][k] + u[i][j+1][k] + u[i][j][k-1] + u[i][j][k+1] + d_squared * f[i][j][k]);
                     
-                    norm_result += (((u_next[i][j][k]) - (u[i][j][k]))*((u_next[i][j][k]) - (u[i][j][k])));
+                    //norm_result += (((u_next[i][j][k]) - (u[i][j][k]))*((u_next[i][j][k]) - (u[i][j][k])));
                     
                 }
             }
@@ -48,7 +51,7 @@ double jacobi(  double*** f,        /* 3D matrix "Cube" of function values, Seco
         u_next = temp;
         
 
-        norm_result = sqrt(norm_result);
+        //norm_result = sqrt(norm_result);
         m++;
     }
     *mp = m;

@@ -1,6 +1,8 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <cuda_runtime_api.h>
+#include <helper_cuda.h>
 
 // Function for initializing f, u, and u_next according to given initial conditions
 void init(double*** f, double*** u, double*** u_next, int N, double start_T) {

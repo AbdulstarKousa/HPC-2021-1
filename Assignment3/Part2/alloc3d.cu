@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include <cuda_runtime_api.h>
+
 
 double ***
 d_malloc_3d(int m, int n, int k) {

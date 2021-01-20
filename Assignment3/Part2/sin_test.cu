@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <math.h>
 #include "alloc3d.h"
+#include <cuda_runtime_api.h>
+#include <helper_cuda.h>
 
 
 void sin_init(double*** f, double*** u, double*** u_next, int N) {

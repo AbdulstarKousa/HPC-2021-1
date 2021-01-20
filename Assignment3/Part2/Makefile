@@ -5,8 +5,8 @@ TARGET_J  = poisson_j		# Jacobi
 #TARGET_GS = poisson_gs		# Gauss-Seidel
 #TARGET_GS_OMP = poisson_gs_omp		# Gauss-SeidelOMP
 
-SOURCES	= main.c print.c alloc3d.c jacobi.c sin_test.c init.c
-OBJECTS	= print.o alloc3d.o init.o sin_test.o
+SOURCES	= main.cu print.cu alloc3d.cu alloc3d_gpu.cu transfer3d_gpu.cu jacobi.cu sin_test.cu init.cu
+OBJECTS	= print.o alloc3d.o alloc3d_gpu.o transfer3d_gpu.o init.o sin_test.o
 MAIN_J	= main_j.o
 #MAIN_J_OMP	= main_j_omp.o
 #MAIN_GS = main_gs.o
@@ -16,27 +16,57 @@ OBJS_J	= $(MAIN_J) jacobi.o
 #OBJS_GS	= $(MAIN_GS) gauss_seidel.o
 #OBJS_GS_OMP	= $(MAIN_GS_OMP) gauss_seidel_omp.o
 
+
 # options and settings for the GCC compilers
 #
-CC		= gcc 
+##CC		= nvcc 
 # DEFS	= -D_JACOBI
 # DEFS	= -D_JACOBI_OMP
 # DEFS	= -D_GAUSS_SEIDEL
 # DEFS	= -D_GAUSS_SEIDEL_OMP 
-OPT		= -g -std=c11 -fopenmp -Ofast
-IPO		= 
-SIN		= -D_SIN_TEST
-ISA		=
-CHIP	= 
-ARCH	= 
-PARA	= 
-CFLAGS	= $(ARCH) $(OPT) $(ISA) $(CHIP) $(IPO) $(PARA) $(XOPTS)
-LDFLAGS = -lm 
+#OPT		= #-g -std=c11 -fopenmp -Ofast 
+#IPO		= 
+#SIN		= -D_SIN_TEST
+#ISA		=
+#CHIP	= 
+#ARCH	= 
+#PARA	= 
+#CFLAGS	= $(ARCH) $(OPT) $(ISA) $(CHIP) $(IPO) $(PARA) $(XOPTS)
+#LDFLAGS = -lm 
 
-all: $(TARGET_J) #$(TARGET_GS) $(TARGET_J_OMP) $(TARGET_GS_OMP) 
+
+####
+OPT	= -g -O3 
+PIC	=
+XOPTS = -Xptxas=-v
+ARCH  = -arch=sm_80
+OMP   = -fopenmp
+
+CXX	= nvcc
+CXXFLAGS= --compiler-options "$(OPT) $(PIC) $(OMP)" $(ARCH) $(XOPTS) 
+
+CUDA_PATH ?= /appl/cuda/11.1
+INCLUDES = -I$(CUDA_PATH)/include -I$(CUDA_PATH)/samples/common/inc
+
+####
+
+SOFLAGS =
+XLIBS	= 
 
 $(TARGET_J): $(OBJECTS) $(OBJS_J)
-	$(CC) -o $@ $(CFLAGS) $(OBJS_J) $(OBJECTS) $(LDFLAGS)
+	$(CXX) -o $@ $(CXXFLAGS) $(SOFLAGS) $(INCLUDES) $^ $(XLIBS) 
+
+.SUFFIXES: .cu
+.cu.o:
+	$(CXX) -o $*.o -c $*.cu $(CXXFLAGS) $(SOFLAGS) $(INCLUDES)
+
+$(MAIN_J):
+	$(CXX) -o $@ -D_JACOBI $(CXXFLAGS) -c main.cu
+
+#all: $(TARGET_J) #$(TARGET_GS) $(TARGET_J_OMP) $(TARGET_GS_OMP) 
+
+#$(TARGET_J): $(OBJECTS) $(OBJS_J)
+#	$(CXX) -o $@ $(CXXFLAGS) $(OBJS_J) $(OBJECTS) $(LDFLAGS)
 
 ##$(TARGET_J_OMP): $(OBJECTS) $(OBJS_J_OMP)
 #	$(CC) -o $@ $(CFLAGS) $(OBJS_J_OMP) $(OBJECTS) $(LDFLAGS)
@@ -47,8 +77,8 @@ $(TARGET_J): $(OBJECTS) $(OBJS_J)
 #$(TARGET_GS_OMP): $(OBJECTS) $(OBJS_GS_OMP)
 #	$(CC) -o $@ $(CFLAGS) $(OBJS_GS_OMP) $(OBJECTS) $(LDFLAGS)
 
-$(MAIN_J):
-	$(CC) -o $@ -D_JACOBI $(CFLAGS) -c main.c 
+##$(MAIN_J):
+#	$(CXX) -o $@ -D_JACOBI $(CXXFLAGS) -c main.cu
 
 #$(MAIN_J_OMP):
 #	$(CC) -o $@ -D_JACOBI_OMP $(CFLAGS) -c main.c 
@@ -63,11 +93,13 @@ clean:
 	@/bin/rm -f core *.o *~
 
 realclean: clean
-	@/bin/rm -f $(TARGET_J)  $(TARGET_GS)
+	@/bin/rm -f $(TARGET_J) 
+
+#$(TARGET_GS)
 
 # DO NOT DELETE
 
-main_j.o: main.c print.h jacobi.h sin_test.h 
+main_j.o: main.cu print.h jacobi.h sin_test.h
 #main_j_omp: main.c print.h jacobi_omp.h sin_test.h
 #main_gs.o: main.c print.h gauss_seidel.h sin_test.h
 #main_gs_omp.o: main.c print.h gauss_seidel_omp.h sin_test.h

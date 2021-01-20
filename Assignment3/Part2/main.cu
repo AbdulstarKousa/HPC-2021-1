@@ -4,10 +4,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <omp.h>
+#include <cuda_runtime_api.h>
+//#include <helper_cuda.h>
 #include "alloc3d.h"
+#include "alloc3d_gpu.h"
+#include "transfer3d_gpu.h"
 #include "print.h"
 #include "sin_test.h"
 #include "init.h"
+
 
 #ifdef _JACOBI
 #include "jacobi.h"
@@ -38,9 +43,12 @@ main(int argc, char *argv[]) {
     char	*output_prefix = "poisson_res";
     char    *output_ext    = "";
     char	output_filename[FILENAME_MAX];
-    double 	***u = NULL;
-    double 	***f = NULL;
-    double 	***u_next = NULL;
+    double 	***h_u = NULL;
+    double 	***h_f = NULL;
+    double 	***h_u_next = NULL;
+    double 	***d_u = NULL;
+    double 	***d_f = NULL;
+    double 	***d_u_next = NULL;
     int m;
 
     /* get the paramters from the command line */
@@ -52,22 +60,52 @@ main(int argc, char *argv[]) {
 	output_type = atoi(argv[5]);  // ouput type
     }
 
+    //Allocate memory on HOST
     int N2 = N + 2; 
-    // allocate memory
-    if ( (u = d_malloc_3d(N2, N2, N2)) == NULL ) {
-        perror("array u: allocation failed");
+    printf("Allocating mem_space on CPU\n");
+
+    if ( (h_u = d_malloc_3d(N2, N2, N2)) == NULL ) {
+        perror("array h_u: allocation failed");
         exit(-1);
     }
-    if ( (u_next = d_malloc_3d(N2, N2, N2)) == NULL ) {
-        perror("array u_next: allocation failed");
+    if ( (h_u_next = d_malloc_3d(N2, N2, N2)) == NULL ) {
+        perror("array h_u_next: allocation failed");
         exit(-1);
     }
-    if ( (f = d_malloc_3d(N2, N2, N2)) == NULL ) {
-        perror("array f: allocation failed");
+    if ( (h_f = d_malloc_3d(N2, N2, N2)) == NULL ) {
+        perror("array h_f: allocation failed");
         exit(-1);
     }
 
-   
+    //Allocate memory on DEVICE
+    printf("Allocating mem_space on GPU\n");
+
+    if ( (d_u = d_malloc_3d_gpu(N2, N2, N2)) == NULL ) {
+        perror("array d_u: allocation failed");
+        exit(-1);
+    }
+    if ( (d_u_next = d_malloc_3d_gpu(N2, N2, N2)) == NULL ) {
+        perror("array d_u_next: allocation failed");
+        exit(-1);
+    }
+    if ( (d_f = d_malloc_3d_gpu(N2, N2, N2)) == NULL ) {
+        perror("array d_f: allocation failed");
+        exit(-1);
+    }
+
+
+    //Iniliazie matrices on HOST  
+    printf("Iniliazie matrices on HOST\n");
+    init(h_f, h_u, h_u_next, N, start_T);  
+
+    //Transfer data to DEVICE 
+    printf("Transfer data to DEVICE \n");
+    transfer_3d(d_u, h_u, N2, N2, N2, cudaMemcpyHostToDevice); 
+    transfer_3d(d_u_next, h_u_next, N2, N2, N2, cudaMemcpyHostToDevice); 
+    transfer_3d(d_f, h_f, N2, N2, N2, cudaMemcpyHostToDevice); 
+
+
+/*
     //Iniliazie matrices 
     #ifdef _SIN_TEST
     printf("Running sin_test \n");
@@ -88,6 +126,10 @@ main(int argc, char *argv[]) {
     printf("Norm result from norm %e\n",norm_check);
     printf("#Nr. iterations= %d\n",m);
     #endif
+*/
+
+
+
 
 /*
     #ifdef _JACOBI_OMP
@@ -138,13 +180,13 @@ main(int argc, char *argv[]) {
 	    output_ext = ".bin";
 	    sprintf(output_filename, "%s_%d%s", output_prefix, N+2, output_ext);
 	    fprintf(stderr, "Write binary dump to %s: ", output_filename);
-	    print_binary(output_filename, N+2, u);
+	    print_binary(output_filename, N+2, h_u);
 	    break;
 	case 4:
 	    output_ext = ".vtk";
 	    sprintf(output_filename, "%s_%d%s", output_prefix, N+2, output_ext);
 	    fprintf(stderr, "Write VTK file to %s: ", output_filename);
-	    print_vtk(output_filename, N+2, u);
+	    print_vtk(output_filename, N+2, h_u);
 	    break;
 	default:
 	    fprintf(stderr, "Non-supported output type!\n");
@@ -152,9 +194,12 @@ main(int argc, char *argv[]) {
     }
 
     // de-allocate memory
-    free(u);
-    free(u_next);
-    free(f);
+    free(h_u);
+    free(h_u_next);
+    free(h_f);
+    free_gpu(d_u);
+    free_gpu(d_u_next);
+    free_gpu(d_f);
 
     return(0);
 }
