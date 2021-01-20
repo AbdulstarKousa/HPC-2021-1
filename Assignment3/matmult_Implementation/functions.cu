@@ -98,7 +98,7 @@ void matmult_gpulib(int m,int n,int k,double *A,double *B,double *C){
 
 }
 
-
+//  --------------------------------------------------------------------------
 /*  matmult_lib:
         calls cblas_dgemm from cblas library, the provided driver(matmult_f.nvcc) will link it to a multithreaded version of CBLAS.
     */
@@ -147,7 +147,7 @@ __global__ void matmult_gpu1_kernel(int m,int n,int k,double *A,double *B,double
 */
 void matmult_gpu1(int m,int n,int k,double *A,double *B,double *C){
 
-    // Allocate host memory (here we don't need to allocate host memory as it's already givin as arguments)
+    // Allocate host memory (here we don't need to allocate host memory as it's already given as arguments)
     // But as an example bolw is how to Allocate host memory: 
     // double *h_A, *h_B, *h_C;
     // cudaMallocHost((void**)&h_A, m*k*sizeof(double));
@@ -177,7 +177,7 @@ void matmult_gpu1(int m,int n,int k,double *A,double *B,double *C){
     cudaFree(d_B);
     cudaFree(d_C);
 
-    // Deallocate host memory (here we don't need to Deallocate host memory as it was givin as arguments)
+    // Deallocate host memory (here we don't need to Deallocate host memory as it was given as arguments)
     // but as an example bolw is how to Deallocate host memory:
     // cudaFreeHost(h_A);
     // cudaFreeHost(h_B);
