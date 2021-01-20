@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <omp.h>
 #include <cuda_runtime_api.h>
-//#include <helper_cuda.h>
 #include "alloc3d.h"
 #include "alloc3d_gpu.h"
 #include "transfer3d_gpu.h"
@@ -18,18 +17,6 @@
 #ifdef _JACOBI
 #include "jacobi.h"
 #endif
-
-////#ifdef _JACOBI_OMP
-///#include "jacobi_omp.h"
-//#endif
-
-//#ifdef _GAUSS_SEIDEL
-//#include "gauss_seidel.h"
-//#endif
-
-//#ifdef _GAUSS_SEIDEL_OMP
-//#include "gauss_seidel_omp.h"
-//#endif
 
 #define N_DEFAULT 100
 
@@ -58,7 +45,7 @@ main(int argc, char *argv[]) {
     tolerance = atof(argv[3]);  // tolerance
     start_T   = atof(argv[4]);  // start T for all inner grid points
     if (argc == 6) {
-	output_type = atoi(argv[5]);  // ouput type
+    output_type = atoi(argv[5]);  // ouput type
     }
 
     //Allocate memory on HOST
@@ -105,6 +92,29 @@ main(int argc, char *argv[]) {
     transfer_3d(d_u_next, h_u_next, N2, N2, N2, cudaMemcpyHostToDevice); 
     transfer_3d(d_f, h_f, N2, N2, N2, cudaMemcpyHostToDevice); 
 
+    jacobi_gpu_wrap(d_f,d_u,d_u_next,N,tolerance,iter_max,&m);
+    printf("Out of Jabobi\n");
+
+    printf("Transfer data back to HOST \n");
+    transfer_3d(h_u,d_u, N2, N2, N2, cudaMemcpyDeviceToHost); 
+    transfer_3d( h_u_next,d_u_next, N2, N2, N2, cudaMemcpyDeviceToHost); 
+    transfer_3d( h_f, d_f,N2, N2, N2, cudaMemcpyDeviceToHost); 
+
+    
+
+
+
+    /*
+    int i,j,k; 
+    for (i = 0; i < N+2; i++) {
+        for (j = 0; j < N+2; j++) {
+            for (k = 0; k < N+2; k++) { 
+                printf("%lf ",h_u[i][j][k]);
+            }
+        }
+        printf("\n");
+    }
+    *\
 
 /*
     //Iniliazie matrices 
@@ -114,63 +124,8 @@ main(int argc, char *argv[]) {
     #else
     init(f, u, u_next, N, start_T);
     #endif
-    
-s
-
-    #ifdef _JACOBI
-    printf("Running jacobi sequential\n");
-    double start = omp_get_wtime();
-    double norm_check = jacobi(f, u, u_next, N, tolerance, iter_max, &m); 
-    double end = omp_get_wtime();
-    printf("Wall time %f \n", (end-start) );
-    //printf("Number of iterations run: %d \n", p);
-    printf("Norm result from norm %e\n",norm_check);
-    printf("#Nr. iterations= %d\n",m);
-    #endif
 */
 
-
-
-
-/*
-    #ifdef _JACOBI_OMP
-    printf("Running Jacobi OMP\n");
-    double start = omp_get_wtime();
-    double norm_check = jacobiOMP(f, u, u_next, N, tolerance, iter_max, &m); 
-    double end = omp_get_wtime();
-    printf("Wall time %f \n", (end-start) );
-    //printf("Number of iterations run: %d \n", p);
-    printf("Norm result from norm %e\n",norm_check);
-    printf("#Nr. iterations= %d\n",m);
-    #endif
-
-    #ifdef _GAUSS_SEIDEL
-    printf("Running Gauss sequential\n");
-    double start = omp_get_wtime();
-    double norm_check = gauss_seidel(f, u, N, tolerance, iter_max, &m); 
-    double end = omp_get_wtime();
-    printf("Wall time %f \n", (end-start) );
-    //printf("Number of iterations run: %d \n", p);
-    printf("Norm result from norm %e\n",norm_check);
-    printf("#Nr. iterations= %d\n",m);
-    #endif
-
-    #ifdef _GAUSS_SEIDEL_OMP
-    printf("Running Gauss OMP \n");
-    double start = omp_get_wtime();
-    double norm_check = gauss_seidelOMP(f, u, N, tolerance, iter_max, &m); 
-    double end = omp_get_wtime();
-    printf("Wall time %f \n", (end-start) );
-    //printf("Number of iterations run: %d \n", p);
-    printf("Norm result from norm %e\n",norm_check);
-    printf("#Nr. iterations= %d\n",m);
-    #endif
-
-    #ifdef _SIN_TEST
-    printf("Running sin_check \n");
-    printf("Results of sin_check = %lf\n",sin_check(u, N));
-    #endif  
-*/
 
     // dump  results if wanted 
     switch(output_type) {

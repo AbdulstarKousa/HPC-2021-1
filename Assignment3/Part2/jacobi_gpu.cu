@@ -14,8 +14,8 @@ void jacobi_kernel(
     double d_squared, 
     double inv              ){
 
-    
     int i,j,k; 
+    int edge_point_count = N + 2; 
 
     for (i = 1; i < edge_point_count - 1; i++) {
         for (j = 1; j < edge_point_count - 1; j++) {
@@ -26,7 +26,7 @@ void jacobi_kernel(
             }
         }
     }
-
+    printf("Leaving kernel function\n");
 }
 
 void jacobi_gpu_wrap(  double*** d_f,        /* 3D matrix "Cube" of function values, Second derivatives of temperature  */
@@ -41,11 +41,12 @@ void jacobi_gpu_wrap(  double*** d_f,        /* 3D matrix "Cube" of function val
     double delta= (double)(2.0/((double)(N+1))); // the grid spacing.
     double d_squared = delta*delta;
     double inv = 1.0/6.0;
-    int edge_point_count = N + 2; 
     double *** temp; // to swipe between u and u_next.
     int i,j,k, m = 0;
 
     // alg. from the slides show "Assignment 2: The Poisson Problem" p 14. 
+
+    printf("Entering while loop\n");
     while (m < iter_max) //&& norm_result > tolerance 
     {
 
@@ -60,4 +61,5 @@ void jacobi_gpu_wrap(  double*** d_f,        /* 3D matrix "Cube" of function val
         m++;
     }
     *mp = m;
+    printf("End Jacobi wrapper\n");
 }
