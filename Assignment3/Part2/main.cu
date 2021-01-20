@@ -84,19 +84,24 @@ main(int argc, char *argv[]) {
     }
 
     //Allocate memory on DEVICE
-    printf("Allocating mem_space on GPU\n");
+    if(jacobi_type == 31){ //skip if we need to GPU's 
+        printf("Skip allocating memory\n");
+    }
+    else{
+        printf("Allocating mem_space on GPU\n");
 
-    if ( (d_u = d_malloc_3d_gpu(N2, N2, N2)) == NULL ) {
-        perror("array d_u: allocation failed");
-        exit(-1);
-    }
-    if ( (d_u_next = d_malloc_3d_gpu(N2, N2, N2)) == NULL ) {
-        perror("array d_u_next: allocation failed");
-        exit(-1);
-    }
-    if ( (d_f = d_malloc_3d_gpu(N2, N2, N2)) == NULL ) {
-        perror("array d_f: allocation failed");
-        exit(-1);
+        if ( (d_u = d_malloc_3d_gpu(N2, N2, N2)) == NULL ) {
+            perror("array d_u: allocation failed");
+            exit(-1);
+        }
+        if ( (d_u_next = d_malloc_3d_gpu(N2, N2, N2)) == NULL ) {
+            perror("array d_u_next: allocation failed");
+            exit(-1);
+        }
+        if ( (d_f = d_malloc_3d_gpu(N2, N2, N2)) == NULL ) {
+            perror("array d_f: allocation failed");
+            exit(-1);
+        }
     }
 
 
@@ -184,29 +189,82 @@ main(int argc, char *argv[]) {
             }
         case 31:
             {
+            if( N % 2 != 0){
+                printf("N IS NOT EVEN\n");
+                perror("failed.......!");
+                exit(-1);
+            }
+
             printf("\n");
             printf("Jacopi running two GPU ex7\n");
+
+            //Allocate device memory 
+            //Device 0 
+            if ( (d0_u = d_malloc_3d_gpu(N2, N2, N2/2)) == NULL ) {
+                perror("array d_u: allocation failed");
+                exit(-1);
+            }
+            if ( (d0_u_next = d_malloc_3d_gpu(N2, N2, N2/2)) == NULL ) {
+                perror("array d_u_next: allocation failed");
+                exit(-1);
+            }
+            if ( (d0_f = d_malloc_3d_gpu(N2, N2, N2/2)) == NULL ) {
+                perror("array d_f: allocation failed");
+                exit(-1);
+            }
+
+            //Device 1
+            if ( (d1_u = d_malloc_3d_gpu(N2, N2, N2/2)) == NULL ) {
+                perror("array d_u: allocation failed");
+                exit(-1);
+            }
+            if ( (d1_u_next = d_malloc_3d_gpu(N2, N2, N2/2)) == NULL ) {
+                perror("array d_u_next: allocation failed");
+                exit(-1);
+            }
+            if ( (d1_f = d_malloc_3d_gpu(N2, N2, N2/2)) == NULL ) {
+                perror("array d_f: allocation failed");
+                exit(-1);
+            }
+
             //warm up GPU
             warmUp(); 
 
             //Iniliazie matrices on HOST  
             printf("Iniliazie matrices on HOST\n");
-            init(h_f, h_u, h_u_next, N, start_T);  
-
+            init(h_f, h_u, h_u_next, N, start_T); 
+            
             double time_t2 = omp_get_wtime();
             
-            //Transfer data to DEVICE 
-            printf("Transfer data to DEVICE \n");
-            transfer_3d(d_u, h_u, N2, N2, N2, cudaMemcpyHostToDevice); 
-            transfer_3d(d_u_next, h_u_next, N2, N2, N2, cudaMemcpyHostToDevice); 
-            transfer_3d(d_f, h_f, N2, N2, N2, cudaMemcpyHostToDevice); 
+            //Transfer data to DEVICE 0 
+            printf("Transfer data to DEVICE 0 \n");
+            cudaSetDevice(0);
+            transfer_3d(d0_u, h_u, N2, N2, N2/2, cudaMemcpyHostToDevice); 
+            transfer_3d(d0_u_next, h_u_next, N2, N2, N2/2, cudaMemcpyHostToDevice); 
+            transfer_3d(d0_f, h_f, N2, N2, N2/2, cudaMemcpyHostToDevice); 
+
+            //Transfer data to DEVICE 1
+            printf("Transfer data to DEVICE 1 \n");              
+            //off-set 
+            long long offset = N2*N2*(N2/2); 
+            cudaSetDevice(1);
+            transfer_3d(d1_u, h_u+offset, N2, N2, N2/2, cudaMemcpyHostToDevice); 
+            transfer_3d(d1_u_next, h_u_next+offset, N2, N2, N2/2, cudaMemcpyHostToDevice); 
+            transfer_3d(d1_f, h_f+offset, N2, N2, N2/2, cudaMemcpyHostToDevice);            
 
 
-            jacobi_gpu_wrap3(d_f,d_u,d_u_next,N,tolerance,iter_max,&m);
+            jacobi_gpu_wrap3(d0_f,d0_u,d0_u_next,d1_f,d1_u,d1_u_next,N,tolerance,iter_max,&m);
             printf("Out of Jabobi exercise 6\n");
 
-            printf("Transfer data back to HOST \n");
-            transfer_3d(h_u,d_u, N2, N2, N2, cudaMemcpyDeviceToHost);  
+            //Transfer data back to HOST 
+            printf("Transfer data back to HOST from DEVICE 0 \n");
+            cudaSetDevice(0);
+            transfer_3d(h_u, d0_u, N2, N2, N2/2, cudaMemcpyDeviceToHost);  
+
+            printf("Transfer data back to HOST from DEVICE 1 \n");
+            cudaSetDevice(1);
+            transfer_3d(h_u+offset, d1_u, N2, N2, N2/2, cudaMemcpyDeviceToHost);  
+
             
             printf("total time = %lf seconds, with N=%d and %d iterations \n", (omp_get_wtime() - time_t2),N,iter_max);
             
