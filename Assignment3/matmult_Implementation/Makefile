@@ -1,6 +1,6 @@
 TARGET	= libmatmult.so
-LIBSRCS	= 
-LIBOBJS	= 
+LIBSRCS	= functions.cu
+LIBOBJS	= functions.o
 
 OPT	= -g -O3
 PIC = -fpic
