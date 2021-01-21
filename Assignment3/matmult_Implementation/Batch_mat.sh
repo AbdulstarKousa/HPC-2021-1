@@ -25,7 +25,7 @@ EXECUTABLE=matmult_f.nvcc
 # SIZES="2048 4096 8192"
 SIZES="16 32 64 128 256 512 1024 2048 4096 8192"
 
-PERMUTATIONS="gpu4"
+PERMUTATIONS="gpulib gpu5"
 # PERMUTATIONS="lib gpu1 gpu2 gpu3 gpu4 gpu5 gpulib"
 
 for P in $PERMUTATIONS

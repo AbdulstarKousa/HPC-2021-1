@@ -1,0 +1,80 @@
+GPU1 wall time 0.001993 
+GPU! mem wall time 0.008092 
+GPU1 wall time 0.000016 
+GPU! mem wall time 0.002016 
+GPU1 wall time 0.000015 
+GPU! mem wall time 0.001973 
+       6.000      1.737 0 # matmult_gpulib
+permutation: gpulib size 16
+GPU1 wall time 0.000103 
+GPU! mem wall time 0.004699 
+GPU1 wall time 0.000016 
+GPU! mem wall time 0.002025 
+GPU1 wall time 0.000015 
+GPU! mem wall time 0.001982 
+      24.000     22.147 0 # matmult_gpulib
+permutation: gpulib size 32
+GPU1 wall time 0.000103 
+GPU! mem wall time 0.004582 
+GPU1 wall time 0.000017 
+GPU! mem wall time 0.001987 
+GPU1 wall time 0.000014 
+GPU! mem wall time 0.001953 
+      96.000    180.902 0 # matmult_gpulib
+permutation: gpulib size 64
+GPU1 wall time 0.004743 
+GPU! mem wall time 0.004630 
+GPU1 wall time 0.000023 
+GPU! mem wall time 0.002087 
+GPU1 wall time 0.000020 
+GPU! mem wall time 0.002036 
+     384.000    926.879 0 # matmult_gpulib
+permutation: gpulib size 128
+GPU1 wall time 0.000166 
+GPU! mem wall time 0.004873 
+GPU1 wall time 0.000036 
+GPU! mem wall time 0.002246 
+GPU1 wall time 0.000020 
+GPU! mem wall time 0.002171 
+    1536.000  10540.010 0 # matmult_gpulib
+permutation: gpulib size 256
+GPU1 wall time 0.000866 
+GPU! mem wall time 0.012058 
+GPU1 wall time 0.000038 
+GPU! mem wall time 0.003663 
+GPU1 wall time 0.000034 
+GPU! mem wall time 0.003548 
+    6144.000  39765.135 0 # matmult_gpulib
+permutation: gpulib size 512
+GPU1 wall time 0.000181 
+GPU! mem wall time 0.009306 
+GPU1 wall time 0.000039 
+GPU! mem wall time 0.006536 
+GPU1 wall time 0.000038 
+GPU! mem wall time 0.006376 
+   24576.000 286031.537 0 # matmult_gpulib
+permutation: gpulib size 1024
+GPU1 wall time 0.000193 
+GPU! mem wall time 0.019764 
+GPU1 wall time 0.000039 
+GPU! mem wall time 0.017479 
+GPU1 wall time 0.000034 
+GPU! mem wall time 0.017336 
+   98304.000 938815.143 300 # matmult_gpulib
+permutation: gpulib size 2048
+GPU1 wall time 0.000202 
+GPU! mem wall time 0.057566 
+GPU1 wall time 0.000040 
+GPU! mem wall time 0.065608 
+GPU1 wall time 0.000022 
+GPU! mem wall time 0.065622 
+  393216.000 2180168.475 19200 # matmult_gpulib
+permutation: gpulib size 4096
+GPU1 wall time 0.000209 
+GPU! mem wall time 0.248559 
+GPU1 wall time 0.000042 
+GPU! mem wall time 0.313276 
+GPU1 wall time 0.000034 
+GPU! mem wall time 0.313302 
+ 1572864.000 3767680.640 1.2288e+06 # matmult_gpulib
+permutation: gpulib size 8192

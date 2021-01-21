@@ -459,7 +459,7 @@ __global__ void matmult_gpu4_kernel(int m,int n,int k,double *A,double *B,double
 void matmult_gpu4(int m,int n,int k,double *A,double *B,double *C){
     
     double GPU1_mem_start = omp_get_wtime();
-    
+
     double *d_A;
     double *d_B;
     double *d_C;
@@ -588,6 +588,7 @@ __global__ void matmult_gpu5_kernel(int m,int n,int k,double *A,double *B,double
 */
 void matmult_gpu5(int m,int n,int k,double *A,double *B,double *C){
 
+    double GPU1_mem_start = omp_get_wtime();
     //making sure that m, n and k are integer multiples of the thread block size.
     if(m%BLOCK_SIZE!=0 || n%BLOCK_SIZE!=0 || k%BLOCK_SIZE!=0){
         INPUT_ERR;
@@ -612,9 +613,11 @@ void matmult_gpu5(int m,int n,int k,double *A,double *B,double *C){
     // For simplicity,  it is assumed that m, n and k are integer multiples of the thread block size = 16. See Assignment task. 
     dim3 dimBlock(BLOCK_SIZE, BLOCK_SIZE);
     dim3 dimGrid(n / dimBlock.x, m / dimBlock.y);
+
+    double GPU1_ker_start = omp_get_wtime();
     matmult_gpu5_kernel<<<dimGrid, dimBlock>>>(m,n,k,d_A,d_B,d_C); 
     checkCudaErrors(cudaDeviceSynchronize());
-
+    double GPU1_ker_end = omp_get_wtime();
     // Transfer data back to host memory
     cudaMemcpy(C, d_C, m*n*sizeof(double), cudaMemcpyDeviceToHost);
 
@@ -623,6 +626,11 @@ void matmult_gpu5(int m,int n,int k,double *A,double *B,double *C){
     cudaFree(d_B);
     cudaFree(d_C);
 
+    double GPU1_mem_end = omp_get_wtime();
+
+    printf("GPU1 wall time %f \n", (GPU1_ker_end-GPU1_ker_start));
+    printf("GPU! mem wall time %f \n", (GPU1_mem_end-GPU1_mem_start+GPU1_ker_start-GPU1_ker_end));
+
 }
 
 
@@ -630,6 +638,7 @@ void matmult_gpu5(int m,int n,int k,double *A,double *B,double *C){
     calls DGEMM function for GPUs provided by Nvidia in the CUBLAS library        
 */
 void matmult_gpulib(int m,int n,int k,double *A,double *B,double *C){
+    double GPU1_mem_start = omp_get_wtime();
     double *d_A;
     double *d_B;
     double *d_C;
@@ -654,9 +663,13 @@ void matmult_gpulib(int m,int n,int k,double *A,double *B,double *C){
     cudaMemcpy(d_A, A, dimA, cudaMemcpyHostToDevice);
     cudaMemcpy(d_B, B, dimB, cudaMemcpyHostToDevice);
 
+    double GPU1_ker_start = omp_get_wtime();
+
     /* Performs operation using cublas */
     cublasDgemm(handle, CUBLAS_OP_N, CUBLAS_OP_N, n, m, k, &alpha, d_B,
-                        n, d_A, k, &beta, d_C, n);
+        n, d_A, k, &beta, d_C, n);
+
+    double GPU1_ker_end = omp_get_wtime();
 
     /* Read the result back */
     cudaMemcpy(C, d_C, dimC, cudaMemcpyDeviceToHost);
@@ -666,6 +679,10 @@ void matmult_gpulib(int m,int n,int k,double *A,double *B,double *C){
     cudaFree(d_C);
     cublasDestroy(handle);
 
+    double GPU1_mem_end = omp_get_wtime();
+
+    printf("GPU1 wall time %f \n", (GPU1_ker_end-GPU1_ker_start));
+    printf("GPU! mem wall time %f \n", (GPU1_mem_end-GPU1_mem_start+GPU1_ker_start-GPU1_ker_end));
 }
 
 
