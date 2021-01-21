@@ -33,7 +33,7 @@ do
 	for S in $SIZES
 	do
 		LOGEXT=../matmult_Results/datmatmult_time_${P}.dat
-		$EXECUTABLE $P $S $S $S |& grep -v CPU >> $LOGEXT
+		MFLOPS_MIN_T=3 MFLOPS_MAX_IT=3 ./$EXECUTABLE $P $S $S $S |& grep -v CPU >> $LOGEXT
 		echo permutation: $P size $S |  grep -v CPU >>$LOGEXT
 	done
 done
