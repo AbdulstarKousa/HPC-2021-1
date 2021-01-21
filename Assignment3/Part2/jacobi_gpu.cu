@@ -154,9 +154,11 @@ void jacobi_kernel31(
     int k = blockIdx.z * blockDim.z + threadIdx.z;
 
 
-    if (k == (N/2)) 
+    if (k == ((N+2)/2)) 
     {
         // Need to access memory of sister device
+        // d0_u[?][?][k+1] becomes d1_u[?][?][0]
+        d0_u_next[i][j][k] = (d0_u[i-1][j][k] + d0_u[i+1][j][k] + d0_u[i][j-1][k] + d0_u[i][j+1][k] + d0_u[i][j][k-1] + d1_u[i][j][0] + d_squared * d_f[i][j][k]);
     }
 
 
