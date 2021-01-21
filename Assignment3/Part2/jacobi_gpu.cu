@@ -142,12 +142,11 @@ void jacobi_kernel31(
     int j = blockIdx.y * blockDim.y + threadIdx.y;
     int k = blockIdx.z * blockDim.z + threadIdx.z;
 
-    //printf("i %d j %d k %d \n", i,j,k);
-
     if(0 < i && 0 < j && 0 < k && k < N+1 && j < N+1 && i < (N+2)/2)
     {    
         if (i == ((N+2)/2)-1) 
         {
+            //Peer access
             d0_u_next[i][j][k] = inv * (d0_u[i-1][j][k] + d1_u[0][j][k] + d0_u[i][j-1][k] + d0_u[i][j+1][k] + d0_u[i][j][k-1] + d0_u[i][j][k+1] + d_squared * d0_f[i][j][k]);
         }
         else 
@@ -178,8 +177,8 @@ void jacobi_kernel32(
     if(0 <= i && 0 < j && 0 < k && k < N+1 && j < N+1 && i < (N+2/2)-1)  //if(0 < i && 0 < j && 0 <= k && i < N+1 && j < N+1 && k < (N+2/2)-1)
     {  
         if (i == 0) 
-        {
-            // Need to access memory of sister device
+        {   
+            //Peer access
             d1_u_next[i][j][k] = inv * (d0_u[((N+2)/2)-1][j][k] + d1_u[i+1][j][k] + d1_u[i][j-1][k] + d1_u[i][j+1][k] + d1_u[i][j][k-1] + d1_u[i][j][k+1] + d_squared * d1_f[i][j][k]);
         } 
         else 
@@ -200,7 +199,7 @@ void jacobi_gpu_wrap3(  double*** d0_f,        /* 3D matrix "Cube" of function v
                 int iter_max,       /* maximum nr. of iterations */
                 int * mp){           /* #nr. the iteration needed to get a suciently small diference*/
 
-    double delta= (double)(2.0/((double)(N+1))); // the grid spacing.
+    double delta= (double)(2.0/((double)(N+1))); 
     double d_squared = delta*delta;
     double inv = 1.0/6.0;
     double *** temp0; // to swipe between u and u_next.
@@ -209,14 +208,12 @@ void jacobi_gpu_wrap3(  double*** d0_f,        /* 3D matrix "Cube" of function v
 
     int threads_blck = 8; 
 
-        
     dim3 dimBlock(threads_blck,threads_blck,threads_blck);// threads per block
     dim3 dimGrid((((N+2)/2)/dimBlock.x)+1,((N+2)/dimBlock.y)+1,((N+2)/dimBlock.z)+1); 
 
     printf("Entering while loop\n");
-    while (m < iter_max) //&& norm_result > tolerance 
+    while (m < iter_max) 
     {
-
         //DEVICE 0 
         cudaSetDevice(0);
         jacobi_kernel31<<<dimGrid,dimBlock>>>(d0_f, d0_u, d1_u, d0_u_next, N, d_squared,inv);     
@@ -229,7 +226,6 @@ void jacobi_gpu_wrap3(  double*** d0_f,        /* 3D matrix "Cube" of function v
         cudaSetDevice(0); 
         cudaDeviceSynchronize(); 
 
-
         temp0 = d0_u;
         d0_u = d0_u_next; 
         d0_u_next = temp0;
@@ -240,8 +236,6 @@ void jacobi_gpu_wrap3(  double*** d0_f,        /* 3D matrix "Cube" of function v
         
         m++;
     }
-    *mp = m;
-    printf("End Jacobi wrapper\n");
 }
 
 

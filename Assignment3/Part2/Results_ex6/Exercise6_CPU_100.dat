@@ -18,3 +18,5 @@ total time = 7.871591
 size 300 iterations 100
 total time = 18.248392 
 size 400 iterations 100
+total time = 35.897439 
+size 500 iterations 100

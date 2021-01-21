@@ -85,7 +85,7 @@ main(int argc, char *argv[]) {
 
     //Allocate memory on DEVICE
     if(jacobi_type == 31){ //skip if we need to GPU's 
-        printf("Skip allocating memory\n");
+        //printf("Skip allocating memory\n");
     }
     else{
         //printf("Allocating mem_space on GPU\n");
@@ -196,7 +196,7 @@ main(int argc, char *argv[]) {
                 exit(-1);
             }
 
-            printf("\n");
+            //printf("\n");
             printf("Jacobi running two GPU ex7\n");
 
             //Allocate device memory 
@@ -271,6 +271,9 @@ main(int argc, char *argv[]) {
                  perror("array d_f: allocation failed");
                  exit(-1);
              }
+            
+             printf("Im here 0\n");
+
             //warm up GPU
             warmUp(); 
 
@@ -303,7 +306,9 @@ main(int argc, char *argv[]) {
             cudaSetDevice(0);
             cudaDeviceEnablePeerAccess(1, 0);
             transfer_3d(d0_u, h0_u, N2/2, N2, N2, cudaMemcpyHostToDevice); 
+            printf("Transfer data to DEVICE 0 \n");
             transfer_3d(d0_u_next, h0_u_next, N2/2, N2, N2, cudaMemcpyHostToDevice); 
+            printf("Transfer data to DEVICE 0 \n");
             transfer_3d(d0_f, h0_f, N2/2, N2, N2, cudaMemcpyHostToDevice); 
 
             //Transfer data to DEVICE 1
@@ -321,15 +326,34 @@ main(int argc, char *argv[]) {
 
             //Transfer data back to HOST 
             printf("Transfer data back to HOST from DEVICE 0 \n");
-            //cudaSetDevice(0);
+            cudaSetDevice(0);
             transfer_3d(h0_u, d0_u, N2/2, N2, N2, cudaMemcpyDeviceToHost);  
 
             printf("Transfer data back to HOST from DEVICE 1 \n");
-            //cudaSetDevice(1);
+            cudaSetDevice(1);
             transfer_3d(h1_u, d1_u, N2/2, N2, N2, cudaMemcpyDeviceToHost);  
 
             
-            printf("total time = %lf seconds, with N=%d and %d iterations \n", (omp_get_wtime() - time_t2),N,iter_max);
+            printf("total time = %lf\n", (omp_get_wtime() - time_t2));
+
+
+            free_gpu(d0_f); 
+            free_gpu(d0_u); 
+            free_gpu(d0_u_next); 
+            free_gpu(d1_f); 
+            free_gpu(d1_u); 
+            free_gpu(d1_u_next); 
+
+            free(h_u);
+            free(h_u_next);
+            free(h_f);
+            free(h0_u);
+            free(h0_u_next);
+            free(h0_f);
+            free(h1_u);
+            free(h1_u_next);
+            free(h1_f);
+
             
             break;
         }
