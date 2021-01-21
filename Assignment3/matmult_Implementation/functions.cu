@@ -491,7 +491,7 @@ void matmult_gpu4(int m,int n,int k,double *A,double *B,double *C){
 
 // Thread block size
 #define BLOCK_SIZE 16 
-#define INPUT_ERR fprintf(stderr,"%s:\nOne or more of the defiend values for m , n , k are not integer multiples of the thread block size\n",__func__)
+#define INPUT_ERR fprintf(stderr,"%s:\nOne or more of the defiend values for m , n , k are not integer multiples of the thread block size = %d.\n",__func__,BLOCK_SIZE)
 /*  matmult_gpu5_kernel:  
         helper function, that takes care of the calculations.
 */
