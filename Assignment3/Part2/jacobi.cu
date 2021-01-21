@@ -71,16 +71,15 @@ void jacobi_no_norm(  double*** f,        /* 3D matrix "Cube" of function values
     double delta= (double)(2.0/((double)(N+1))); // the grid spacing.
     double d_squared = delta*delta;
     double inv = 1.0/6.0;
-    int edge_point_count = N + 2; 
+    int N2 = N + 2; 
     double *** temp; // to swipe between u and u_next.
     int i,j,k, m = 0;
 
-    // alg. from the slides show "Assignment 2: The Poisson Problem" p 14. 
     while (m < iter_max) //&& norm_result > tolerance 
     {
-        for (i = 1; i < edge_point_count - 1; i++) {
-            for (j = 1; j < edge_point_count - 1; j++) {
-                for (k = 1; k < edge_point_count - 1; k++) {
+        for (i = 1; i < N2 - 1; i++) {
+            for (j = 1; j < N2 - 1; j++) {
+                for (k = 1; k < N2 - 1; k++) {
                 
                     u_next[i][j][k] = inv * (u[i-1][j][k] + u[i+1][j][k] + u[i][j-1][k] + u[i][j+1][k] + u[i][j][k-1] + u[i][j][k+1] + d_squared * f[i][j][k]);
                     
@@ -94,5 +93,4 @@ void jacobi_no_norm(  double*** f,        /* 3D matrix "Cube" of function values
 
         m++;
     }
-    *mp = m; 
 }

@@ -15,11 +15,11 @@ void jacobi_kernel1(
     double inv              ){
 
     int i,j,k; 
-    int edge_point_count = N + 2; 
+    int N2 = N + 2; 
 
-    for (i = 1; i < edge_point_count - 1; i++) {
-        for (j = 1; j < edge_point_count - 1; j++) {
-            for (k = 1; k < edge_point_count - 1; k++) {
+    for (i = 1; i < N2 - 1; i++) {
+        for (j = 1; j < N2 - 1; j++) {
+            for (k = 1; k < N2 - 1; k++) {
                 
                 d_u_next[i][j][k] = inv * (d_u[i-1][j][k] + d_u[i+1][j][k] + d_u[i][j-1][k] + d_u[i][j+1][k] + d_u[i][j][k-1] + d_u[i][j][k+1] + d_squared * d_f[i][j][k]);
                     
@@ -37,20 +37,16 @@ void jacobi_gpu_wrap1(  double*** d_f,        /* 3D matrix "Cube" of function va
                 int iter_max,       /* maximum nr. of iterations */
                 int * mp){           /* #nr. the iteration needed to get a suciently small diference*/
 
-    double norm_result = tolerance + 0.1;        // to make sure that we enter the while loop below we add 0.01
     double delta= (double)(2.0/((double)(N+1))); // the grid spacing.
     double d_squared = delta*delta;
     double inv = 1.0/6.0;
     double *** temp; // to swipe between u and u_next.
-    int i,j,k, m = 0;
+    int m = 0;
 
-    // alg. from the slides show "Assignment 2: The Poisson Problem" p 14. 
-
-    printf("Entering while loop\n");
-    while (m < iter_max) //&& norm_result > tolerance 
+    //printf("Entering while loop\n");
+    while (m < iter_max) 
     {
 
-        //insert function 
         jacobi_kernel1<<<1,1>>>(d_f, d_u, d_u_next, N, d_squared,inv);    
         cudaDeviceSynchronize();          
 
@@ -60,8 +56,8 @@ void jacobi_gpu_wrap1(  double*** d_f,        /* 3D matrix "Cube" of function va
         
         m++;
     }
-    *mp = m;
-    printf("End Jacobi wrapper\n");
+
+    //printf("End Jacobi wrapper\n");
 }
 
 
@@ -98,25 +94,20 @@ void jacobi_gpu_wrap2(  double*** d_f,        /* 3D matrix "Cube" of function va
                 int iter_max,       /* maximum nr. of iterations */
                 int * mp){           /* #nr. the iteration needed to get a suciently small diference*/
 
-    double norm_result = tolerance + 0.1;        // to make sure that we enter the while loop below we add 0.01
     double delta= (double)(2.0/((double)(N+1))); // the grid spacing.
     double d_squared = delta*delta;
     double inv = 1.0/6.0;
     double *** temp; // to swipe between u and u_next.
     int m = 0;
-
-    // alg. from the slides show "Assignment 2: The Poisson Problem" p 14.
     
-    int threads_blck = 8; 
+    int threads_blck = 8; //optmized to be fastest with 8 threads per block (each dim)
 
     dim3 dimBlock(threads_blck,threads_blck,threads_blck);// threads per block
     dim3 dimGrid(((N+2)/dimBlock.x)+1,((N+2)/dimBlock.y)+1,((N+2)/dimBlock.z)+1); // xx blocks in total
 
-    printf("Entering while loop\n");
+    //printf("Entering while loop\n");
     while (m < iter_max) //&& norm_result > tolerance 
     {
-
-        //insert function 
         jacobi_kernel2<<<dimGrid,dimBlock>>>(d_f, d_u, d_u_next, N, d_squared,inv);    
         cudaDeviceSynchronize();          
 
@@ -126,8 +117,6 @@ void jacobi_gpu_wrap2(  double*** d_f,        /* 3D matrix "Cube" of function va
         
         m++;
     }
-    *mp = m;
-    printf("End Jacobi wrapper\n");
 }
 
 

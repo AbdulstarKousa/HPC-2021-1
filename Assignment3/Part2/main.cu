@@ -24,13 +24,13 @@ void warmUp()
     const int device = 0;
         
     // Wake up GPU from power save state.
-    printf("Warming up device %i ... ", device); fflush(stdout);
-    double time = omp_get_wtime();
+    fflush(stdout);
+    //double time = omp_get_wtime();
     cudaSetDevice(device);           // Set the device to 0 or 1.
     double *dummy_d;
     cudaMalloc((void**)&dummy_d, 0); // We force the creation of context on the
                                          // device by allocating a dummy variable.
-    printf("time = %lf seconds\n", omp_get_wtime() - time);
+    //printf("time = %lf seconds\n", omp_get_wtime() - time);
 }
 
 int
@@ -68,7 +68,7 @@ main(int argc, char *argv[]) {
 
     //Allocate memory on HOST
     int N2 = N + 2; 
-    printf("Allocating mem_space on CPU\n");
+    //printf("Allocating mem_space on CPU\n");
 
     if ( (h_u = d_malloc_3d(N2, N2, N2)) == NULL ) {
         perror("array h_u: allocation failed");
@@ -88,7 +88,7 @@ main(int argc, char *argv[]) {
         printf("Skip allocating memory\n");
     }
     else{
-        printf("Allocating mem_space on GPU\n");
+        //printf("Allocating mem_space on GPU\n");
 
         if ( (d_u = d_malloc_3d_gpu(N2, N2, N2)) == NULL ) {
             perror("array d_u: allocation failed");
@@ -109,81 +109,82 @@ main(int argc, char *argv[]) {
     switch(jacobi_type) {
         case 11:
             {
-            printf("\n");
-            printf("Jacopi GPU ex5\n");
-            //warm up GPU
-            warmUp(); 
+            //printf("\n");
+            //printf("Jacopi GPU ex5\n");
+ 
 
             //Iniliazie matrices on HOST  
-            printf("Iniliazie matrices on HOST\n");
+            //printf("Iniliazie matrices on HOST\n");
             init(h_f, h_u, h_u_next, N, start_T);  
+  
+            //warm up GPU
+            warmUp();
 
             double time_t = omp_get_wtime();
             
             //Transfer data to DEVICE 
-            printf("Transfer data to DEVICE \n");
+            //printf("Transfer data to DEVICE \n");
             transfer_3d(d_u, h_u, N2, N2, N2, cudaMemcpyHostToDevice); 
             transfer_3d(d_u_next, h_u_next, N2, N2, N2, cudaMemcpyHostToDevice); 
             transfer_3d(d_f, h_f, N2, N2, N2, cudaMemcpyHostToDevice); 
 
-
             jacobi_gpu_wrap1(d_f,d_u,d_u_next,N,tolerance,iter_max,&m);
-            printf("Out of Jabobi\n");
+            //printf("Out of Jabobi\n");
 
-            printf("Transfer data back to HOST \n");
+            //printf("Transfer data back to HOST \n");
             transfer_3d(h_u,d_u, N2, N2, N2, cudaMemcpyDeviceToHost); 
             
-            printf("total time = %lf seconds, with N=%d and %d iterations \n", (omp_get_wtime() - time_t),N,iter_max);
+            printf("total time = %lf \n", (omp_get_wtime() - time_t));
             
             break;
             }
         
         case 12: //OBS HOW TO WE SAT MAKEFILE TO 1 CPU     numactl --cpunodebind=0 
             {
-            printf("\n");
-            printf("Jacopi CPU ex5\n");
+            //printf("\n");
+            //printf("Jacopi CPU ex5\n");
             //Initialize matrices
             init(h_f, h_u, h_u_next, N, start_T);  
 
             //Call reference jacobi 
-            printf("Calling reference jacobi\n");
+            //printf("Calling reference jacobi\n");
             double time_t1 = omp_get_wtime();
 
             jacobi_no_norm(h_f,h_u,h_u_next,N,tolerance,iter_max,&m);
 
-            printf("total time = %lf seconds, with N=%d and %d iterations \n", (omp_get_wtime() - time_t1),N,iter_max);
-            printf("Out of reference jacobi\n");
+            printf("total time = %lf \n", (omp_get_wtime() - time_t1));
+            //printf("Out of reference jacobi\n");
 
             break;
             } 
 
         case 21:
             {
-            printf("\n");
-            printf("Jacopi GPU ex6\n");
+            //printf("\n");
+            //printf("Jacopi GPU ex6\n");
             //warm up GPU
             warmUp(); 
 
             //Iniliazie matrices on HOST  
-            printf("Iniliazie matrices on HOST\n");
+            //printf("Iniliazie matrices on HOST\n");
             init(h_f, h_u, h_u_next, N, start_T);  
 
             double time_t2 = omp_get_wtime();
             
             //Transfer data to DEVICE 
-            printf("Transfer data to DEVICE \n");
+            //printf("Transfer data to DEVICE \n");
             transfer_3d(d_u, h_u, N2, N2, N2, cudaMemcpyHostToDevice); 
             transfer_3d(d_u_next, h_u_next, N2, N2, N2, cudaMemcpyHostToDevice); 
             transfer_3d(d_f, h_f, N2, N2, N2, cudaMemcpyHostToDevice); 
 
 
             jacobi_gpu_wrap2(d_f,d_u,d_u_next,N,tolerance,iter_max,&m);
-            printf("Out of Jabobi exercise 6\n");
+            //printf("Out of Jabobi exercise 6\n");
 
-            printf("Transfer data back to HOST \n");
+            //printf("Transfer data back to HOST \n");
             transfer_3d(h_u,d_u, N2, N2, N2, cudaMemcpyDeviceToHost);  
             
-            printf("total time = %lf seconds, with N=%d and %d iterations \n", (omp_get_wtime() - time_t2),N,iter_max);
+            printf("total time = %lf\n", (omp_get_wtime() - time_t2));
             
             break;
             }
