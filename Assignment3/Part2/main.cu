@@ -67,7 +67,7 @@ main(int argc, char *argv[]) {
 
 
     //Allocate memory on HOST
-    int N2 = N + 2; 
+    long long N2 = N + 2; 
     //printf("Allocating mem_space on CPU\n");
 
     if ( (h_u = d_malloc_3d(N2, N2, N2)) == NULL ) {
@@ -344,9 +344,6 @@ main(int argc, char *argv[]) {
             free_gpu(d1_u); 
             free_gpu(d1_u_next); 
 
-            free(h_u);
-            free(h_u_next);
-            free(h_f);
             free(h0_u);
             free(h0_u_next);
             free(h0_f);
