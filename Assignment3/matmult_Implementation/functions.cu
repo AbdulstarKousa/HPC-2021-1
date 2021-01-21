@@ -154,10 +154,8 @@ void matmult_gpu2(int m,int n,int k,double *A,double *B,double *C){
 
     double GPU1_ker_start = omp_get_wtime();
     matmult_gpu2_kernel<<<blocks,threadsPerBlock>>>(m, n, k, d_A, d_B, d_C);
-    double GPU1_ker_end = omp_get_wtime();
-
     cudaDeviceSynchronize();
-
+    double GPU1_ker_end = omp_get_wtime();
     cudaMemcpy(C, d_C, dimC, cudaMemcpyDeviceToHost);
 
     cudaFree(d_A); 

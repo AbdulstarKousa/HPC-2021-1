@@ -55,6 +55,10 @@ GPU! mem wall time 0.004213
    24576.000     48.108 0 # matmult_gpu1
 permutation: gpu1 size 1024
 GPU1 wall time 661.172487 
+GPU! mem wall time 0.016438
+GPU1 wall time 661.172487 
+GPU! mem wall time 0.016438 
+GPU1 wall time 661.172487 
 GPU! mem wall time 0.016438 
    98304.000     25.983 300 # matmult_gpu1
 permutation: gpu1 size 2048
