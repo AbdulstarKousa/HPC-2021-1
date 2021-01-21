@@ -110,7 +110,7 @@ void jacobi_gpu_wrap2(  double*** d_f,        /* 3D matrix "Cube" of function va
     int threads_blck = 8; 
 
     dim3 dimBlock(threads_blck,threads_blck,threads_blck);// threads per block
-    dim3 dimGrid((threads_blck/dimBlock.x)+1,(threads_blck/dimBlock.y)+1,(threads_blck/dimBlock.z)+1); // xx blocks in total
+    dim3 dimGrid(((N+2)/dimBlock.x)+1,((N+2)/dimBlock.y)+1,((N+2)/dimBlock.z)+1); // xx blocks in total
 
     printf("Entering while loop\n");
     while (m < iter_max) //&& norm_result > tolerance 
@@ -159,29 +159,11 @@ void jacobi_kernel31(
     {    
         if (i == ((N+2)/2)-1) 
         {
-            //double check = inv * (d0_u[4][4][1]); 
-            //d0_u[4][4][1] = inv;
-            //printf("TRYING TO READ FROM D1: i %d j %d k %d \n", i,j,k);
             d0_u_next[i][j][k] = inv * (d0_u[i-1][j][k] + d1_u[0][j][k] + d0_u[i][j-1][k] + d0_u[i][j+1][k] + d0_u[i][j][k-1] + d0_u[i][j][k+1] + d_squared * d0_f[i][j][k]);
-            
-            //d0_u_next[i][j][k] = inv * (d0_u[i-1][j][k]);
-            //d0_u_next[i][j][k] = inv * (d0_u[i][j-1][k]);
-            //d0_u_next[i][j][k] = inv * (d0_u[i][j][k-1]);
-            //d0_u_next[i][j][k] = inv * (d0_u[i+1][j][k]);
-            //d0_u_next[i][j][k] = inv * (d0_u[i][j+1][k]);
-            //d0_u_next[i][j][k] = inv * (d0_u[i][j][k+1]);
         }
         else 
         {
             d0_u_next[i][j][k] = inv * (d0_u[i-1][j][k] + d0_u[i+1][j][k] + d0_u[i][j-1][k] + d0_u[i][j+1][k] + d0_u[i][j][k-1] + d0_u[i][j][k+1] + d_squared * d0_f[i][j][k]);
-            
-            //d0_u_next[i][j][k] = inv * (d0_u[i-1][j][k]);
-            //d0_u_next[i][j][k] = inv * (d0_u[i][j-1][k]);
-            //d0_u_next[i][j][k] = inv * (d0_u[i][j][k-1]);
-            //d0_u_next[i][j][k] = inv * (d0_u[i+1][j][k]);
-            //d0_u_next[i][j][k] = inv * (d0_u[i][j+1][k]);
-            //d0_u_next[i][j][k] = inv * (d0_u[i][j][k+1]);
-
         }
     }
 }
@@ -329,9 +311,8 @@ void reduction_presum(double *a, int n, double *res)
 }
 
 /*
-__global__ 
-void jacobi_kernel4(
-    double*** d_f,        /* 3D matrix "Cube" of function values, Second derivatives of temperature  */
+__global__ void jacobi_kernel4(
+        double*** d_f,        /* 3D matrix "Cube" of function values, Second derivatives of temperature  */
     double*** d_u,        /* 3D matrix "Cube" of temperature estimates */
     double *** d_u_next,  /* 3D matrix "Cube" to hold new temperature estimates */
     int N,                /* #nr. interior grid points */
@@ -351,8 +332,11 @@ void jacobi_kernel4(
         //Add norm calculation 
     }
 }
+*/
 
 
+
+/*
 void jacobi_gpu_wrap4(  double*** d_f,        /* 3D matrix "Cube" of function values, Second derivatives of temperature  */
                 double*** d_u,        /* 3D matrix "Cube" of temperature estimates */
                 double *** d_u_next,  /* 3D matrix "Cube" to hold new temperature estimates */
@@ -396,16 +380,22 @@ void jacobi_gpu_wrap4(  double*** d_f,        /* 3D matrix "Cube" of function va
 
 
 
+
 __global__ 
 void jacobi_kernel4new(
     double*** d_f,        /* 3D matrix "Cube" of function values, Second derivatives of temperature  */
     double*** d_u,        /* 3D matrix "Cube" of temperature estimates */
     double *** d_u_next,  /* 3D matrix "Cube" to hold new temperature estimates */
-    int N,                /* #nr. interior grid points */
-    double d_squared, 
-    double inv              ){
+    int N,                /* #nr. interior grid points */ 
+    double inv,
+    double tolerance              ){
 
-    double norm_result = 0.0; 
+    double norm_result = tolerance + 0.1;        // to make sure that we enter the while loop below we add 0.01
+    double delta= (double)(2.0/((double)(N+1))); // the grid spacing.
+    double d_squared = delta*delta;
+    double inv = 1.0/6.0;
+    double *** temp; // to swipe between u and u_next.
+    int m = 0;
 
     while(m < iter_max && norm_result > tolerance){
         norm_result = 0.0; 
@@ -440,35 +430,16 @@ void jacobi_gpu_wrap4new(  double*** d_f,        /* 3D matrix "Cube" of function
                 double tolerance,   /* threshold */
                 int iter_max,       /* maximum nr. of iterations */
                 int * mp){           /* #nr. the iteration needed to get a suciently small diference*/
-
-    double norm_result = tolerance + 0.1;        // to make sure that we enter the while loop below we add 0.01
-    double delta= (double)(2.0/((double)(N+1))); // the grid spacing.
-    double d_squared = delta*delta;
-    double inv = 1.0/6.0;
-    double *** temp; // to swipe between u and u_next.
-    int m = 0;
-
-    // alg. from the slides show "Assignment 2: The Poisson Problem" p 14.
     
     int threads_blck = 8; 
 
     dim3 dimBlock(threads_blck,threads_blck,threads_blck);// threads per block
-    dim3 dimGrid((threads_blck/dimBlock.x)+1,(threads_blck/dimBlock.y)+1,(threads_blck/dimBlock.z)+1); // xx blocks in total
+    dim3 dimGrid(((N+2)/dimBlock.x)+1,((N+2)/dimBlock.y)+1,((N+2)/dimBlock.z)+1); // xx blocks in total
 
-    printf("Entering while loop\n");
-    while (m < iter_max && norm_result > tolerance ) //
-    {
+    printf("Calling kernel\n");
 
-        //insert function 
-        jacobi_kernel4<<<dimGrid,dimBlock>>>(d_f, d_u, d_u_next, N, d_squared,inv);    
-        cudaDeviceSynchronize();          
+    jacobi_kernel4new<<<dimGrid,dimBlock>>>(d_f, d_u, d_u_next, N, d_squared,inv);    
+    cudaDeviceSynchronize();          
 
-        temp = d_u;
-        d_u = d_u_next; 
-        d_u_next = temp;
-        
-        m++;
-    }
-    *mp = m;
-    printf("End Jacobi wrapper\n");
+    printf("End kernel exercise 8 \n");
 }
