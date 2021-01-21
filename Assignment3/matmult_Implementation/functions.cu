@@ -8,7 +8,7 @@ extern "C" {                // c++ syntax purposes "in matmult_f.nvcc"
 
 /*  matmult_lib:
         calls cblas_dgemm from cblas library, the provided driver(matmult_f.nvcc) will link it to a multithreaded version of CBLAS.
-    */
+*/
 void matmult_lib(int m,int n,int k,double *A,double *B,double *C) {
 
     double alpha, beta;
@@ -18,11 +18,13 @@ void matmult_lib(int m,int n,int k,double *A,double *B,double *C) {
     }
 
 
-//  --------------------------------------------------------------------------
-//  Two functions for the first sequential implementation of matrix multiplication on the GPU, useing only a single thread:
-//         - matmult_gpu1_kernel:  see the comment attached to the function below.
-//         - matmult_gpu1:         see the comment attached to the function below. 
-    
+// --------------------------------------------------------------------------
+/* Two functions for the first sequential implementation of matrix multiplication on the GPU, using only a single thread:
+        - matmult_gpu1_kernel:  see the comment attached to the function below.
+        - matmult_gpu1:         see the comment attached to the function below. 
+*/
+
+
 /*  matmult_gpu1_kernel:  
         helper function, that takes care of the calculations, for the sequential single threaded matmult_gpu1 function.
 */
@@ -91,6 +93,19 @@ void matmult_gpu1(int m,int n,int k,double *A,double *B,double *C){
     // cudaFreeHost(h_C);        
 }
 
+
+
+
+// --------------------------------------------------------------------------
+/* Two functions for gpu2, using one thread per element of C matrix:
+        - matmult_gpu2_kernel:  see the comment attached to the function below.
+        - matmult_gpu2:         see the comment attached to the function below. 
+*/
+
+
+/*  matmult_gpu2_kernel:  
+        helper function, that takes care of the calculations.
+*/
 __global__ void matmult_gpu2_kernel(int m,int n,int k,double *A,double *B,double *C){
 
     int j = blockIdx.x * blockDim.x + threadIdx.x;
@@ -106,6 +121,9 @@ __global__ void matmult_gpu2_kernel(int m,int n,int k,double *A,double *B,double
     }   
 }    
 
+/* matmult_gpu2: 
+    Solves C=AB using one thread per element of C matrix
+*/
 void matmult_gpu2(int m,int n,int k,double *A,double *B,double *C){
     
     double *d_A;
@@ -139,6 +157,15 @@ void matmult_gpu2(int m,int n,int k,double *A,double *B,double *C){
     cudaFree(d_C);
 }
 
+// --------------------------------------------------------------------------
+/* Two functions for gpu3, where each thread computes exactly two elements of C matrix:
+        - matmult_gpu3_kernel:  see the comment attached to the function below.
+        - matmult_gpu3:         see the comment attached to the function below. 
+*/
+
+/*  matmult_gpu3_kernel:  
+        helper function, that takes care of the calculations.
+*/
 __global__ void matmult_gpu3_kernel(int m,int n,int k,double *A,double *B,double *C){
 
     int j = blockIdx.x * blockDim.x + threadIdx.x;
@@ -161,6 +188,10 @@ __global__ void matmult_gpu3_kernel(int m,int n,int k,double *A,double *B,double
     }   
 }    
 
+
+/* matmult_gpu3: 
+    Solves C=AB where each thread computes exactly two elements of C matrix.
+*/
 void matmult_gpu3(int m,int n,int k,double *A,double *B,double *C){
     
     double *d_A;
@@ -326,6 +357,17 @@ void matmult_gpu3(int m,int n,int k,double *A,double *B,double *C){
 // }
 
 
+
+// --------------------------------------------------------------------------
+/* Two functions for gpu4, where each thread computes > 2 elements of C:
+        - matmult_gpu4_kernel:  see the comment attached to the function below.
+        - matmult_gpu4:         see the comment attached to the function below. 
+*/
+
+
+/*  matmult_gpu4_kernel:  
+        helper function, that takes care of the calculations.
+*/
 __global__ void matmult_gpu4_kernel(int m,int n,int k,double *A,double *B,double *C){
 
 
@@ -391,6 +433,10 @@ __global__ void matmult_gpu4_kernel(int m,int n,int k,double *A,double *B,double
     }    
 }    
 
+
+/* matmult_gpu4: 
+    Solves C=AB where each thread computes > 2 elements of C.
+*/
 void matmult_gpu4(int m,int n,int k,double *A,double *B,double *C){
     
     double *d_A;
@@ -427,6 +473,112 @@ void matmult_gpu4(int m,int n,int k,double *A,double *B,double *C){
     cudaFree(d_C);
 }
 
+
+// Thread block size
+#define BLOCK_SIZE 16
+
+__global__ void matmult_gpu5_kernel(int m,int n,int k,double *A,double *B,double *C){
+    // Block row and column
+    int blockRow = blockIdx.y;
+    int blockCol = blockIdx.x;
+
+    // Each thread block computes one sub-matrix Csub of C
+    double * Csub;
+    Csub = &C[n* BLOCK_SIZE * blockRow + BLOCK_SIZE * blockCol];
+
+    // Each thread computes one element of Csub
+    // by accumulating results into Cvalue
+    double Cvalue = 0.0;
+
+    // Thread row and column within Csub
+    int row = threadIdx.y;
+    int col = threadIdx.x;
+
+    // Loop over all the sub-matrices of A and B that are
+    // required to compute Csub
+    // Multiply each pair of sub-matrices together
+    // and accumulate the results
+    for (int i = 0; i < (k / BLOCK_SIZE); ++i) {
+
+        // Get sub-matrix Asub of A
+        // double * Asub;
+        // Asub = &A[k * BLOCK_SIZE * blockRow + BLOCK_SIZE * i];
+
+        // Get sub-matrix Bsub of B
+        // double * Bsub;
+        // Bsub = &B[n* BLOCK_SIZE * i + BLOCK_SIZE * blockCol];
+
+        // Shared memory used to store Asub and Bsub respectively
+        __shared__ double As[BLOCK_SIZE][BLOCK_SIZE];
+        __shared__ double Bs[BLOCK_SIZE][BLOCK_SIZE];
+
+        // Load Asub and Bsub from device memory to shared memory
+        // Each thread loads one element of each sub-matrix
+        // As[row][col] = Asub[row * k + col];
+        // Bs[row][col] = Bsub[row * n + col];
+        As[row][col] = A[row * k + col + k * BLOCK_SIZE * blockRow + BLOCK_SIZE * i];
+        Bs[row][col] = B[row * n + col + n* BLOCK_SIZE * i + BLOCK_SIZE * blockCol];
+
+
+
+        // Synchronize to make sure the sub-matrices are loaded
+        // before starting the computation
+        __syncthreads();
+
+        // Multiply Asub and Bsub together
+        for (int e = 0; e < BLOCK_SIZE; ++e)
+            Cvalue += As[row][e] * Bs[e][col];
+
+        // Synchronize to make sure that the preceding
+        // computation is done before loading two new
+        // sub-matrices of A and B in the next iteration
+        __syncthreads();
+    }
+
+    // Write Csub to device memory
+    // Each thread writes one element
+    // Csub[row * n + col] = Cvalue;
+    C[row * n + col + n* BLOCK_SIZE * blockRow + BLOCK_SIZE * blockCol] = Cvalue;
+}
+
+
+
+void matmult_gpu5(int m,int n,int k,double *A,double *B,double *C){
+    // Allocate device memory
+    double *d_A, *d_B, *d_C;
+    cudaMalloc((void**)&d_A, m*k*sizeof(double));
+    cudaMalloc((void**)&d_B, k*n*sizeof(double));
+    cudaMalloc((void**)&d_C, m*n*sizeof(double));
+
+    // Transfer data from host to device memory
+    cudaMemcpy(d_A, A, m*k*sizeof(double), cudaMemcpyHostToDevice);
+    cudaMemcpy(d_B, B, k*n*sizeof(double), cudaMemcpyHostToDevice);
+    cudaMemcpy(d_C, C, m*n*sizeof(double), cudaMemcpyHostToDevice);
+
+
+    // Executing kernel 
+    dim3 dimBlock(BLOCK_SIZE, BLOCK_SIZE);
+    dim3 dimGrid(n / dimBlock.x, m / dimBlock.y);
+    // dim3 dimBlock(10, 10);
+    // dim3 dimGrid(10, 10);
+
+    matmult_gpu5_kernel<<<dimGrid, dimBlock>>>(m,n,k,d_A,d_B,d_C); 
+    checkCudaErrors(cudaDeviceSynchronize());
+
+    // Transfer data back to host memory
+    cudaMemcpy(C, d_C, m*n*sizeof(double), cudaMemcpyDeviceToHost);
+
+    // Deallocate device memory
+    cudaFree(d_A);
+    cudaFree(d_B);
+    cudaFree(d_C);
+
+}
+
+
+/*  matmult_gpulib:
+    calls DGEMM function for GPUs provided by Nvidia in the CUBLAS library        
+*/
 void matmult_gpulib(int m,int n,int k,double *A,double *B,double *C){
     double *d_A;
     double *d_B;
@@ -465,5 +617,6 @@ void matmult_gpulib(int m,int n,int k,double *A,double *B,double *C){
     cublasDestroy(handle);
 
 }
+
 
 } // end extern "C"    
