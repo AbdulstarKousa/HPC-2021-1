@@ -21,18 +21,18 @@ numactl --cpunodebind=1
 
 EXECUTABLE=matmult_f.nvcc
 # SIZES="2000"
-SIZES="16 32 64 128 256 512 1024"
+# SIZES="16 32 64 128 256 512 1024"
 # SIZES="2048 4096 8192"
-# SIZES="16 32 64 128 256 512 1024 2048 4096 8192"
+SIZES="16 32 64 128 256 512 1024 2048 4096 8192"
 
-PERMUTATIONS="lib"
+PERMUTATIONS="gpu5"
 # PERMUTATIONS="lib gpu1 gpu2 gpu3 gpu4 gpu5 gpulib"
 
 for P in $PERMUTATIONS
 do
 	for S in $SIZES
 	do
-		LOGEXT=../matmult_Results/datmatmult_time_${P}.dat
+		LOGEXT=../matmult_Results/datmatmult_${P}.dat
 		MFLOPS_MIN_T=3 MFLOPS_MAX_IT=3 ./$EXECUTABLE $P $S $S $S |& grep -v CPU >> $LOGEXT
 		echo permutation: $P size $S |  grep -v CPU >>$LOGEXT
 	done
