@@ -153,18 +153,40 @@ void jacobi_kernel31(
     int j = blockIdx.y * blockDim.y + threadIdx.y;
     int k = blockIdx.z * blockDim.z + threadIdx.z;
 
-    printf("i %d j %d k %d \n", i,j,k);
+    //d0_u_next[0][0][0] = inv * (d0_u[4][4][1]); NO
+    //double check = inv * (d0_u[i][j][k]); 
+    double check = inv * (d0_u[10][10][10]); //OK
+    //printf("check val %lf\n",check);
+    //d0_u[5][1][1] = inv;
+    //d0_u_next[0][0][0] = check;
+    //printf("ACCESS OKAY ! \n");
+    return; 
+
+    //printf("i %d j %d k %d \n", i,j,k);
 
     if(0 < i && 0 < j && 0 < k && i < N+1 && j < N+1 && k < (N+2)/2)
     {    
         if (k == ((N+2)/2)-1) 
         {
             printf("TRYING TO READ FROM D1: i %d j %d k %d \n", i,j,k);
-            d0_u_next[i][j][k] = inv * (d0_u[i-1][j][k] + d0_u[i+1][j][k] + d0_u[i][j-1][k] + d0_u[i][j+1][k] + d0_u[i][j][k-1] + d1_u[i][j][0] + d_squared * d0_f[i][j][k]);
+            //d0_u_next[i][j][k] = inv * (d0_u[i-1][j][k] + d0_u[i+1][j][k] + d0_u[i][j-1][k] + d0_u[i][j+1][k] + d0_u[i][j][k-1] + d1_u[i][j][0] + d_squared * d0_f[i][j][k]);
+            //d0_u_next[i][j][k] = inv * (d0_u[i-1][j][k]);
+            //d0_u_next[i][j][k] = inv * (d0_u[i][j-1][k]);
+            //d0_u_next[i][j][k] = inv * (d0_u[i][j][k-1]);
+            //d0_u_next[i][j][k] = inv * (d0_u[i+1][j][k]);
+            //d0_u_next[i][j][k] = inv * (d0_u[i][j+1][k]);
+            //d0_u_next[i][j][k] = inv * (d0_u[i][j][k+1]);
         }
         else 
         {
-            d0_u_next[i][j][k] = inv * (d0_u[i-1][j][k] + d0_u[i+1][j][k] + d0_u[i][j-1][k] + d0_u[i][j+1][k] + d0_u[i][j][k-1] + d0_u[i][j][k+1] + d_squared * d0_f[i][j][k]);
+            //d0_u_next[i][j][k] = inv * (d0_u[i-1][j][k] + d0_u[i+1][j][k] + d0_u[i][j-1][k] + d0_u[i][j+1][k] + d0_u[i][j][k-1] + d0_u[i][j][k+1] + d_squared * d0_f[i][j][k]);
+            //d0_u_next[i][j][k] = inv * (d0_u[i-1][j][k]);
+            //d0_u_next[i][j][k] = inv * (d0_u[i][j-1][k]);
+            //d0_u_next[i][j][k] = inv * (d0_u[i][j][k-1]);
+            //d0_u_next[i][j][k] = inv * (d0_u[i+1][j][k]);
+            //d0_u_next[i][j][k] = inv * (d0_u[i][j+1][k]);
+            //d0_u_next[i][j][k] = inv * (d0_u[i][j][k+1]);
+
         }
     }
 }
@@ -219,13 +241,14 @@ void jacobi_gpu_wrap3(  double*** d0_f,        /* 3D matrix "Cube" of function v
     double *** temp1;
     int m = 0;
 
-    int threads_blck = N+2; 
+    //int threads_blck = N+2; 
+    int threads_blck = 8; 
 
     //dim3 dimBlock(threads_blck,threads_blck,threads_blck/2);// threads per block
     //dim3 dimGrid(((N+2)/dimBlock.x)+1,((N+2)/dimBlock.y)+1,(((N+2)/2)/dimBlock.z)+1); // xx blocks in total   dim3 dimGrid((N/dimBlock.x)+1,(N/dimBlock.y)+1,((N/2)/dimBlock.z)+1); // xx blocks in total
     
     dim3 dimBlock(threads_blck,threads_blck,threads_blck);// threads per block
-    dim3 dimGrid((threads_blck/dimBlock.x)+1,(threads_blck/dimBlock.y)+1,((threads_blck/2)/dimBlock.z)+1); //((threads_blck/2)/dimBlock.z)+1
+    dim3 dimGrid(((N+2)/dimBlock.x)+1,((N+2)/dimBlock.y)+1,(((N+2)/2)/dimBlock.z)+1); //((threads_blck/2)/dimBlock.z)+1
 
     printf("Entering while loop\n");
     while (m < iter_max) //&& norm_result > tolerance 
@@ -236,11 +259,11 @@ void jacobi_gpu_wrap3(  double*** d0_f,        /* 3D matrix "Cube" of function v
         jacobi_kernel31<<<dimGrid,dimBlock>>>(d0_f, d0_u, d1_u, d0_u_next, N, d_squared,inv);     
         
         //DEVICE 1 
-        cudaSetDevice(1);
-        jacobi_kernel32<<<dimGrid,dimBlock>>>(d1_f, d1_u, d0_u, d1_u_next, N, d_squared,inv);    
-        cudaDeviceSynchronize();  
+        //cudaSetDevice(1);
+        //jacobi_kernel32<<<dimGrid,dimBlock>>>(d1_f, d1_u, d0_u, d1_u_next, N, d_squared,inv);    
+        //cudaDeviceSynchronize();  
         
-        cudaSetDevice(0); 
+        //cudaSetDevice(0); 
         cudaDeviceSynchronize(); 
 
 
@@ -263,6 +286,55 @@ void jacobi_gpu_wrap3(  double*** d0_f,        /* 3D matrix "Cube" of function v
 /* *************
  EXERCISE 8 
 ************* */
+
+__inline__ __device__
+double warpReduceSum(double value) 
+{ 
+    for (int i = 16; i > 0; i /= 2)
+    {
+        value += __shfl_down_sync(-1, value, i); 
+    }
+    return value;
+}
+
+__inline__ __device__
+double blockReduceSum(double value) {
+    __shared__ double smem[32]; // Max 32 warp sums
+
+    if (threadIdx.x < warpSize) {
+        smem[threadIdx.x] = 0;
+    }
+    __syncthreads();
+
+    value = warpReduceSum(value);
+
+    if (threadIdx.x % warpSize == 0){
+    smem[threadIdx.x / warpSize] = value;
+    }   
+    __syncthreads();
+
+    if (threadIdx.x < warpSize){ 
+    value = smem[threadIdx.x];
+    }
+
+    return warpReduceSum(value);
+}
+
+__global__
+void reduction_presum(double *a, int n, double *res)
+{
+    int idx = threadIdx.x + blockIdx.x * blockDim.x;
+    double value = 0;
+    for (int i = idx; i < n; i += blockDim.x * gridDim.x){
+        value += a[i];
+    }
+
+    value = blockReduceSum(value); 
+
+    if (threadIdx.x == 0){
+        atomicAdd(res, value);
+    }
+}
 
 __global__ 
 void jacobi_kernel4(
