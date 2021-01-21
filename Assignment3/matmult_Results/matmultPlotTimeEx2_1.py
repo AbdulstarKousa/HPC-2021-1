@@ -40,7 +40,7 @@ for (i, run) in enumerate(content):
     row = [size, Wtime, Mtime, Perm]
     data.loc[i] = row
 
-with open("datmatmult_time_gpu4.dat") as f:
+with open("datmatmult_time_gpu3_bad.dat") as f:
     content = f.readlines()
 
 content = [x.strip() for x in content]
@@ -85,7 +85,7 @@ plot_names = ["Execution time vs Problem size", "Bla"]
 plt.figure(plot_names[0])
 plt.plot(lib["Problem Size[elm]"], lib["Wall time[s]"], label = lib["Permutation"][1], linestyle="-")
 plt.plot(data["Problem Size[elm]"], data["Kernel wall time[s]"] + data["Memory wall time[s]"], label = "gpu3_col", linestyle="--")
-plt.plot(data1["Problem Size[elm]"], data1["Kernel wall time[s]"] + data1["Memory wall time[s]"], label = data1["Permutation"][1], linestyle=":")
+plt.plot(data1["Problem Size[elm]"], data1["Kernel wall time[s]"] + data1["Memory wall time[s]"], label = "gpu3_row", linestyle=":")
 plt.plot(data2["Problem Size[elm]"], data2["Kernel wall time[s]"] + data2["Memory wall time[s]"], label = data2["Permutation"][1], linestyle=":")
 plt.legend()
 plt.xlabel("Problem Size[elm]")
