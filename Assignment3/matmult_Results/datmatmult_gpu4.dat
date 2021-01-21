@@ -1,0 +1,20 @@
+       2.344      6.803 0 # matmult_gpu4
+permutation: gpu4 size 10
+       9.375     50.626 0 # matmult_gpu4
+permutation: gpu4 size 20
+      58.594    730.956 0 # matmult_gpu4
+permutation: gpu4 size 50
+     234.375   5857.811 0 # matmult_gpu4
+permutation: gpu4 size 100
+     937.500  36451.674 0 # matmult_gpu4
+permutation: gpu4 size 200
+    5859.375 165129.151 0 # matmult_gpu4
+permutation: gpu4 size 500
+   23437.500 491569.623 0 # matmult_gpu4
+permutation: gpu4 size 1000
+   93750.000 978447.049 248 # matmult_gpu4
+permutation: gpu4 size 2000
+  585937.500 1641310.305 33280 # matmult_gpu4
+permutation: gpu4 size 5000
+ 2343750.000 2266883.255 1.04858e+06 # matmult_gpu4
+permutation: gpu4 size 10000

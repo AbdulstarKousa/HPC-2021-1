@@ -1,0 +1,20 @@
+       2.344   6858.620 0 # matmult_lib
+permutation: lib size 10
+       9.375  30041.306 0 # matmult_lib
+permutation: lib size 20
+      58.594  61645.520 0 # matmult_lib
+permutation: lib size 50
+     234.375  73877.949 0 # matmult_lib
+permutation: lib size 100
+     937.500  71457.889 0 # matmult_lib
+permutation: lib size 200
+    5859.375  79814.641 0 # matmult_lib
+permutation: lib size 500
+   23437.500  81894.040 0 # matmult_lib
+permutation: lib size 1000
+   93750.000  79787.032 0 # matmult_lib
+permutation: lib size 2000
+  585937.500  81348.574 0 # matmult_lib
+permutation: lib size 5000
+ 2343750.000  83377.744 0 # matmult_lib
+permutation: lib size 10000
