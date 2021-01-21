@@ -20,6 +20,24 @@ for (i, run) in enumerate(content):
     row = [size, Wtime, Perm]
     lib.loc[i] = row
 
+with open("datmatmult_time_gpu2.dat") as f:
+    content = f.readlines()
+
+content = [x.strip() for x in content]
+content = np.array(content)
+
+# Split data into runs
+content = np.split(content, len(content)/8)
+
+data2 = pd.DataFrame(columns=["Problem Size[elm]", "Kernel wall time[s]", "Memory wall time[s]", "Permutation"])
+
+for (i, run) in enumerate(content):
+    size = int(run[-1].split(' ')[-1])
+    Wtime = float(float(run[0].split(' ')[-1]) + float(run[2].split(' ')[-1]) + float(run[4].split(' ')[-1])) /3
+    Mtime = float(float(run[1].split(' ')[-1]) + float(run[3].split(' ')[-1]) + float(run[5].split(' ')[-1])) /3
+    Perm = str(run[-1].split(' ')[-3])
+    row = [size, Wtime, Mtime, Perm]
+    data2.loc[i] = row
 
 with open("datmatmult_time_gpu3.dat") as f:
     content = f.readlines()
@@ -59,24 +77,7 @@ for (i, run) in enumerate(content):
     row = [size, Wtime, Mtime, Perm]
     data1.loc[i] = row
 
-with open("datmatmult_time_gpu2.dat") as f:
-    content = f.readlines()
 
-content = [x.strip() for x in content]
-content = np.array(content)
-
-# Split data into runs
-content = np.split(content, len(content)/8)
-
-data2 = pd.DataFrame(columns=["Problem Size[elm]", "Kernel wall time[s]", "Memory wall time[s]", "Permutation"])
-
-for (i, run) in enumerate(content):
-    size = int(run[-1].split(' ')[-1])
-    Wtime = float(float(run[0].split(' ')[-1]) + float(run[2].split(' ')[-1]) + float(run[4].split(' ')[-1])) /3
-    Mtime = float(float(run[1].split(' ')[-1]) + float(run[3].split(' ')[-1]) + float(run[5].split(' ')[-1])) /3
-    Perm = str(run[-1].split(' ')[-3])
-    row = [size, Wtime, Mtime, Perm]
-    data2.loc[i] = row
 
 
 sets = ["lib", "gpu1", "gpu2"]
@@ -84,9 +85,9 @@ plot_names = ["Execution time vs Problem size", "Bla"]
 
 plt.figure(plot_names[0])
 plt.plot(lib["Problem Size[elm]"], lib["Wall time[s]"], label = lib["Permutation"][1], linestyle="-")
-plt.plot(data["Problem Size[elm]"], data["Kernel wall time[s]"] + data["Memory wall time[s]"], label = "gpu3_col", linestyle="--")
-plt.plot(data1["Problem Size[elm]"], data1["Kernel wall time[s]"] + data1["Memory wall time[s]"], label = data1["Permutation"][1], linestyle=":")
 plt.plot(data2["Problem Size[elm]"], data2["Kernel wall time[s]"] + data2["Memory wall time[s]"], label = data2["Permutation"][1], linestyle=":")
+plt.plot(data["Problem Size[elm]"], data["Kernel wall time[s]"] + data["Memory wall time[s]"], label = "gpu3_col", linestyle="--")
+plt.plot(data1["Problem Size[elm]"], data1["Kernel wall time[s]"] + data1["Memory wall time[s]"], label = data1["Permutation"][1], linestyle="-.")
 plt.legend()
 plt.xlabel("Problem Size[elm]")
 plt.ylabel("Total wall time [s]")
