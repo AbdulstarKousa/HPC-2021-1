@@ -5,6 +5,8 @@
 #include <stdlib.h>         // memory purposes
 extern "C" {                // c++ syntax purposes "in matmult_f.nvcc"
 #include "cblas.h"          // cblas_dgemm Prototype
+#include <assert.h>         // for check 
+
 
 /*  matmult_lib:
         calls cblas_dgemm from cblas library, the provided driver(matmult_f.nvcc) will link it to a multithreaded version of CBLAS.
@@ -485,9 +487,25 @@ void matmult_gpu4(int m,int n,int k,double *A,double *B,double *C){
 }
 
 
-// Thread block size
-#define BLOCK_SIZE 16
 
+
+
+
+
+
+// --------------------------------------------------------------------------
+/* Two functions for gpu5 that uses shared memory for reading the A and B matrices in order to improve the performance:
+        - matmult_gpu5_kernel:  see the comment attached to the function below.
+        - matmult_gpu5:         see the comment attached to the function below. 
+    Please make sure when you run matmult_gpu5 that m, n and k are integer multiples of the thread block size = 16.
+*/
+
+// Thread block size
+#define BLOCK_SIZE 16 
+#define INPUT_ERR fprintf(stderr,"%s:\nOne or more of the defiend values for m , n , k are not integer multiples of the thread block size = %d.\n",__func__,BLOCK_SIZE)
+/*  matmult_gpu5_kernel:  
+        helper function, that takes care of the calculations.
+*/
 __global__ void matmult_gpu5_kernel(int m,int n,int k,double *A,double *B,double *C){
     // Block row and column
     int blockRow = blockIdx.y;
@@ -512,12 +530,12 @@ __global__ void matmult_gpu5_kernel(int m,int n,int k,double *A,double *B,double
     for (int i = 0; i < (k / BLOCK_SIZE); ++i) {
 
         // Get sub-matrix Asub of A
-        // double * Asub;
-        // Asub = &A[k * BLOCK_SIZE * blockRow + BLOCK_SIZE * i];
+        double * Asub; 
+        Asub = &A[k * BLOCK_SIZE * blockRow + BLOCK_SIZE * i]; 
 
         // Get sub-matrix Bsub of B
-        // double * Bsub;
-        // Bsub = &B[n* BLOCK_SIZE * i + BLOCK_SIZE * blockCol];
+        double * Bsub; 
+        Bsub = &B[n* BLOCK_SIZE * i + BLOCK_SIZE * blockCol];  
 
         // Shared memory used to store Asub and Bsub respectively
         __shared__ double As[BLOCK_SIZE][BLOCK_SIZE];
@@ -525,12 +543,8 @@ __global__ void matmult_gpu5_kernel(int m,int n,int k,double *A,double *B,double
 
         // Load Asub and Bsub from device memory to shared memory
         // Each thread loads one element of each sub-matrix
-        // As[row][col] = Asub[row * k + col];
-        // Bs[row][col] = Bsub[row * n + col];
-        As[row][col] = A[row * k + col + k * BLOCK_SIZE * blockRow + BLOCK_SIZE * i];
-        Bs[row][col] = B[row * n + col + n* BLOCK_SIZE * i + BLOCK_SIZE * blockCol];
-
-
+        As[row][col] = Asub[row * k + col]; // As[row][col] = A[row * k + col + k * BLOCK_SIZE * blockRow + BLOCK_SIZE * i];
+        Bs[row][col] = Bsub[row * n + col]; // Bs[row][col] = B[row * n + col + n* BLOCK_SIZE * i + BLOCK_SIZE * blockCol];
 
         // Synchronize to make sure the sub-matrices are loaded
         // before starting the computation
@@ -548,13 +562,24 @@ __global__ void matmult_gpu5_kernel(int m,int n,int k,double *A,double *B,double
 
     // Write Csub to device memory
     // Each thread writes one element
-    // Csub[row * n + col] = Cvalue;
-    C[row * n + col + n* BLOCK_SIZE * blockRow + BLOCK_SIZE * blockCol] = Cvalue;
+    Csub[row * n + col] = Cvalue;  // C[row * n + col + n* BLOCK_SIZE * blockRow + BLOCK_SIZE * blockCol] = Cvalue;
+
 }
 
 
-
+/* matmult_gpu5: 
+    Solves C=AB useing shared memory for reading the A and B matrices in order to improve the performance
+*/
 void matmult_gpu5(int m,int n,int k,double *A,double *B,double *C){
+
+    //making sure that m, n and k are integer multiples of the thread block size.
+    if(m%BLOCK_SIZE!=0 || n%BLOCK_SIZE!=0 || k%BLOCK_SIZE!=0){
+        INPUT_ERR;
+        assert(m%BLOCK_SIZE!=0 == 0);
+        assert(n%BLOCK_SIZE!=0 == 0);
+        assert(k%BLOCK_SIZE!=0 == 0);
+    }
+
     // Allocate device memory
     double *d_A, *d_B, *d_C;
     cudaMalloc((void**)&d_A, m*k*sizeof(double));
@@ -568,11 +593,9 @@ void matmult_gpu5(int m,int n,int k,double *A,double *B,double *C){
 
 
     // Executing kernel 
+    // For simplicity,  it is assumed that m, n and k are integer multiples of the thread block size = 16. See Assignment task. 
     dim3 dimBlock(BLOCK_SIZE, BLOCK_SIZE);
     dim3 dimGrid(n / dimBlock.x, m / dimBlock.y);
-    // dim3 dimBlock(10, 10);
-    // dim3 dimGrid(10, 10);
-
     matmult_gpu5_kernel<<<dimGrid, dimBlock>>>(m,n,k,d_A,d_B,d_C); 
     checkCudaErrors(cudaDeviceSynchronize());
 
