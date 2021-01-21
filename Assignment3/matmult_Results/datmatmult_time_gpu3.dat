@@ -1,0 +1,74 @@
+GPU1 wall time 0.000051 
+GPU! mem wall time 0.003563 
+GPU1 wall time 0.000020 
+GPU! mem wall time 0.000326 
+GPU1 wall time 0.000019 
+GPU! mem wall time 0.000308 
+       6.000      5.691 0 # matmult_gpu3
+permutation: gpu3 size 16
+GPU1 wall time 0.000057 
+GPU! mem wall time 0.002751 
+GPU1 wall time 0.000029 
+GPU! mem wall time 0.000328 
+GPU1 wall time 0.000026 
+GPU! mem wall time 0.000309 
+      24.000     55.640 0 # matmult_gpu3
+permutation: gpu3 size 32
+GPU1 wall time 0.000066 
+GPU! mem wall time 0.002751 
+GPU1 wall time 0.000036 
+GPU! mem wall time 0.000337 
+GPU1 wall time 0.000034 
+GPU! mem wall time 0.000314 
+      96.000    440.755 0 # matmult_gpu3
+permutation: gpu3 size 64
+GPU1 wall time 0.000085 
+GPU! mem wall time 0.002826 
+GPU1 wall time 0.000055 
+GPU! mem wall time 0.000357 
+GPU1 wall time 0.000054 
+GPU! mem wall time 0.000341 
+     384.000   3355.847 0 # matmult_gpu3
+permutation: gpu3 size 128
+GPU1 wall time 0.000124 
+GPU! mem wall time 0.002898 
+GPU1 wall time 0.000093 
+GPU! mem wall time 0.000458 
+GPU1 wall time 0.000092 
+GPU! mem wall time 0.000443 
+    1536.000  24258.680 0 # matmult_gpu3
+permutation: gpu3 size 256
+GPU1 wall time 0.000233 
+GPU! mem wall time 0.003937 
+GPU1 wall time 0.000203 
+GPU! mem wall time 0.001435 
+GPU1 wall time 0.000201 
+GPU! mem wall time 0.001423 
+    6144.000 107811.488 0 # matmult_gpu3
+permutation: gpu3 size 512
+GPU1 wall time 0.001492 
+GPU! mem wall time 0.006264 
+GPU1 wall time 0.001458 
+GPU! mem wall time 0.003797 
+GPU1 wall time 0.001458 
+GPU! mem wall time 0.003810 
+   24576.000 351574.494 0 # matmult_gpu3
+permutation: gpu3 size 1024
+GPU1 wall time 0.012455 
+GPU! mem wall time 0.013864 
+GPU1 wall time 0.012407 
+GPU! mem wall time 0.012968 
+GPU1 wall time 0.012378 
+GPU! mem wall time 0.013075 
+   98304.000 667623.790 300 # matmult_gpu3
+permutation: gpu3 size 2048
+GPU1 wall time 0.102329 
+GPU! mem wall time 0.039743 
+GPU1 wall time 0.102256 
+GPU! mem wall time 0.051567 
+GPU1 wall time 0.102271 
+GPU! mem wall time 0.053040 
+  393216.000 913698.150 19200 # matmult_gpu3
+permutation: gpu3 size 4096
+CUDA error at allocate_gpu.cu:15 code=1(cudaErrorInvalidValue) "cudaMallocHost((void **) &inner, m*n*sizeof(double))" 
+permutation: gpu3 size 8192

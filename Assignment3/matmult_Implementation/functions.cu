@@ -205,6 +205,8 @@ __global__ void matmult_gpu3_kernel(int m,int n,int k,double *A,double *B,double
 */
 void matmult_gpu3(int m,int n,int k,double *A,double *B,double *C){
     
+    double GPU1_mem_start = omp_get_wtime();
+
     double *d_A;
     double *d_B;
     double *d_C;
@@ -225,17 +227,24 @@ void matmult_gpu3(int m,int n,int k,double *A,double *B,double *C){
     dim3 threadsPerBlock = dim3(numThreads,numThreads);
     dim3 blocks = dim3(n/numThreads+1, m/(numThreads*2)+1);
 
-    double GPUstart = omp_get_wtime();
 
+    double GPU1_ker_start = omp_get_wtime();
     matmult_gpu3_kernel<<<blocks,threadsPerBlock>>>(m, n, k, d_A, d_B, d_C);
 
     cudaDeviceSynchronize();
+
+    double GPU1_ker_end = omp_get_wtime();
 
     cudaMemcpy(C, d_C, dimC, cudaMemcpyDeviceToHost);
 
     cudaFree(d_A); 
     cudaFree(d_B);
     cudaFree(d_C);
+
+    double GPU1_mem_end = omp_get_wtime();
+
+    printf("GPU1 wall time %f \n", (GPU1_ker_end-GPU1_ker_start));
+    printf("GPU! mem wall time %f \n", (GPU1_mem_end-GPU1_mem_start+GPU1_ker_start-GPU1_ker_end));
 }
 
 __global__ void matmult_gpu6_kernel(int m,int n,int k,double *A,double *B,double *C){
@@ -281,8 +290,6 @@ void matmult_gpu6(int m,int n,int k,double *A,double *B,double *C){
 
     dim3 blocks = dim3(n/(numThreads*2)+1, m/numThreads+1);
 
-    double GPUstart = omp_get_wtime();
-
     matmult_gpu6_kernel<<<blocks,threadsPerBlock>>>(m, n, k, d_A, d_B, d_C);
 
     cudaDeviceSynchronize();
@@ -292,6 +299,7 @@ void matmult_gpu6(int m,int n,int k,double *A,double *B,double *C){
     cudaFree(d_A); 
     cudaFree(d_B);
     cudaFree(d_C);
+
 }
 
 // __global__ void matmult_gpu4_kernel(int m,int n,int k,double *A,double *B,double *C){
@@ -450,6 +458,8 @@ __global__ void matmult_gpu4_kernel(int m,int n,int k,double *A,double *B,double
 */
 void matmult_gpu4(int m,int n,int k,double *A,double *B,double *C){
     
+    double GPU1_mem_start = omp_get_wtime();
+    
     double *d_A;
     double *d_B;
     double *d_C;
@@ -471,17 +481,25 @@ void matmult_gpu4(int m,int n,int k,double *A,double *B,double *C){
 
     dim3 blocks = dim3(n/numThreads+1, m/(numThreads*8)+1);
 
-    double GPUstart = omp_get_wtime();
+    double GPU1_ker_start = omp_get_wtime();
 
     matmult_gpu4_kernel<<<blocks,threadsPerBlock>>>(m, n, k, d_A, d_B, d_C);
 
     cudaDeviceSynchronize();
+
+    double GPU1_ker_end = omp_get_wtime();
 
     cudaMemcpy(C, d_C, dimC, cudaMemcpyDeviceToHost);
 
     cudaFree(d_A); 
     cudaFree(d_B);
     cudaFree(d_C);
+
+
+    double GPU1_mem_end = omp_get_wtime();
+
+    printf("GPU1 wall time %f \n", (GPU1_ker_end-GPU1_ker_start));
+    printf("GPU! mem wall time %f \n", (GPU1_mem_end-GPU1_mem_start+GPU1_ker_start-GPU1_ker_end));
 }
 
 
