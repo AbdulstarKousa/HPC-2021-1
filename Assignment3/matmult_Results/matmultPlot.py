@@ -10,15 +10,23 @@ content = [x.strip() for x in content]
 content = np.array(content)
 
 # Split data into runs
-content = np.split(content, len(content)/5)
-# print(content)
-# content = content[1:]
+content = np.split(content, len(content)/8)
 
+data = pd.DataFrame(columns=["Problem Size[elm]", "Kernel wall time[s]", "Memory wall time[s]", "Permutation"])
+
+for (i, run) in enumerate(content):
+    size = int(run[-1].split(' ')[-1])
+    Wtime = (float(run[0].split(' ')[-1]) + float(run[2].split(' ')[-1]) + float(run[4].split(' ')[-1])) /3
+    Mtime = (float(run[1].split(' ')[-1]) + float(run[3].split(' ')[-1]) + float(run[5].split(' ')[-1])) /3
+    Perm = str(run[-1].split(' ')[-3])
+    row = np.array([size, Wtime, Mtime, Perm])
+    data.loc[i] = row
+print(data)
 # # Reverse array to have run with 1 thread at the top
 # content = np.flip(content, axis=0)
 
 # # Build data frame from data
-# data = pd.DataFrame(columns=["run_time", "iterations", "norm", "threads", "lattice_updates"])
+
 
 # for (i, run) in enumerate(content):
 #     time = float(run[1].split(' ')[-1])
