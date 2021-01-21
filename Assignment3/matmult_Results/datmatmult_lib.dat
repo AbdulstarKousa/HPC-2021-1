@@ -18,3 +18,4 @@ permutation: lib size 2000
 permutation: lib size 5000
  2343750.000  83377.744 0 # matmult_lib
 permutation: lib size 10000
+

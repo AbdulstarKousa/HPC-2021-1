@@ -10,11 +10,12 @@ extern "C" {                // c++ syntax purposes "in matmult_f.nvcc"
         calls cblas_dgemm from cblas library, the provided driver(matmult_f.nvcc) will link it to a multithreaded version of CBLAS.
 */
 void matmult_lib(int m,int n,int k,double *A,double *B,double *C) {
-
+    double LIBstart = omp_get_wtime();
     double alpha, beta;
     alpha = 1.0; beta = 0.0;
     cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, m, n, k, alpha, A, k, B, n, beta, C, n);
-    
+    double LIBend = omp_get_wtime();
+    printf("lib wall time %f \n", (LIBend-LIBstart));
     }
 
 
@@ -62,7 +63,7 @@ void matmult_gpu1(int m,int n,int k,double *A,double *B,double *C){
     // cudaMallocHost((void**)&h_A, m*k*sizeof(double));
     // cudaMallocHost((void**)&h_B, k*n*sizeof(double));
     // cudaMallocHost((void**)&h_C, m*n*sizeof(double));
-    
+    double GPU1_mem_start = omp_get_wtime();
     // Allocate device memory
     double *d_A, *d_B, *d_C;
     cudaMalloc((void**)&d_A, m*k*sizeof(double));
@@ -73,19 +74,21 @@ void matmult_gpu1(int m,int n,int k,double *A,double *B,double *C){
     cudaMemcpy(d_A, A, m*k*sizeof(double), cudaMemcpyHostToDevice);
     cudaMemcpy(d_B, B, k*n*sizeof(double), cudaMemcpyHostToDevice);
     cudaMemcpy(d_C, C, m*n*sizeof(double), cudaMemcpyHostToDevice);
-
+    double GPU1_ker_start = omp_get_wtime();
     // Executing kernel 
     matmult_gpu1_kernel<<<1,1>>>(m,n,k,d_A,d_B,d_C); //single threaded (1 block, 1 thread per block)
     checkCudaErrors(cudaDeviceSynchronize());
-
+    double GPU1_ker_end = omp_get_wtime();
     // Transfer data back to host memory
     cudaMemcpy(C, d_C, m*n*sizeof(double), cudaMemcpyDeviceToHost);
-
+    
     // Deallocate device memory
     cudaFree(d_A);
     cudaFree(d_B);
     cudaFree(d_C);
-
+    double GPU1_mem_end = omp_get_wtime();
+    printf("GPU1 wall time %f \n", (GPU1_ker_end-GPU1_ker_start));
+    printf("GPU! mem wall time %f \n", (GPU1_mem_end-GPU1_mem_start+GPU1_ker_start-GPU1_ker_end));
     // Deallocate host memory (here we don't need to Deallocate host memory as it was given as arguments)
     // but as an example bolw is how to Deallocate host memory:
     // cudaFreeHost(h_A);
@@ -126,6 +129,7 @@ __global__ void matmult_gpu2_kernel(int m,int n,int k,double *A,double *B,double
 */
 void matmult_gpu2(int m,int n,int k,double *A,double *B,double *C){
     
+    double GPU1_mem_start = omp_get_wtime();
     double *d_A;
     double *d_B;
     double *d_C;
@@ -146,7 +150,9 @@ void matmult_gpu2(int m,int n,int k,double *A,double *B,double *C){
     dim3 threadsPerBlock = dim3(numThreads,numThreads);
     dim3 blocks = dim3(n/numThreads+1, m/numThreads+1);
 
+    double GPU1_ker_start = omp_get_wtime();
     matmult_gpu2_kernel<<<blocks,threadsPerBlock>>>(m, n, k, d_A, d_B, d_C);
+    double GPU1_ker_end = omp_get_wtime();
 
     cudaDeviceSynchronize();
 
@@ -155,6 +161,11 @@ void matmult_gpu2(int m,int n,int k,double *A,double *B,double *C){
     cudaFree(d_A); 
     cudaFree(d_B);
     cudaFree(d_C);
+    double GPU1_mem_end = omp_get_wtime();
+
+    printf("GPU1 wall time %f \n", (GPU1_ker_end-GPU1_ker_start));
+    printf("GPU! mem wall time %f \n", (GPU1_mem_end-GPU1_mem_start+GPU1_ker_start-GPU1_ker_end));
+    
 }
 
 // --------------------------------------------------------------------------

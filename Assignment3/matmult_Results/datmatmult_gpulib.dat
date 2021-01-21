@@ -18,3 +18,4 @@ permutation: gpulib size 2000
 permutation: gpulib size 5000
  2343750.000 5407080.222 1.04858e+06 # matmult_gpulib
 permutation: gpulib size 10000
+

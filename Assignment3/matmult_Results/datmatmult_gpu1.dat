@@ -8,3 +8,9 @@ permutation: gpu1 size 50
 permutation: gpu1 size 100
      937.500     66.961 0 # matmult_gpu1
 permutation: gpu1 size 200
+    5859.375     66.517 0 # matmult_gpu1
+permutation: gpu1 size 500
+   23437.500     43.613 0 # matmult_gpu1
+permutation: gpu1 size 1000
+   93750.000     26.098 248 # matmult_gpu1
+permutation: gpu1 size 2000
