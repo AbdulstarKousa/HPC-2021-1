@@ -158,11 +158,11 @@ void jacobi_kernel31(
     {    
         if (k == ((N+2)/2)-1) 
         {
-            d0_u_next[i][j][k] = (d0_u[i-1][j][k] + d0_u[i+1][j][k] + d0_u[i][j-1][k] + d0_u[i][j+1][k] + d0_u[i][j][k-1] + d1_u[i][j][0] + d_squared * d0_f[i][j][k]);
+            d0_u_next[i][j][k] = inv * (d0_u[i-1][j][k] + d0_u[i+1][j][k] + d0_u[i][j-1][k] + d0_u[i][j+1][k] + d0_u[i][j][k-1] + d1_u[i][j][0] + d_squared * d0_f[i][j][k]);
         }
         else 
         {
-        d0_u_next[i][j][k] = inv * (d0_u[i-1][j][k] + d0_u[i+1][j][k] + d0_u[i][j-1][k] + d0_u[i][j+1][k] + d0_u[i][j][k-1] + d0_u[i][j][k+1] + d_squared * d0_f[i][j][k]);
+            d0_u_next[i][j][k] = inv * (d0_u[i-1][j][k] + d0_u[i+1][j][k] + d0_u[i][j-1][k] + d0_u[i][j+1][k] + d0_u[i][j][k-1] + d0_u[i][j][k+1] + d_squared * d0_f[i][j][k]);
         }
     }
 }
@@ -185,7 +185,6 @@ void jacobi_kernel32(
     int k = blockIdx.z * blockDim.z + threadIdx.z;
 
 
-    // if(0 < i && 0 < j && 0 < k && i < N+1 && j < N+1 && k < N+1)
     if(0 < i && 0 < j && 0 <= k && i < N+1 && j < N+1 && k < (N+2/2)-1)
     {  
         if (k == 0) 
@@ -211,7 +210,6 @@ void jacobi_gpu_wrap3(  double*** d0_f,        /* 3D matrix "Cube" of function v
                 int iter_max,       /* maximum nr. of iterations */
                 int * mp){           /* #nr. the iteration needed to get a suciently small diference*/
 
-    double norm_result = tolerance + 0.1;        // to make sure that we enter the while loop below we add 0.01
     double delta= (double)(2.0/((double)(N+1))); // the grid spacing.
     double d_squared = delta*delta;
     double inv = 1.0/6.0;
@@ -233,13 +231,13 @@ void jacobi_gpu_wrap3(  double*** d0_f,        /* 3D matrix "Cube" of function v
 
         //DEVICE 0 
         cudaSetDevice(0);
-        cudaDeviceEnablePeerAccess(1, 0);
+        //cudaDeviceEnablePeerAccess(1, 0);
         jacobi_kernel31<<<dimGrid,dimBlock>>>(d0_f, d0_u, d1_u, d0_u_next, N, d_squared,inv);    
         cudaDeviceSynchronize();   
         
         //DEVICE 1 
         cudaSetDevice(1);
-        cudaDeviceEnablePeerAccess(0, 0);
+        //cudaDeviceEnablePeerAccess(0, 0);
         jacobi_kernel32<<<dimGrid,dimBlock>>>(d1_f, d1_u, d0_u, d1_u_next, N, d_squared,inv);    
         cudaDeviceSynchronize();          
 

@@ -202,10 +202,13 @@ main(int argc, char *argv[]) {
             double 	***d0_u = NULL;
             double 	***d0_f = NULL;
             double 	***d0_u_next = NULL;
+
             double 	***d1_u = NULL;
             double 	***d1_f = NULL;
             double 	***d1_u_next = NULL;
+
             //Device 0 
+            cudaSetDevice(0);
             if ( (d0_u = d_malloc_3d_gpu(N2, N2, N2/2)) == NULL ) {
                 perror("array d_u: allocation failed");
                 exit(-1);
@@ -220,6 +223,7 @@ main(int argc, char *argv[]) {
             }
 
             //Device 1
+            cudaSetDevice(1);
             if ( (d1_u = d_malloc_3d_gpu(N2, N2, N2/2)) == NULL ) {
                 perror("array d_u: allocation failed");
                 exit(-1);
@@ -245,6 +249,7 @@ main(int argc, char *argv[]) {
             //Transfer data to DEVICE 0 
             printf("Transfer data to DEVICE 0 \n");
             cudaSetDevice(0);
+            cudaDeviceEnablePeerAccess(1, 0);
             transfer_3d(d0_u, h_u, N2, N2, N2/2, cudaMemcpyHostToDevice); 
             transfer_3d(d0_u_next, h_u_next, N2, N2, N2/2, cudaMemcpyHostToDevice); 
             transfer_3d(d0_f, h_f, N2, N2, N2/2, cudaMemcpyHostToDevice); 
@@ -254,6 +259,7 @@ main(int argc, char *argv[]) {
             //off-set 
             long long offset = N2*N2*(N2/2); 
             cudaSetDevice(1);
+            cudaDeviceEnablePeerAccess(0, 0);
             transfer_3d(d1_u, h_u+offset, N2, N2, N2/2, cudaMemcpyHostToDevice); 
             transfer_3d(d1_u_next, h_u_next+offset, N2, N2, N2/2, cudaMemcpyHostToDevice); 
             transfer_3d(d1_f, h_f+offset, N2, N2, N2/2, cudaMemcpyHostToDevice);            
@@ -264,11 +270,11 @@ main(int argc, char *argv[]) {
 
             //Transfer data back to HOST 
             printf("Transfer data back to HOST from DEVICE 0 \n");
-            cudaSetDevice(0);
+            //cudaSetDevice(0);
             transfer_3d(h_u, d0_u, N2, N2, N2/2, cudaMemcpyDeviceToHost);  
 
             printf("Transfer data back to HOST from DEVICE 1 \n");
-            cudaSetDevice(1);
+            //cudaSetDevice(1);
             transfer_3d(h_u+offset, d1_u, N2, N2, N2/2, cudaMemcpyDeviceToHost);  
 
             
