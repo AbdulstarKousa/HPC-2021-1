@@ -9,7 +9,7 @@
 #BSUB -J mm_batch
 #BSUB -o ../jobfiles/mm_batch_%J.out
 #BSUB -q hpcintrogpu
-#BSUB -n 16
+#BSUB -n 1
 #BSUB -R "rusage[mem=2048]"
 #BSUB -R "span[hosts=1]"
 #BSUB -W 20
@@ -21,11 +21,11 @@ numactl --cpunodebind=1
 
 EXECUTABLE=matmult_f.nvcc
 # SIZES="2000"
-# SIZES="16 32 64 128 256 512 1024"
+SIZES="16 32 64 128 256 512 1024"
 # SIZES="2048 4096 8192"
-SIZES="16 32 64 128 256 512 1024 2048 4096 8192"
+# SIZES="16 32 64 128 256 512 1024 2048 4096 8192"
 
-PERMUTATIONS="gpu2"
+PERMUTATIONS="lib"
 # PERMUTATIONS="lib gpu1 gpu2 gpu3 gpu4 gpu5 gpulib"
 
 for P in $PERMUTATIONS
