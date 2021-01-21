@@ -199,6 +199,12 @@ main(int argc, char *argv[]) {
             printf("Jacopi running two GPU ex7\n");
 
             //Allocate device memory 
+            double 	***d0_u = NULL;
+            double 	***d0_f = NULL;
+            double 	***d0_u_next = NULL;
+            double 	***d1_u = NULL;
+            double 	***d1_f = NULL;
+            double 	***d1_u_next = NULL;
             //Device 0 
             if ( (d0_u = d_malloc_3d_gpu(N2, N2, N2/2)) == NULL ) {
                 perror("array d_u: allocation failed");
@@ -254,7 +260,7 @@ main(int argc, char *argv[]) {
 
 
             jacobi_gpu_wrap3(d0_f,d0_u,d0_u_next,d1_f,d1_u,d1_u_next,N,tolerance,iter_max,&m);
-            printf("Out of Jabobi exercise 6\n");
+            printf("Out of Jabobi exercise 7\n");
 
             //Transfer data back to HOST 
             printf("Transfer data back to HOST from DEVICE 0 \n");

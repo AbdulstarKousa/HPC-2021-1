@@ -154,18 +154,16 @@ void jacobi_kernel31(
     int k = blockIdx.z * blockDim.z + threadIdx.z;
 
 
-    if (k == ((N+2)/2)) 
-    {
-        // Need to access memory of sister device
-        // d0_u[?][?][k+1] becomes d1_u[?][?][0]
-        d0_u_next[i][j][k] = (d0_u[i-1][j][k] + d0_u[i+1][j][k] + d0_u[i][j-1][k] + d0_u[i][j+1][k] + d0_u[i][j][k-1] + d1_u[i][j][0] + d_squared * d_f[i][j][k]);
-    }
-
-
-    // if(0 < i && 0 < j && 0 < k && i < N+1 && j < N+1 && k < N+1)
-    if(0 < i && 0 < j && 0 < k && i < N+1 && j < N+1 && k < N+1)
+    if(0 < i && 0 < j && 0 < k && i < N+1 && j < N+1 && k < (N+2)/2)
     {    
-        d_u_next[i][j][k] = inv * (d_u[i-1][j][k] + d_u[i+1][j][k] + d_u[i][j-1][k] + d_u[i][j+1][k] + d_u[i][j][k-1] + d_u[i][j][k+1] + d_squared * d_f[i][j][k]);
+        if (k == ((N+2)/2)-1) 
+        {
+            d0_u_next[i][j][k] = (d0_u[i-1][j][k] + d0_u[i+1][j][k] + d0_u[i][j-1][k] + d0_u[i][j+1][k] + d0_u[i][j][k-1] + d1_u[i][j][0] + d_squared * d0_f[i][j][k]);
+        }
+        else 
+        {
+        d0_u_next[i][j][k] = inv * (d0_u[i-1][j][k] + d0_u[i+1][j][k] + d0_u[i][j-1][k] + d0_u[i][j+1][k] + d0_u[i][j][k-1] + d0_u[i][j][k+1] + d_squared * d0_f[i][j][k]);
+        }
     }
 }
 
@@ -186,16 +184,19 @@ void jacobi_kernel32(
     int j = blockIdx.y * blockDim.y + threadIdx.y;
     int k = blockIdx.z * blockDim.z + threadIdx.z;
 
-    if (k == 0) 
-    {
-        // Need to access memory of sister device
-    }
-
 
     // if(0 < i && 0 < j && 0 < k && i < N+1 && j < N+1 && k < N+1)
-    if(0 < i && 0 < j && 0 < k && i < N+1 && j < N+1 && k < (N/2))
-    {    
-        d_u_next[i][j][k] = inv * (d_u[i-1][j][k] + d_u[i+1][j][k] + d_u[i][j-1][k] + d_u[i][j+1][k] + d_u[i][j][k-1] + d_u[i][j][k+1] + d_squared * d_f[i][j][k]);
+    if(0 < i && 0 < j && 0 <= k && i < N+1 && j < N+1 && k < (N+2/2)-1)
+    {  
+        if (k == 0) 
+        {
+            // Need to access memory of sister device
+            d1_u_next[i][j][k] = inv * (d1_u[i-1][j][k] + d1_u[i+1][j][k] + d1_u[i][j-1][k] + d1_u[i][j+1][k] + d0_u[i][j][((N+2)/2)-1] + d1_u[i][j][k+1] + d_squared * d1_f[i][j][k]);
+        } 
+        else 
+        {
+        d1_u_next[i][j][k] = inv * (d1_u[i-1][j][k] + d1_u[i+1][j][k] + d1_u[i][j-1][k] + d1_u[i][j+1][k] + d1_u[i][j][k-1] + d1_u[i][j][k+1] + d_squared * d1_f[i][j][k]);
+        }
     }
 }
 
@@ -233,13 +234,13 @@ void jacobi_gpu_wrap3(  double*** d0_f,        /* 3D matrix "Cube" of function v
         //DEVICE 0 
         cudaSetDevice(0);
         cudaDeviceEnablePeerAccess(1, 0);
-        jacobi_kernel31<<<dimGrid,dimBlock>>>(d0_f, d0_u, d0_u_next, N, d_squared,inv);    
+        jacobi_kernel31<<<dimGrid,dimBlock>>>(d0_f, d0_u, d1_u, d0_u_next, N, d_squared,inv);    
         cudaDeviceSynchronize();   
         
         //DEVICE 1 
         cudaSetDevice(1);
         cudaDeviceEnablePeerAccess(0, 0);
-        jacobi_kernel32<<<dimGrid,dimBlock>>>(d1_f, d1_u, d1_u_next, N, d_squared,inv);    
+        jacobi_kernel32<<<dimGrid,dimBlock>>>(d1_f, d1_u, d0_u, d1_u_next, N, d_squared,inv);    
         cudaDeviceSynchronize();          
 
         temp0 = d0_u;
