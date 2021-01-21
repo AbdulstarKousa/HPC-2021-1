@@ -153,6 +153,14 @@ void jacobi_kernel31(
     int j = blockIdx.y * blockDim.y + threadIdx.y;
     int k = blockIdx.z * blockDim.z + threadIdx.z;
 
+
+    if (k == (N/2)) 
+    {
+        // Need to access memory of sister device
+    }
+
+
+    // if(0 < i && 0 < j && 0 < k && i < N+1 && j < N+1 && k < N+1)
     if(0 < i && 0 < j && 0 < k && i < N+1 && j < N+1 && k < N+1)
     {    
         d_u_next[i][j][k] = inv * (d_u[i-1][j][k] + d_u[i+1][j][k] + d_u[i][j-1][k] + d_u[i][j+1][k] + d_u[i][j][k-1] + d_u[i][j][k+1] + d_squared * d_f[i][j][k]);
@@ -163,6 +171,7 @@ __global__
 void jacobi_kernel32(
     double*** d1_f,        /* 3D matrix "Cube" of function values, Second derivatives of temperature  */
     double*** d1_u,        /* 3D matrix "Cube" of temperature estimates */
+    double*** d0_u,
     double *** d1_u_next,  /* 3D matrix "Cube" to hold new temperature estimates */
     int N,                /* #nr. interior grid points */
     double d_squared, 
@@ -175,7 +184,7 @@ void jacobi_kernel32(
     int j = blockIdx.y * blockDim.y + threadIdx.y;
     int k = blockIdx.z * blockDim.z + threadIdx.z;
 
-    if (k == (N/2)) 
+    if (k == 0) 
     {
         // Need to access memory of sister device
     }
