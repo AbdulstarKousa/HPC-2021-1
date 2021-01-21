@@ -284,8 +284,7 @@ main(int argc, char *argv[]) {
                         if(i < N2/2){
                             h0_f[i][j][k] = h_f[i][j][k];
                             h0_u[i][j][k] = h_f[i][j][k];
-                            h0_u_next[i][j][k] = h_f[i][j][k];
-                            
+                            h0_u_next[i][j][k] = h_f[i][j][k];  
                         }
                         else{
                             h1_f[i - (N2/2)][j][k] = h_f[i][j][k];
