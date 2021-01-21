@@ -153,11 +153,13 @@ void jacobi_kernel31(
     int j = blockIdx.y * blockDim.y + threadIdx.y;
     int k = blockIdx.z * blockDim.z + threadIdx.z;
 
+    printf("i %d j %d k %d \n", i,j,k);
 
     if(0 < i && 0 < j && 0 < k && i < N+1 && j < N+1 && k < (N+2)/2)
     {    
         if (k == ((N+2)/2)-1) 
         {
+            printf("TRYING TO READ FROM D1: i %d j %d k %d \n", i,j,k);
             d0_u_next[i][j][k] = inv * (d0_u[i-1][j][k] + d0_u[i+1][j][k] + d0_u[i][j-1][k] + d0_u[i][j+1][k] + d0_u[i][j][k-1] + d1_u[i][j][0] + d_squared * d0_f[i][j][k]);
         }
         else 
@@ -194,7 +196,7 @@ void jacobi_kernel32(
         } 
         else 
         {
-        d1_u_next[i][j][k] = inv * (d1_u[i-1][j][k] + d1_u[i+1][j][k] + d1_u[i][j-1][k] + d1_u[i][j+1][k] + d1_u[i][j][k-1] + d1_u[i][j][k+1] + d_squared * d1_f[i][j][k]);
+            d1_u_next[i][j][k] = inv * (d1_u[i-1][j][k] + d1_u[i+1][j][k] + d1_u[i][j-1][k] + d1_u[i][j+1][k] + d1_u[i][j][k-1] + d1_u[i][j][k+1] + d_squared * d1_f[i][j][k]);
         }
     }
 }
@@ -217,13 +219,13 @@ void jacobi_gpu_wrap3(  double*** d0_f,        /* 3D matrix "Cube" of function v
     double *** temp1;
     int m = 0;
 
-    // alg. from the slides show "Assignment 2: The Poisson Problem" p 14.
-    
-    // TODO: Figure out whether we should actually have N blocks per thread
-    int threads_blck = N; 
+    int threads_blck = N+2; 
 
-    dim3 dimBlock(threads_blck,threads_blck,threads_blck/2);// threads per block
-    dim3 dimGrid((N/dimBlock.x)+1,(N/dimBlock.y)+1,((N/2)/dimBlock.z)+1); // xx blocks in total
+    //dim3 dimBlock(threads_blck,threads_blck,threads_blck/2);// threads per block
+    //dim3 dimGrid(((N+2)/dimBlock.x)+1,((N+2)/dimBlock.y)+1,(((N+2)/2)/dimBlock.z)+1); // xx blocks in total   dim3 dimGrid((N/dimBlock.x)+1,(N/dimBlock.y)+1,((N/2)/dimBlock.z)+1); // xx blocks in total
+    
+    dim3 dimBlock(threads_blck,threads_blck,threads_blck);// threads per block
+    dim3 dimGrid((threads_blck/dimBlock.x)+1,(threads_blck/dimBlock.y)+1,((threads_blck/2)/dimBlock.z)+1); //((threads_blck/2)/dimBlock.z)+1
 
     printf("Entering while loop\n");
     while (m < iter_max) //&& norm_result > tolerance 
@@ -231,15 +233,16 @@ void jacobi_gpu_wrap3(  double*** d0_f,        /* 3D matrix "Cube" of function v
 
         //DEVICE 0 
         cudaSetDevice(0);
-        //cudaDeviceEnablePeerAccess(1, 0);
-        jacobi_kernel31<<<dimGrid,dimBlock>>>(d0_f, d0_u, d1_u, d0_u_next, N, d_squared,inv);    
-        cudaDeviceSynchronize();   
+        jacobi_kernel31<<<dimGrid,dimBlock>>>(d0_f, d0_u, d1_u, d0_u_next, N, d_squared,inv);     
         
         //DEVICE 1 
         cudaSetDevice(1);
-        //cudaDeviceEnablePeerAccess(0, 0);
         jacobi_kernel32<<<dimGrid,dimBlock>>>(d1_f, d1_u, d0_u, d1_u_next, N, d_squared,inv);    
-        cudaDeviceSynchronize();          
+        cudaDeviceSynchronize();  
+        
+        cudaSetDevice(0); 
+        cudaDeviceSynchronize(); 
+
 
         temp0 = d0_u;
         d0_u = d0_u_next; 
