@@ -353,7 +353,7 @@ main(int argc, char *argv[]) {
             transfer_3d(d_f, h_f, N2, N2, N2, cudaMemcpyHostToDevice); 
 
 
-            jacobi_gpu_wrap4(d_f,d_u,d_u_next,N,tolerance,iter_max,&m);
+            jacobi_gpu_wrap4new(d_f,d_u,d_u_next,N,tolerance,iter_max,&m);
             printf("Out of Jabobi exercise 6\n");
 
             printf("Transfer data back to HOST \n");
