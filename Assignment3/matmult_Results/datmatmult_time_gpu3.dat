@@ -70,5 +70,3 @@ GPU1 wall time 0.102271
 GPU! mem wall time 0.053040 
   393216.000 913698.150 19200 # matmult_gpu3
 permutation: gpu3 size 4096
-CUDA error at allocate_gpu.cu:15 code=1(cudaErrorInvalidValue) "cudaMallocHost((void **) &inner, m*n*sizeof(double))" 
-permutation: gpu3 size 8192

@@ -1,12 +1,12 @@
-       2.344      1.250 0 # matmult_gpu2
+2.344 1.250 0 # matmult_gpu2
 permutation: gpu2 size 10
-       9.375     10.048 0 # matmult_gpu2
+       9.375 10.048 0 # matmult_gpu2
 permutation: gpu2 size 20
-      58.594    150.247 0 # matmult_gpu2
+      58.594 150.247 0 # matmult_gpu2
 permutation: gpu2 size 50
-     234.375   6114.419 0 # matmult_gpu2
+     234.375 6114.419 0 # matmult_gpu2
 permutation: gpu2 size 100
-     937.500  40628.039 0 # matmult_gpu2
+     937.500 40628.039 0 # matmult_gpu2
 permutation: gpu2 size 200
     5859.375 173469.901 0 # matmult_gpu2
 permutation: gpu2 size 500
