@@ -333,7 +333,7 @@ void jacobi_gpu_wrap4new(  double*** d_f,   /* 3D matrix "Cube" of function valu
     dim3 dimBlock(threads_blck,threads_blck,threads_blck);                          // threads per block
     dim3 dimGrid(((N+2)/dimBlock.x)+1,((N+2)/dimBlock.y)+1,((N+2)/dimBlock.z)+1);   // xx blocks in total
 
-    printf("Calling kernel\n");
+    //printf("Calling kernel\n");
     
     *h_norm = 1.0 + tolerance; 
 
@@ -353,7 +353,7 @@ void jacobi_gpu_wrap4new(  double*** d_f,   /* 3D matrix "Cube" of function valu
         m++;
     }        
 
-    printf("\n m_break = %d", m-1);
-    printf("\n End kernel exercise 8 \n");
+    //printf("\n m_break = %d", m-1);
+    //printf("\n End kernel exercise 8 \n");
     *mp = m-1;
 }

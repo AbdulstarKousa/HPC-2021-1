@@ -377,31 +377,31 @@ main(int argc, char *argv[]) {
 
         case 41:
         {
-            printf("\n");
-            printf("Jacopi running with norm GPU ex8\n");
+            //printf("\n");
+            //printf("Jacopi running with norm GPU ex8\n");
             //warm up GPU
             warmUp(); 
 
             //Iniliazie matrices on HOST  
-            printf("Iniliazie matrices on HOST\n");
+            //printf("Iniliazie matrices on HOST\n");
             init(h_f, h_u, h_u_next, N, start_T);  
 
             double time_t2 = omp_get_wtime();
             
             //Transfer data to DEVICE 
-            printf("Transfer data to DEVICE \n");
+            //printf("Transfer data to DEVICE \n");
             transfer_3d(d_u, h_u, N2, N2, N2, cudaMemcpyHostToDevice); 
             transfer_3d(d_u_next, h_u_next, N2, N2, N2, cudaMemcpyHostToDevice); 
             transfer_3d(d_f, h_f, N2, N2, N2, cudaMemcpyHostToDevice); 
 
 
             jacobi_gpu_wrap4new(d_f,d_u,d_u_next,N,tolerance,iter_max,&m);
-            printf("Out of Jabobi exercise 8\n");
+            //printf("Out of Jabobi exercise 8\n");
 
-            printf("Transfer data back to HOST \n");
+            //printf("Transfer data back to HOST \n");
             transfer_3d(h_u,d_u, N2, N2, N2, cudaMemcpyDeviceToHost);  
             
-            printf("total time = %lf seconds, with N=%d and %d iterations to break out of %d iterations\n", (omp_get_wtime() - time_t2),N,m,iter_max);
+            printf("total time = %lf\n", (omp_get_wtime() - time_t2));
             
             break;
         }

@@ -1,0 +1,30 @@
+Running Jacobi OMP
+Wall time 0.030413 
+Norm result from norm 9.952313e-04
+#Nr. iterations= 1813
+size 30 iterations 1000000
+Running Jacobi OMP
+Wall time 0.060111 
+Norm result from norm 9.982399e-04
+#Nr. iterations= 3123
+size 40 iterations 1000000
+Running Jacobi OMP
+Wall time 0.137580 
+Norm result from norm 9.986815e-04
+#Nr. iterations= 4776
+size 50 iterations 1000000
+Running Jacobi OMP
+Wall time 0.246615 
+Norm result from norm 9.998072e-04
+#Nr. iterations= 6763
+size 60 iterations 1000000
+Running Jacobi OMP
+Wall time 2.731412 
+Norm result from norm 9.997341e-04
+#Nr. iterations= 18021
+size 100 iterations 1000000
+Running Jacobi OMP
+Wall time 50.855968 
+Norm result from norm 9.998807e-04
+#Nr. iterations= 39355
+size 150 iterations 1000000
