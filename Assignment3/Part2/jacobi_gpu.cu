@@ -174,7 +174,7 @@ void jacobi_kernel32(
     int k = blockIdx.z * blockDim.z + threadIdx.z;
 
 
-    if(0 <= i && 0 < j && 0 < k && k < N+1 && j < N+1 && i < (N+2/2)-1)  //if(0 < i && 0 < j && 0 <= k && i < N+1 && j < N+1 && k < (N+2/2)-1)
+    if(0 <= i && 0 < j && 0 < k && k < N+1 && j < N+1 && i < ((N+2)/2)-1)  //if(0 < i && 0 < j && 0 <= k && i < N+1 && j < N+1 && k < (N+2/2)-1)
     {  
         if (i == 0) 
         {   
