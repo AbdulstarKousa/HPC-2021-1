@@ -8,8 +8,6 @@ MAIN_J	= main_j.o
 
 OBJS_J	= $(MAIN_J) jacobi.o jacobi_gpu.o
 
-# numact1 --cpunodebind=0 
-
 OPT	= -O3 
 PIC	= 
 XOPTS = -Xptxas=-v

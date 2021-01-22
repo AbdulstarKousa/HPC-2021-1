@@ -65,11 +65,9 @@ main(int argc, char *argv[]) {
     output_type = atoi(argv[6]);  // ouput type
     }
 
-    printf("output type %d \n", output_type);
-
 
     //Allocate memory on HOST
-    long long N2 = N + 2; 
+    int N2 = N + 2; 
     //printf("Allocating mem_space on CPU\n");
 
     if ( (h_u = d_malloc_3d(N2, N2, N2)) == NULL ) {
@@ -426,42 +424,7 @@ main(int argc, char *argv[]) {
  
         break;
         } 
-
-        default:
-        {
-            fprintf(stderr, "No valid version specified!\n");
-            break;
-        }
     }
-
-
-
-
-
-    /*
-    int i,j,k; 
-    for (i = 0; i < N+2; i++) {
-        for (j = 0; j < N+2; j++) {
-            for (k = 0; k < N+2; k++) { 
-                printf("%lf ",h_u[i][j][k]);
-            }
-        }
-        printf("\n");
-    }
-    */
-   
-    
-
-/*
-    //Iniliazie matrices 
-    #ifdef _SIN_TEST
-    printf("Running sin_test \n");
-    sin_init(f, u, u_next, N);
-    #else
-    init(f, u, u_next, N, start_T);
-    #endif
-*/
-
 
     // dump  results if wanted 
     switch(output_type) {
@@ -475,7 +438,6 @@ main(int argc, char *argv[]) {
 	    print_binary(output_filename, N+2, h_u);
 	    break;
     case 4:
-        printf("\n I'm here case 4");
 	    output_ext = ".vtk";
 	    sprintf(output_filename, "%s_%d%s", output_prefix, N+2, output_ext);
 	    fprintf(stderr, "Write VTK file to %s: ", output_filename);
