@@ -1,12 +1,6 @@
 #!/bin/bash
-# 02614 - High-Performance Computing, January 2018
-# 
-# batch script to run matmult on a decidated server in the hpcintro
-# queue
-#
-# Author: Bernd Dammann <bd@cc.dtu.dk>
-#
-#BSUB -J mm_batch
+
+#BSUB -J proftest
 #BSUB -o ../jobfiles/mm_batch_%J.out
 #BSUB -q hpcintrogpu
 #BSUB -n 16
@@ -18,15 +12,19 @@
 module load cuda/11.1
 module load gcc/9.2.0
 numactl --cpunodebind=1
+export TMPDIR=$__LSF_JOB_TMPDIR__
 
+export MFLOPS_MAX_IT=1 
 # LOGEXT=../matmult_Results/GPUandCPUInfowe.dat
 
 EXECUTABLE=matmult_f.nvcc
-# SIZES="2000"
-S="10 20 50 100 200 500 1000 2000 5000 10000"
-P="gpu5"
-# PERMUTATIONS="lib gpu1 gpu2 gpu3 gpu4 gpulib"
+S="2048"
+P="gpu6"
 
-LOGEXT=../matmult_Results/datmatmult_${P}.dat
-./$EXECUTABLE $P $S $S $S |& grep -v CPU >> $LOGEXT
-echo permutation: $P size $S |  grep -v CPU >>$LOGEXT
+nv-nsight-cu-cli -o profile_${P}_$LSB_JOBID \
+    --section MemoryWorkloadAnalysis \
+    --section MemoryWorkloadAnalysis_Chart \
+    --section ComputeWorkloadAnalysis \
+    --section SchedulerStats \
+    --section LaunchStats \
+    ./matmult_f.nvcc $P $S $S $S

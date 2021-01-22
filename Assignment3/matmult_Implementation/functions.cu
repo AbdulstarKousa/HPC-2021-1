@@ -73,7 +73,6 @@ void matmult_gpu1(int m,int n,int k,double *A,double *B,double *C){
     // Transfer data from host to device memory
     cudaMemcpy(d_A, A, m*k*sizeof(double), cudaMemcpyHostToDevice);
     cudaMemcpy(d_B, B, k*n*sizeof(double), cudaMemcpyHostToDevice);
-    cudaMemcpy(d_C, C, m*n*sizeof(double), cudaMemcpyHostToDevice);
 
     // Executing kernel 
     matmult_gpu1_kernel<<<1,1>>>(m,n,k,d_A,d_B,d_C); //single threaded (1 block, 1 thread per block)
@@ -477,7 +476,7 @@ void matmult_gpu4(int m,int n,int k,double *A,double *B,double *C){
 */
 
 // Thread block size
-#define BLOCK_SIZE 32 
+#define BLOCK_SIZE 16 
 #define INPUT_ERR fprintf(stderr,"%s:\nOne or more of the defiend values for m , n , k are not integer multiples of the thread block size = %d.\n",__func__,BLOCK_SIZE)
 /*  matmult_gpu5_kernel:  
         helper function, that takes care of the calculations.
@@ -548,7 +547,7 @@ __global__ void matmult_gpu5_kernel(int m,int n,int k,double *A,double *B,double
 */
 void matmult_gpu5(int m,int n,int k,double *A,double *B,double *C){
 
-    double start = omp_get_wtime();
+    
 
     //making sure that m, n and k are integer multiples of the thread block size.
     if(m%BLOCK_SIZE!=0 || n%BLOCK_SIZE!=0 || k%BLOCK_SIZE!=0){
@@ -557,6 +556,7 @@ void matmult_gpu5(int m,int n,int k,double *A,double *B,double *C){
         assert(n%BLOCK_SIZE!=0 == 0);
         assert(k%BLOCK_SIZE!=0 == 0);
     }
+    double start = omp_get_wtime();
 
     // Allocate device memory
     double *d_A, *d_B, *d_C;
@@ -567,7 +567,6 @@ void matmult_gpu5(int m,int n,int k,double *A,double *B,double *C){
     // Transfer data from host to device memory
     cudaMemcpy(d_A, A, m*k*sizeof(double), cudaMemcpyHostToDevice);
     cudaMemcpy(d_B, B, k*n*sizeof(double), cudaMemcpyHostToDevice);
-    cudaMemcpy(d_C, C, m*n*sizeof(double), cudaMemcpyHostToDevice);
 
 
     // Executing kernel 
@@ -590,6 +589,119 @@ void matmult_gpu5(int m,int n,int k,double *A,double *B,double *C){
     printf("Wall time %f \n" ,(end-start));
 }
 
+// Thread block size
+#define BLOCK_SIZE1 32 
+#define INPUT_ERR fprintf(stderr,"%s:\nOne or more of the defiend values for m , n , k are not integer multiples of the thread block size = %d.\n",__func__,BLOCK_SIZE)
+/*  matmult_gpu5_kernel:  
+        helper function, that takes care of the calculations.
+*/
+__global__ void matmult_gpu6_kernel(int m,int n,int k,double *A,double *B,double *C){
+    // Block row and column
+    int blockRow = blockIdx.y;
+    int blockCol = blockIdx.x;
+
+    // Each thread block computes one sub-matrix Csub of C
+    double * Csub;
+    Csub = &C[n* BLOCK_SIZE1 * blockRow + BLOCK_SIZE1 * blockCol];
+
+    // Each thread computes one element of Csub
+    // by accumulating results into Cvalue
+    double Cvalue = 0.0;
+
+    // Thread row and column within Csub
+    int row = threadIdx.y;
+    int col = threadIdx.x;
+
+    // Loop over all the sub-matrices of A and B that are
+    // required to compute Csub
+    // Multiply each pair of sub-matrices together
+    // and accumulate the results
+    for (int i = 0; i < (k / BLOCK_SIZE1); ++i) {
+
+        // Get sub-matrix Asub of A
+        double * Asub; 
+        Asub = &A[k * BLOCK_SIZE1 * blockRow + BLOCK_SIZE1 * i]; 
+
+        // Get sub-matrix Bsub of B
+        double * Bsub; 
+        Bsub = &B[n* BLOCK_SIZE1 * i + BLOCK_SIZE1 * blockCol];  
+
+        // Shared memory used to store Asub and Bsub respectively
+        __shared__ double As[BLOCK_SIZE1][BLOCK_SIZE1];
+        __shared__ double Bs[BLOCK_SIZE1][BLOCK_SIZE1];
+
+        // Load Asub and Bsub from device memory to shared memory
+        // Each thread loads one element of each sub-matrix
+        As[row][col] = Asub[row * k + col]; // As[row][col] = A[row * k + col + k * BLOCK_SIZE * blockRow + BLOCK_SIZE * i];
+        Bs[row][col] = Bsub[row * n + col]; // Bs[row][col] = B[row * n + col + n* BLOCK_SIZE * i + BLOCK_SIZE * blockCol];
+
+        // Synchronize to make sure the sub-matrices are loaded
+        // before starting the computation
+        __syncthreads();
+
+        // Multiply Asub and Bsub together
+        for (int e = 0; e < BLOCK_SIZE1; ++e)
+            Cvalue += As[row][e] * Bs[e][col];
+
+        // Synchronize to make sure that the preceding
+        // computation is done before loading two new
+        // sub-matrices of A and B in the next iteration
+        __syncthreads();
+    }
+
+    // Write Csub to device memory
+    // Each thread writes one element
+    Csub[row * n + col] = Cvalue;  // C[row * n + col + n* BLOCK_SIZE * blockRow + BLOCK_SIZE * blockCol] = Cvalue;
+
+}
+
+
+/* matmult_gpu5: 
+    Solves C=AB useing shared memory for reading the A and B matrices in order to improve the performance
+*/
+void matmult_gpu6(int m,int n,int k,double *A,double *B,double *C){
+
+    
+
+    //making sure that m, n and k are integer multiples of the thread block size.
+    if(m%BLOCK_SIZE1!=0 || n%BLOCK_SIZE1!=0 || k%BLOCK_SIZE1!=0){
+        INPUT_ERR;
+        assert(m%BLOCK_SIZE1!=0 == 0);
+        assert(n%BLOCK_SIZE1!=0 == 0);
+        assert(k%BLOCK_SIZE1!=0 == 0);
+    }
+    double start = omp_get_wtime();
+
+    // Allocate device memory
+    double *d_A, *d_B, *d_C;
+    cudaMalloc((void**)&d_A, m*k*sizeof(double));
+    cudaMalloc((void**)&d_B, k*n*sizeof(double));
+    cudaMalloc((void**)&d_C, m*n*sizeof(double));
+
+    // Transfer data from host to device memory
+    cudaMemcpy(d_A, A, m*k*sizeof(double), cudaMemcpyHostToDevice);
+    cudaMemcpy(d_B, B, k*n*sizeof(double), cudaMemcpyHostToDevice);
+
+
+    // Executing kernel 
+    // For simplicity,  it is assumed that m, n and k are integer multiples of the thread block size = 16. See Assignment task. 
+    dim3 dimBlock(BLOCK_SIZE1, BLOCK_SIZE1);
+    dim3 dimGrid(n / dimBlock.x, m / dimBlock.y);
+
+    matmult_gpu6_kernel<<<dimGrid, dimBlock>>>(m,n,k,d_A,d_B,d_C); 
+    checkCudaErrors(cudaDeviceSynchronize());
+
+    // Transfer data back to host memory
+    cudaMemcpy(C, d_C, m*n*sizeof(double), cudaMemcpyDeviceToHost);
+
+    // Deallocate device memory
+    cudaFree(d_A);
+    cudaFree(d_B);
+    cudaFree(d_C);
+
+    double end = omp_get_wtime();
+    printf("Wall time %f \n" ,(end-start));
+}
 
 /*  matmult_gpulib:
     calls DGEMM function for GPUs provided by Nvidia in the CUBLAS library        

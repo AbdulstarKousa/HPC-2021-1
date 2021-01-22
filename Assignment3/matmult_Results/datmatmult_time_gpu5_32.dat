@@ -1,49 +1,49 @@
-matmult_gpu5:
-One or more of the defiend values for m , n , k are not integer multiples of the thread block size = 32.
-matmult_f.nvcc: functions.cu:556: void matmult_gpu5(int, int, int, double*, double*, double*): Assertion `m%32!=0 == 0' failed.
-permutation: gpu5 size 16
-Wall time 0.002740 
-Wall time 0.000326 
-Wall time 0.000309 
-      24.000     57.733 0 # matmult_gpu5
-permutation: gpu5 size 32
-Wall time 0.002796 
-Wall time 0.000333 
-Wall time 0.000318 
-      96.000    459.309 0 # matmult_gpu5
-permutation: gpu5 size 64
-Wall time 0.002782 
-Wall time 0.000374 
-Wall time 0.000370 
-     384.000   3578.937 0 # matmult_gpu5
-permutation: gpu5 size 128
-Wall time 0.003060 
-Wall time 0.000538 
-Wall time 0.000514 
-    1536.000  24565.240 0 # matmult_gpu5
-permutation: gpu5 size 256
-Wall time 0.004370 
-Wall time 0.001781 
-Wall time 0.001758 
-    6144.000 101891.994 0 # matmult_gpu5
-permutation: gpu5 size 512
-Wall time 0.008277 
-Wall time 0.005865 
-Wall time 0.005870 
-   24576.000 322072.658 0 # matmult_gpu5
-permutation: gpu5 size 1024
-Wall time 0.028525 
-Wall time 0.026994 
-Wall time 0.027014 
-   98304.000 624513.973 300 # matmult_gpu5
-permutation: gpu5 size 2048
-Wall time 0.135294 
-Wall time 0.135701 
-Wall time 0.108351 
-  393216.000 1086898.378 19200 # matmult_gpu5
-permutation: gpu5 size 4096
-Wall time 0.648798 
-Wall time 0.627739 
-Wall time 0.630757 
- 1572864.000 1729421.437 1.2288e+06 # matmult_gpu5
-permutation: gpu5 size 8192
+matmult_gpu6:
+One or more of the defiend values for m , n , k are not integer multiples of the thread block size = 16.
+matmult_f.nvcc: functions.cu:669: void matmult_gpu6(int, int, int, double*, double*, double*): Assertion `m%32!=0 == 0' failed.
+permutation: gpu6 size 16
+Wall time 0.006101 
+Wall time 0.000493 
+Wall time 0.000302 
+      24.000     28.301 0 # matmult_gpu6
+permutation: gpu6 size 32
+Wall time 0.005739 
+Wall time 0.000506 
+Wall time 0.000520 
+      96.000    234.884 0 # matmult_gpu6
+permutation: gpu6 size 64
+Wall time 0.005668 
+Wall time 0.000367 
+Wall time 0.000348 
+     384.000   1990.590 0 # matmult_gpu6
+permutation: gpu6 size 128
+Wall time 0.003129 
+Wall time 0.000494 
+Wall time 0.000474 
+    1536.000  24588.183 0 # matmult_gpu6
+permutation: gpu6 size 256
+Wall time 0.006960 
+Wall time 0.001602 
+Wall time 0.001583 
+    6144.000  79778.994 0 # matmult_gpu6
+permutation: gpu6 size 512
+Wall time 0.007614 
+Wall time 0.005199 
+Wall time 0.005202 
+   24576.000 357688.146 0 # matmult_gpu6
+permutation: gpu6 size 1024
+Wall time 0.025854 
+Wall time 0.024526 
+Wall time 0.024369 
+   98304.000 689381.956 300 # matmult_gpu6
+permutation: gpu6 size 2048
+Wall time 0.128261 
+Wall time 0.102203 
+Wall time 0.096270 
+  393216.000 1261896.758 19200 # matmult_gpu6
+permutation: gpu6 size 4096
+Wall time 0.624710 
+Wall time 0.590143 
+Wall time 0.593911 
+ 1572864.000 1823620.608 1.2288e+06 # matmult_gpu6
+permutation: gpu6 size 8192
