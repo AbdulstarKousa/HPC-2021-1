@@ -1,0 +1,20 @@
+Wall time 0.000002Wall time 0.000001Wall time 0.000001       6.000     20.711 0 # matmult_lib
+permutation: lib size 16
+Wall time 0.000005Wall time 0.000002Wall time 0.000013      24.000   5853.478 0 # matmult_lib
+permutation: lib size 32
+Wall time 0.000094Wall time 0.000009Wall time 0.000010      96.000  18360.280 0 # matmult_lib
+permutation: lib size 64
+Wall time 0.000117Wall time 0.000019Wall time 0.000018     384.000 101298.897 0 # matmult_lib
+permutation: lib size 128
+Wall time 0.000185Wall time 0.000085Wall time 0.000083    1536.000 298530.447 0 # matmult_lib
+permutation: lib size 256
+Wall time 0.001346Wall time 0.000615Wall time 0.000626    6144.000 312676.052 0 # matmult_lib
+permutation: lib size 512
+Wall time 0.002984Wall time 0.002287Wall time 0.002270   24576.000 853658.373 0 # matmult_lib
+permutation: lib size 1024
+Wall time 0.021776Wall time 0.018063Wall time 0.018092   98304.000 889518.327 0 # matmult_lib
+permutation: lib size 2048
+Wall time 0.130740Wall time 0.128813Wall time 0.128906  393216.000 1061365.593 0 # matmult_lib
+permutation: lib size 4096
+Wall time 1.087921Wall time 1.087510Wall time 1.087359 1572864.000 1010947.533 0 # matmult_lib
+permutation: lib size 8192
