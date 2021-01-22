@@ -139,9 +139,9 @@ void jacobi_kernel31(
     //I AM THE BOTTOM 
     //when highest z value = (N+2)/2 visit my sister device 
 
-    int i = blockIdx.x * blockDim.x + threadIdx.x; 
-    int j = blockIdx.y * blockDim.y + threadIdx.y;
-    int k = blockIdx.z * blockDim.z + threadIdx.z;
+    int k = blockIdx.x * blockDim.x + threadIdx.x; 
+    int i = blockIdx.y * blockDim.y + threadIdx.y;
+    int j = blockIdx.z * blockDim.z + threadIdx.z;
 
     if(0 < i && 0 < j && 0 < k && k < N+1 && j < N+1 && i < Nh)
     {    
@@ -171,9 +171,9 @@ void jacobi_kernel32(
     //I AM THE TOP
     //when lowest z value = 0 visit my sister device
 
-    int i = blockIdx.x * blockDim.x + threadIdx.x; 
-    int j = blockIdx.y * blockDim.y + threadIdx.y;
-    int k = blockIdx.z * blockDim.z + threadIdx.z;
+    int k = blockIdx.x * blockDim.x + threadIdx.x; 
+    int i = blockIdx.y * blockDim.y + threadIdx.y;
+    int j = blockIdx.z * blockDim.z + threadIdx.z;
 
 
     if(0 <= i && 0 < j && 0 < k && k < N+1 && j < N+1 && i < (Nh-1))  //if(0 < i && 0 < j && 0 <= k && i < N+1 && j < N+1 && k < (N+2/2)-1)
