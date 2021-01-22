@@ -13,11 +13,13 @@ extern "C" {                // c++ syntax purposes "in matmult_f.nvcc"
 */
 void matmult_lib(int m,int n,int k,double *A,double *B,double *C) {
     
+    double start = omp_get_wtime();
     double alpha, beta;
     alpha = 1.0; beta = 0.0;
     cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, m, n, k, alpha, A, k, B, n, beta, C, n);
-    
-    }
+    double end = omp_get_wtime();
+    printf("Wall time %f" ,(end-start));
+}
 
 
 // --------------------------------------------------------------------------
