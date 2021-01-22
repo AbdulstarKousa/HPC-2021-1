@@ -221,10 +221,10 @@ void jacobi_gpu_wrap3(  double*** d0_f,        /* 3D matrix "Cube" of function v
         //DEVICE 1 
         cudaSetDevice(1);
         jacobi_kernel32<<<dimGrid,dimBlock>>>(d1_f, d1_u, d0_u, d1_u_next, N, d_squared,inv);    
-        cudaDeviceSynchronize();  
+        checkCudaErrors(cudaDeviceSynchronize());  
        
         cudaSetDevice(0); 
-        cudaDeviceSynchronize(); 
+        checkCudaErrors(cudaDeviceSynchronize()); 
  
         temp0 = d0_u;
         d0_u = d0_u_next; 
