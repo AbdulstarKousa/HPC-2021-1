@@ -65,6 +65,8 @@ main(int argc, char *argv[]) {
     output_type = atoi(argv[6]);  // ouput type
     }
 
+    printf("output type %d \n", output_type);
+
 
     //Allocate memory on HOST
     long long N2 = N + 2; 
@@ -275,7 +277,10 @@ main(int argc, char *argv[]) {
              printf("Im here 0\n");
 
             //warm up GPU
-            warmUp(); 
+            cudaSetDevice(0);
+            warmUp();
+            cudaSetDevice(1);
+            warmUp();  
 
             //Iniliazie matrices on HOST  
             printf("Iniliazie matrices on HOST\n");
@@ -287,13 +292,13 @@ main(int argc, char *argv[]) {
                     for(int k = 0; k < N2; k++){
                         if(i < N2/2){
                             h0_f[i][j][k] = h_f[i][j][k];
-                            h0_u[i][j][k] = h_f[i][j][k];
-                            h0_u_next[i][j][k] = h_f[i][j][k];  
+                            h0_u[i][j][k] = h_u[i][j][k];
+                            h0_u_next[i][j][k] = h_u_next[i][j][k];  
                         }
                         else{
                             h1_f[i - (N2/2)][j][k] = h_f[i][j][k];
-                            h1_u[i - (N2/2)][j][k] = h_f[i][j][k];
-                            h1_u_next[i - (N2/2)][j][k] = h_f[i][j][k];
+                            h1_u[i - (N2/2)][j][k] = h_u[i][j][k];
+                            h1_u_next[i - (N2/2)][j][k] = h_u_next[i][j][k];
                         }
                     }
                 }
@@ -335,6 +340,26 @@ main(int argc, char *argv[]) {
 
             
             printf("total time = %lf\n", (omp_get_wtime() - time_t2));
+
+
+            for(int i = 0; i < N2; i++){
+                for(int j = 0; j < N2; j++){
+                    for(int k = 0; k < N2; k++){
+                        if(i < N2/2){
+                            h_f[i][j][k] = h0_f[i][j][k];
+                            h_u[i][j][k] = h0_u[i][j][k];
+                            h_u_next[i][j][k] = h0_u_next[i][j][k];  
+                        }
+                        else{
+                            h_f[i][j][k] = h1_f[i- (N2/2)][j][k];
+                            h_u[i][j][k] = h1_u[i- (N2/2)][j][k];
+                            h_u_next[i][j][k] = h1_u_next[i- (N2/2)][j][k];
+                        }
+                    }
+                }
+            }
+
+            
 
 
             free_gpu(d0_f); 

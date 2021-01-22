@@ -24,7 +24,7 @@ void jacobi_gpu_wrap3(double*** d0_f,double*** d0_u,double *** d0_u_next,double*
 //void jacobi_gpu_wrap4(double*** d_f,double*** d_u,double *** d_u_next,int N,double tolerance,int iter_max,int * mp); 
 
 __global__ 
-void jacobi_kernel4new(double*** d_f,double*** d_u,double *** d_u_next,int N,int iter_max, double tolerance);
+void jacobi_kernel4new(double*** d_f,double*** d_u,double *** d_u_next,int N,double inv, double d_squares);
 void jacobi_gpu_wrap4new(double*** d_f,double*** d_u,double *** d_u_next,int N,double tolerance,int iter_max,int * mp); 
 
 #endif

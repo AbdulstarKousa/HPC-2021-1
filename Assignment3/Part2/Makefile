@@ -10,7 +10,7 @@ OBJS_J	= $(MAIN_J) jacobi.o jacobi_gpu.o
 
 # numact1 --cpunodebind=0 
 
-OPT	= -g -O3 
+OPT	= -O3 
 PIC	= 
 XOPTS = -Xptxas=-v
 ARCH  = -arch=sm_80
