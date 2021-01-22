@@ -45,7 +45,7 @@ plot_names = ["Single thread, CPU vs GPU", "Bla"]
 
 plt.figure(plot_names[0])
 plt.plot(lib["Problem Size[elm]"], lib["Wall time[s]"], label = lib["Permutation"][1], linestyle="-")
-plt.plot(lib["Problem Size[elm]"], lib["Wall time[s]"], label = "libmulti", linestyle=":")
+plt.plot(lib2["Problem Size[elm]"], lib2["Wall time[s]"], label = "libmulti", linestyle=":")
 plt.legend()
 plt.xlabel("Problem Size[elm]")
 plt.ylabel("Total wall time [s]")
