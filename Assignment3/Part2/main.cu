@@ -407,10 +407,6 @@ main(int argc, char *argv[]) {
             
             break;
         }
-<<<<<<< HEAD
-=======
-
->>>>>>> cc140802ebb63c324d61661e03395c30fb3c98cc
         case 42: //OBS HOW TO WE SAT MAKEFILE TO 1 CPU     numactl --cpunodebind=0 
         {
             printf("\n");
@@ -432,11 +428,13 @@ main(int argc, char *argv[]) {
         } 
 
         default:
-            fprintf(stderr, "Non-supported output type!\n");
+        {
+            fprintf(stderr, "No valid version specified!\n");
             break;
         }
+        }
 
-    }
+
 
 
 
