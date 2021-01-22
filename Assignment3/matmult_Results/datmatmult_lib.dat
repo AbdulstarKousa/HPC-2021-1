@@ -1,8 +1,8 @@
-       6.000  22565.860 0 # matmult_lib
+       6.000 22565.860 0 # matmult_lib
 permutation: lib size 16
-      24.000  55107.706 0 # matmult_lib
+      24.000 55107.706 0 # matmult_lib
 permutation: lib size 32
-      96.000  68251.004 0 # matmult_lib
+      96.000 68251.004 0 # matmult_lib
 permutation: lib size 64
      384.000 349975.464 0 # matmult_lib
 permutation: lib size 128
