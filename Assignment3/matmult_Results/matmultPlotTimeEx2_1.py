@@ -84,9 +84,9 @@ plot_names = ["Execution time vs Problem size", "Bla"]
 
 plt.figure(plot_names[0])
 plt.plot(lib["Problem Size[elm]"], lib["Wall time[s]"], label = lib["Permutation"][1], linestyle="-")
+plt.plot(data2["Problem Size[elm]"], data2["Kernel wall time[s]"] + data2["Memory wall time[s]"], label = data2["Permutation"][1], linestyle=":")
 plt.plot(data["Problem Size[elm]"], data["Kernel wall time[s]"] + data["Memory wall time[s]"], label = "gpu3_col", linestyle="--")
 plt.plot(data1["Problem Size[elm]"], data1["Kernel wall time[s]"] + data1["Memory wall time[s]"], label = "gpu3_row", linestyle=":")
-plt.plot(data2["Problem Size[elm]"], data2["Kernel wall time[s]"] + data2["Memory wall time[s]"], label = data2["Permutation"][1], linestyle=":")
 plt.legend()
 plt.xlabel("Problem Size[elm]")
 plt.ylabel("Total wall time [s]")

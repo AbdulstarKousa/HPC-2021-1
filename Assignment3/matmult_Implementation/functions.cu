@@ -558,6 +558,8 @@ __global__ void matmult_gpu5_kernel(int m,int n,int k,double *A,double *B,double
 */
 void matmult_gpu5(int m,int n,int k,double *A,double *B,double *C){
 
+    double start = omp_get_wtime();
+
     //making sure that m, n and k are integer multiples of the thread block size.
     if(m%BLOCK_SIZE!=0 || n%BLOCK_SIZE!=0 || k%BLOCK_SIZE!=0){
         INPUT_ERR;
@@ -593,6 +595,9 @@ void matmult_gpu5(int m,int n,int k,double *A,double *B,double *C){
     cudaFree(d_A);
     cudaFree(d_B);
     cudaFree(d_C);
+
+    double end = omp_get_wtime();
+    printf("Wall time %f \n" ,(end-start));
 }
 
 
