@@ -254,44 +254,12 @@ double warpReduceSum(double value)
     return value;
 }
 
+
 __inline__ __device__
 double blockReduceSum(double value) {
-    __shared__ double smem[32]; // Max 32 warp sums
-
-    if (threadIdx.x < warpSize) {
-        smem[threadIdx.x] = 0;
-    }
-    __syncthreads();
-
-    value = warpReduceSum(value);
-
-    if (threadIdx.x % warpSize == 0){
-    smem[threadIdx.x / warpSize] = value;
-    }   
-    __syncthreads();
-
-    if (threadIdx.x < warpSize){ 
-    value = smem[threadIdx.x];
-    }
-
     return warpReduceSum(value);
 }
 
-__global__
-void reduction_presum(double *a, int n, double *res)
-{
-    int idx = threadIdx.x + blockIdx.x * blockDim.x;
-    double value = 0;
-    for (int i = idx; i < n; i += blockDim.x * gridDim.x){
-        value += a[i];
-    }
-
-    value = blockReduceSum(value); 
-
-    if (threadIdx.x == 0){
-        atomicAdd(res, value);
-    }
-}
 
 //kernel
 __global__ 
@@ -303,7 +271,6 @@ void jacobi_kernel4new(
     double inv,
     double d_squared,
     double * norm ){
-
     double inter_norm;
 
     int i = blockIdx.x * blockDim.x + threadIdx.x; 
@@ -314,9 +281,19 @@ void jacobi_kernel4new(
     {    
         d_u_next[i][j][k] = inv * (d_u[i-1][j][k] + d_u[i+1][j][k] + d_u[i][j-1][k] + d_u[i][j+1][k] + d_u[i][j][k-1] + d_u[i][j][k+1] + d_squared * d_f[i][j][k]);
         inter_norm = (d_u_next[i][j][k] - d_u[i][j][k])*(d_u_next[i][j][k] - d_u[i][j][k]);
-        atomicAdd(norm,inter_norm);
-        // if ((threadIdx.x + threadIdx.y + threadIdx.z) * (blockDim.x * gridDim.x) * () )
-        // atomicAdd(norm,value);        } 
+        //---- baseline
+        //atomicAdd(norm,inter_norm);
+        
+        //---- v2        
+        double value = blockReduceSum(inter_norm);
+        if (threadIdx.x == 0){
+            atomicAdd(norm, value);
+        }
+
+        //---- v3 notes: 
+        // for blockReduceSum
+        // defined warpSize = 32 
+        // lin3axis = blockDim.y*blockDim.z*blockIdx.x + blockIdx.y*blockDim.z + blockIdx.z
 
     }
     
