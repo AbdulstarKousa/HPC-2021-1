@@ -133,7 +133,8 @@ void jacobi_kernel31(
     double *** d0_u_next,  /* 3D matrix "Cube" to hold new temperature estimates */
     int N,                /* #nr. interior grid points */
     double d_squared, 
-    double inv              ){
+    double inv,
+    int Nh              ){
 
     //I AM THE BOTTOM 
     //when highest z value = (N+2)/2 visit my sister device 
@@ -142,9 +143,9 @@ void jacobi_kernel31(
     int j = blockIdx.y * blockDim.y + threadIdx.y;
     int k = blockIdx.z * blockDim.z + threadIdx.z;
 
-    if(0 < i && 0 < j && 0 < k && k < N+1 && j < N+1 && i < (N+2)/2)
+    if(0 < i && 0 < j && 0 < k && k < N+1 && j < N+1 && i < Nh)
     {    
-        if (i == ((N+2)/2)-1) 
+        if (i == Nh-1) 
         {
             //Peer access
             d0_u_next[i][j][k] = inv * (d0_u[i-1][j][k] + d1_u[0][j][k] + d0_u[i][j-1][k] + d0_u[i][j+1][k] + d0_u[i][j][k-1] + d0_u[i][j][k+1] + d_squared * d0_f[i][j][k]);
@@ -164,7 +165,8 @@ void jacobi_kernel32(
     double *** d1_u_next,  /* 3D matrix "Cube" to hold new temperature estimates */
     int N,                /* #nr. interior grid points */
     double d_squared, 
-    double inv              ){
+    double inv,
+    int Nh              ){
 
     //I AM THE TOP
     //when lowest z value = 0 visit my sister device
@@ -174,12 +176,12 @@ void jacobi_kernel32(
     int k = blockIdx.z * blockDim.z + threadIdx.z;
 
 
-    if(0 <= i && 0 < j && 0 < k && k < N+1 && j < N+1 && i < ((N+2)/2)-1)  //if(0 < i && 0 < j && 0 <= k && i < N+1 && j < N+1 && k < (N+2/2)-1)
+    if(0 <= i && 0 < j && 0 < k && k < N+1 && j < N+1 && i < (Nh-1))  //if(0 < i && 0 < j && 0 <= k && i < N+1 && j < N+1 && k < (N+2/2)-1)
     {  
         if (i == 0) 
         {   
             //Peer access
-            d1_u_next[i][j][k] = inv * (d0_u[((N+2)/2)-1][j][k] + d1_u[i+1][j][k] + d1_u[i][j-1][k] + d1_u[i][j+1][k] + d1_u[i][j][k-1] + d1_u[i][j][k+1] + d_squared * d1_f[i][j][k]);
+            d1_u_next[i][j][k] = inv * (d0_u[Nh-1][j][k] + d1_u[i+1][j][k] + d1_u[i][j-1][k] + d1_u[i][j+1][k] + d1_u[i][j][k-1] + d1_u[i][j][k+1] + d_squared * d1_f[i][j][k]);
         } 
         else 
         {
@@ -206,6 +208,10 @@ void jacobi_gpu_wrap3(  double*** d0_f,        /* 3D matrix "Cube" of function v
     double *** temp1;
     int m = 0;
 
+    //printf("running\n");
+
+    int Nh = ((N+2)/2); 
+
     int threads_blck = 8; 
 
     dim3 dimBlock(threads_blck,threads_blck,threads_blck);// threads per block
@@ -216,11 +222,11 @@ void jacobi_gpu_wrap3(  double*** d0_f,        /* 3D matrix "Cube" of function v
     {
         //DEVICE 0 
         cudaSetDevice(0);
-        jacobi_kernel31<<<dimGrid,dimBlock>>>(d0_f, d0_u, d1_u, d0_u_next, N, d_squared,inv);     
+        jacobi_kernel31<<<dimGrid,dimBlock>>>(d0_f, d0_u, d1_u, d0_u_next, N, d_squared,inv,Nh);     
         
         //DEVICE 1 
         cudaSetDevice(1);
-        jacobi_kernel32<<<dimGrid,dimBlock>>>(d1_f, d1_u, d0_u, d1_u_next, N, d_squared,inv);    
+        jacobi_kernel32<<<dimGrid,dimBlock>>>(d1_f, d1_u, d0_u, d1_u_next, N, d_squared,inv,Nh);    
         //checkCudaErrors(cudaDeviceSynchronize());  
         cudaDeviceSynchronize();
        
