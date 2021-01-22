@@ -103,14 +103,14 @@ content = np.array(content)
 # Split data into runs
 content = np.split(content, len(content)/2)
 
-datalib = pd.DataFrame(columns=["Problem Size[elm]", "Speed", "Permutation"])
+clib = pd.DataFrame(columns=["Problem Size[elm]", "Speed", "Permutation"])
 
 for (i, run) in enumerate(content):
     size = int(run[-1].split(' ')[-1])
     Speed = float(run[0].split(' ')[1])
     Perm = str(run[-1].split(' ')[-3])
     row = [size, Speed, Perm]
-    datalib.loc[i] = row
+    clib.loc[i] = row
 
 plot_names = ["Execution time vs Problem size", "Bla"]
 
@@ -119,6 +119,7 @@ plt.plot(data2["Problem Size[elm]"], data2["Speed"], label = data2["Permutation"
 plt.plot(data4["Problem Size[elm]"], data4["Speed"], label = data4["Permutation"][1], linestyle="-")
 plt.plot(data5["Problem Size[elm]"], data5["Speed"], label = "gpu5_32", linestyle="-.")
 plt.plot(datalib["Problem Size[elm]"], datalib["Speed"], label = datalib["Permutation"][1], linestyle="--")
+plt.plot(clib["Problem Size[elm]"], clib["Speed"], label = clib["Permutation"][1], linestyle="--")
 plt.legend()
 plt.xlabel("Problem Size[elm]")
 plt.ylabel("Speed[Mflops/s]")
