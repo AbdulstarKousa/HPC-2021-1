@@ -26,14 +26,14 @@ EXECUTABLE=matmult_f.nvcc
 SIZES="16 32 64 128 256 512 1024 2048 4096 8192"
 
 
-PERMUTATIONS="gpu5"
+PERMUTATIONS="gpu6"
 # PERMUTATIONS="lib gpu1 gpu2 gpu3 gpu4 gpu5 gpulib"
 
 for P in $PERMUTATIONS
 do
 	for S in $SIZES
 	do
-		LOGEXT=../matmult_Results/datmatmult_time_32_${P}.dat
+		LOGEXT=../matmult_Results/datmatmult_time_${P}_32.dat
 		OMP_NUM_THREADS=16 MFLOPS_MIN_T=3 MFLOPS_MAX_IT=3 ./$EXECUTABLE $P $S $S*10 $S |& grep -v CPU >> $LOGEXT
 		echo permutation: $P size $S |  grep -v CPU >>$LOGEXT
 	done
