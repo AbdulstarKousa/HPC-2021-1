@@ -88,14 +88,14 @@ main(int argc, char *argv[]) {
     #endif
 
     #ifdef _JACOBI_OMP
-    printf("Running Jacobi OMP\n");
+    //printf("Running Jacobi OMP\n");
     double start = omp_get_wtime();
     double norm_check = jacobiOMP(f, u, u_next, N, tolerance, iter_max, &m); 
     double end = omp_get_wtime();
-    printf("Wall time %f \n", (end-start) );
+    printf("total time %f \n", (end-start) );
     //printf("Number of iterations run: %d \n", p);
-    printf("Norm result from norm %e\n",norm_check);
-    printf("#Nr. iterations= %d\n",m);
+    //printf("Norm result from norm %e\n",norm_check);
+    //printf("#Nr. iterations= %d\n",m);
     #endif
 
     #ifdef _GAUSS_SEIDEL

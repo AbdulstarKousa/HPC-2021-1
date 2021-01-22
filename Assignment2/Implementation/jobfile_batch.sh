@@ -8,28 +8,27 @@
 #
 #BSUB -J opmJ_batch
 #BSUB -o opmJ_batch_%J.out
-#BSUB -q hpcintro
-#BSUB -n 24
+#BSUB -q hpcintrogpu
+#BSUB -n 16
 #BSUB -R "span[hosts=1]"
 #BSUB -R "rusage[mem=2048]"
 #BSUB -W 59
+#BSUB -gpu "num=1:mode=exclusive_process"
 
-EXECUTABLE=poisson_gs_omp
+module load cuda/11.1
+module load gcc/9.2.0
+numactl --physcpubind=1
 
-THREADS="24"
-# THREADS="12"
+EXECUTABLE=poisson_j_omp
 
-# SCHEDULE="static static,5 static,10  static,25 dynamic dynamic,5 dynamic,25 guided guided,5"
-# SCHEDULE="static static,4 static,8 static,10"
-SCHEDULE="static,1"
-
+THREADS="16"
 
 
-SIZE_N="150"
-ITER="100000"
+SIZE_N="30 40 50 60 100 150 200 250 300 400 500"
+ITER="100"
 TOLE="0.001"
-START_T="0"
-IMG="4"  #image disabled -> 0 
+START_T="0.0"
+IMG="0"  #image disabled -> 0 
 
 
 
@@ -37,14 +36,14 @@ export OMP_PLACES=cores
 export OMP_PROC_BIND=spread
 export OMP_WAIT_POLICY=active
 
+LOGEXT1=Results_ex6/Exercise6_CPU_${ITER}.dat
+
 for T in $THREADS
 do
 	for S in $SIZE_N
 	do
-		LOGEXT=../Results/Jac_Parallel_region_${S}_${ITER}.dat
-		{ OMP_NUM_THREADS=${T} ./$EXECUTABLE $S $ITER $TOLE $START_T $IMG; } |& grep -v CPU >>$LOGEXT
-		echo threads: $T |  grep -v CPU >>$LOGEXT
-		echo size $S iterations $ITER tolerance $TOLE initial guess $START_T  |  grep -v CPU >>$LOGEXT
+		{ OMP_NUM_THREADS=${T} ./$EXECUTABLE $S $ITER $TOLE $START_T $IMG ; } |& grep -v CPU >>$LOGEXT1
+		echo size $S iterations $ITER |  grep -v CPU >>$LOGEXT1
 	done
 done
 
