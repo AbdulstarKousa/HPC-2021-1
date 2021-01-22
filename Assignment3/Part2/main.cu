@@ -424,7 +424,7 @@ main(int argc, char *argv[]) {
             printf("total time = %lf seconds, with N=%d and %d iterations and breaks after %d \n", (omp_get_wtime() - time_t1),N,iter_max, m);
             printf("Out of reference jacobi\n");
  
-        break;
+            break;
         } 
 
         default:
