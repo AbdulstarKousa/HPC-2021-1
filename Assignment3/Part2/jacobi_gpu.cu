@@ -174,7 +174,7 @@ void jacobi_kernel32(
     int k = blockIdx.z * blockDim.z + threadIdx.z;
 
 
-    if(0 <= i && 0 < j && 0 < k && k < N+1 && j < N+1 && i < (N+2/2)-1)  //if(0 < i && 0 < j && 0 <= k && i < N+1 && j < N+1 && k < (N+2/2)-1)
+    if(0 <= i && 0 < j && 0 < k && k < N+1 && j < N+1 && i < ((N+2)/2)-1)  //if(0 < i && 0 < j && 0 <= k && i < N+1 && j < N+1 && k < (N+2/2)-1)
     {  
         if (i == 0) 
         {   
@@ -221,10 +221,12 @@ void jacobi_gpu_wrap3(  double*** d0_f,        /* 3D matrix "Cube" of function v
         //DEVICE 1 
         cudaSetDevice(1);
         jacobi_kernel32<<<dimGrid,dimBlock>>>(d1_f, d1_u, d0_u, d1_u_next, N, d_squared,inv);    
-        checkCudaErrors(cudaDeviceSynchronize());  
+        //checkCudaErrors(cudaDeviceSynchronize());  
+        cudaDeviceSynchronize();
        
         cudaSetDevice(0); 
-        checkCudaErrors(cudaDeviceSynchronize()); 
+        //checkCudaErrors(cudaDeviceSynchronize()); 
+        cudaDeviceSynchronize();
  
         temp0 = d0_u;
         d0_u = d0_u_next; 
