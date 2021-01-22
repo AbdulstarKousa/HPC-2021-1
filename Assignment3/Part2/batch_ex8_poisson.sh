@@ -14,7 +14,7 @@ numactl --cpunodebind=1
 
 EXECUTABLE=poisson_j
 
-SIZE_N="200 230 250"
+SIZE_N="30 40 50 60 100 150"
 ITER="1000000"
 TOLE="0.001"
 START_T="0"

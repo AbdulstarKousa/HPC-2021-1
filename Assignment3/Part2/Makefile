@@ -1,6 +1,6 @@
 # Makefile
 
-TARGET_J  = poisson_j		# Jacobi
+TARGET_J  = poisson_j
 
 SOURCES	= main.cu print.cu alloc3d.cu alloc3d_gpu.cu transfer3d_gpu.cu jacobi.cu jacobi_gpu.cu sin_test.cu init.cu
 OBJECTS	= print.o alloc3d.o alloc3d_gpu.o transfer3d_gpu.o init.o sin_test.o

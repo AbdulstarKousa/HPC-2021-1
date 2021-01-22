@@ -16,10 +16,10 @@ void init(double*** f, double*** u, double*** u_next, int N, double start_T) {
     int edge_point_count = N + 2; 
     int max_point = edge_point_count - 1;
     
-    //#pragma omp parrallel shared(u, u_next, f, start_T)
+    #pragma omp parrallel shared(u, u_next, f, start_T)
     {   
-    // // Initialize u to 0 degrees everywhere except for the walls
-    //#pragma omp for
+     // Initialize u to 0 degrees everywhere except for the walls
+    #pragma omp for
     for (int x = 0; x < edge_point_count; x++) {
         for (int y = 0; y < edge_point_count; y++) {
             for (int z = 0; z < edge_point_count; z++) {
@@ -50,10 +50,7 @@ void init(double*** f, double*** u, double*** u_next, int N, double start_T) {
     int z_min = (int)(ceil(((double)(edge_point_count/2.0))*(1.0/3.0)));
     int z_max = (int)floor((edge_point_count/2.0));
 
-
-    //printf("printing: %d \n", (int)(floor(((double)(edge_point_count/2.0))*(1.0/3.0))));
-    //printf("printing: [%d %d] [%d %d] [%d %d] \n", x_min,x_max,y_min,y_max,z_min,z_max);
-    //#pragma omp for
+    #pragma omp for
     for (int x = 0; x < edge_point_count; x++) {
         for (int y = 0; y < edge_point_count; y++) {
             for (int z = 0; z < edge_point_count; z++) {
@@ -69,18 +66,5 @@ void init(double*** f, double*** u, double*** u_next, int N, double start_T) {
         }
     }
     } //End parallel region
-
-    /*
-    for (int x = 0; x < edge_point_count; x++) {
-        for (int y = 0; y < edge_point_count; y++) {
-            for (int z = 0; z < edge_point_count; z++) {
-                printf("printing f: [%d %d %d] %.3f \n", x,y,z,f[x][y][z]);
-            }
-        }
-    }
-    */
-    
-
-
 
 }

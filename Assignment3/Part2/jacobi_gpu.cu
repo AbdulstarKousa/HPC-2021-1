@@ -4,6 +4,9 @@
 #include <cuda_runtime_api.h>
 #include <helper_cuda.h>
 
+/* *************
+ EXERCISE 5
+************* */
 
 __global__ 
 void jacobi_kernel1(
@@ -22,11 +25,10 @@ void jacobi_kernel1(
             for (k = 1; k < N2 - 1; k++) {
                 
                 d_u_next[i][j][k] = inv * (d_u[i-1][j][k] + d_u[i+1][j][k] + d_u[i][j-1][k] + d_u[i][j+1][k] + d_u[i][j][k-1] + d_u[i][j][k+1] + d_squared * d_f[i][j][k]);
-                    
+                
             }
         }
     }
-    //printf("Leaving kernel function\n");
 }
 
 void jacobi_gpu_wrap1(  double*** d_f,        /* 3D matrix "Cube" of function values, Second derivatives of temperature  */
@@ -37,16 +39,14 @@ void jacobi_gpu_wrap1(  double*** d_f,        /* 3D matrix "Cube" of function va
                 int iter_max,       /* maximum nr. of iterations */
                 int * mp){           /* #nr. the iteration needed to get a suciently small diference*/
 
-    double delta= (double)(2.0/((double)(N+1))); // the grid spacing.
+    double delta= (double)(2.0/((double)(N+1))); // Grid spacing
     double d_squared = delta*delta;
     double inv = 1.0/6.0;
     double *** temp; // to swipe between u and u_next.
     int m = 0;
 
-    //printf("Entering while loop\n");
     while (m < iter_max) 
     {
-
         jacobi_kernel1<<<1,1>>>(d_f, d_u, d_u_next, N, d_squared,inv);    
         cudaDeviceSynchronize();          
 
@@ -56,8 +56,6 @@ void jacobi_gpu_wrap1(  double*** d_f,        /* 3D matrix "Cube" of function va
         
         m++;
     }
-
-    //printf("End Jacobi wrapper\n");
 }
 
 
@@ -103,10 +101,9 @@ void jacobi_gpu_wrap2(  double*** d_f,        /* 3D matrix "Cube" of function va
     int threads_blck = 8; //optmized to be fastest with 8 threads per block (each dim)
 
     dim3 dimBlock(threads_blck,threads_blck,threads_blck);// threads per block
-    dim3 dimGrid(((N+2)/dimBlock.x)+1,((N+2)/dimBlock.y)+1,((N+2)/dimBlock.z)+1); // xx blocks in total
+    dim3 dimGrid(((N+2)/dimBlock.x)+1,((N+2)/dimBlock.y)+1,((N+2)/dimBlock.z)+1); 
 
-    //printf("Entering while loop\n");
-    while (m < iter_max) //&& norm_result > tolerance 
+    while (m < iter_max) 
     {
         jacobi_kernel2<<<dimGrid,dimBlock>>>(d_f, d_u, d_u_next, N, d_squared,inv);    
         cudaDeviceSynchronize();          
@@ -208,8 +205,6 @@ void jacobi_gpu_wrap3(  double*** d0_f,        /* 3D matrix "Cube" of function v
     double *** temp1;
     int m = 0;
 
-    //printf("running\n");
-
     int Nh = ((N+2)/2); 
 
     int threads_blck = 8; 
@@ -217,7 +212,6 @@ void jacobi_gpu_wrap3(  double*** d0_f,        /* 3D matrix "Cube" of function v
     dim3 dimBlock(threads_blck,threads_blck,threads_blck);// threads per block
     dim3 dimGrid((((N+2)/2)/dimBlock.x)+1,((N+2)/dimBlock.y)+1,((N+2)/dimBlock.z)+1); 
 
-    //printf("Entering while loop\n");
     while (m < iter_max) 
     {
         //DEVICE 0 
@@ -227,11 +221,9 @@ void jacobi_gpu_wrap3(  double*** d0_f,        /* 3D matrix "Cube" of function v
         //DEVICE 1 
         cudaSetDevice(1);
         jacobi_kernel32<<<dimGrid,dimBlock>>>(d1_f, d1_u, d0_u, d1_u_next, N, d_squared,inv,Nh);    
-        //checkCudaErrors(cudaDeviceSynchronize());  
         cudaDeviceSynchronize();
        
         cudaSetDevice(0); 
-        //checkCudaErrors(cudaDeviceSynchronize()); 
         cudaDeviceSynchronize();
  
         temp0 = d0_u;
@@ -262,12 +254,10 @@ double warpReduceSum(double value)
     return value;
 }
 
-
 __inline__ __device__
 double blockReduceSum(double value) {
     return warpReduceSum(value);
 }
-
 
 //kernel
 __global__ 
@@ -330,10 +320,8 @@ void jacobi_gpu_wrap4new(  double*** d_f,   /* 3D matrix "Cube" of function valu
                     
     int threads_blck = 8; 
 
-    dim3 dimBlock(threads_blck,threads_blck,threads_blck);                          // threads per block
-    dim3 dimGrid(((N+2)/dimBlock.x)+1,((N+2)/dimBlock.y)+1,((N+2)/dimBlock.z)+1);   // xx blocks in total
-
-    //printf("Calling kernel\n");
+    dim3 dimBlock(threads_blck,threads_blck,threads_blck);   // threads per block
+    dim3 dimGrid(((N+2)/dimBlock.x)+1,((N+2)/dimBlock.y)+1,((N+2)/dimBlock.z)+1);   
     
     *h_norm = 1.0 + tolerance; 
 
@@ -348,12 +336,8 @@ void jacobi_gpu_wrap4new(  double*** d_f,   /* 3D matrix "Cube" of function valu
         d_u_next = temp;
 
         cudaMemcpy(h_norm, d_norm, sizeof(double),cudaMemcpyDeviceToHost);
-        *h_norm = sqrt(*h_norm);
-        //printf("\n h_norm = %e", *h_norm);     
+        *h_norm = sqrt(*h_norm);  
         m++;
     }        
-
-    //printf("\n m_break = %d", m-1);
-    //printf("\n End kernel exercise 8 \n");
     *mp = m-1;
 }
