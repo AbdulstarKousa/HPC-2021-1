@@ -115,8 +115,8 @@ main(int argc, char *argv[]) {
             //printf("Jacopi GPU ex5\n");
  
 
-            //Iniliazie matrices on HOST  
-            //printf("Iniliazie matrices on HOST\n");
+            //Initialize matrices on HOST  
+            //printf("Initialize matrices on HOST\n");
             init(h_f, h_u, h_u_next, N, start_T);  
   
             //warm up GPU
@@ -167,8 +167,8 @@ main(int argc, char *argv[]) {
             //warm up GPU
             warmUp(); 
 
-            //Iniliazie matrices on HOST  
-            //printf("Iniliazie matrices on HOST\n");
+            //Initialize matrices on HOST  
+            //printf("Initialize matrices on HOST\n");
             init(h_f, h_u, h_u_next, N, start_T);  
 
             double time_t2 = omp_get_wtime();
@@ -282,8 +282,8 @@ main(int argc, char *argv[]) {
             cudaSetDevice(1);
             warmUp();  
 
-            //Iniliazie matrices on HOST  
-            printf("Iniliazie matrices on HOST\n");
+            //Initialize matrices on HOST  
+            printf("Initialize matrices on HOST\n");
             init(h_f, h_u, h_u_next, N, start_T); 
             printf("Im here 1\n");
 
@@ -384,8 +384,8 @@ main(int argc, char *argv[]) {
             //warm up GPU
             warmUp(); 
 
-            //Iniliazie matrices on HOST  
-            printf("Iniliazie matrices on HOST\n");
+            //Initialize matrices on HOST  
+            printf("Initialize matrices on HOST\n");
             init(h_f, h_u, h_u_next, N, start_T);  
 
             double time_t2 = omp_get_wtime();
@@ -453,7 +453,7 @@ main(int argc, char *argv[]) {
     
 
 /*
-    //Iniliazie matrices 
+    //Initialize matrices 
     #ifdef _SIN_TEST
     printf("Running sin_test \n");
     sin_init(f, u, u_next, N);
