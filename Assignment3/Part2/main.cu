@@ -452,11 +452,9 @@ main(int argc, char *argv[]) {
     free(h_u);
     free(h_u_next);
     free(h_f);
-    if(jacobi_type != 31 ){
-        free_gpu(d_u);
-        free_gpu(d_u_next);
-        free_gpu(d_f);
-    }
+    free_gpu(d_u);
+    free_gpu(d_u_next);
+    free_gpu(d_f);
 
     return(0);
 }
