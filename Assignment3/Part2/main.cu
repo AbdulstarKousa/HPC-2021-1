@@ -23,10 +23,6 @@ void warmUp()
 {
     const int device = 0;
 
-    
-    //double xxxx = 0.0; 
-
-
     // Wake up GPU from power save state.
     fflush(stdout);
     //double time = omp_get_wtime();
