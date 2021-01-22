@@ -1,0 +1,49 @@
+matmult_gpu6:
+One or more of the defiend values for m , n , k are not integer multiples of the thread block size = 16.
+matmult_f.nvcc: functions.cu:669: void matmult_gpu6(int, int, int, double*, double*, double*): Assertion `m%32!=0 == 0' failed.
+permutation: gpu6 size 16
+Wall time 0.002932 
+Wall time 0.000326 
+Wall time 0.000306 
+      24.000     46.738 0 # matmult_gpu6
+permutation: gpu6 size 32
+Wall time 0.002764 
+Wall time 0.000324 
+Wall time 0.000322 
+      96.000    462.263 0 # matmult_gpu6
+permutation: gpu6 size 64
+Wall time 0.002871 
+Wall time 0.000368 
+Wall time 0.000349 
+     384.000   3523.493 0 # matmult_gpu6
+permutation: gpu6 size 128
+Wall time 0.003021 
+Wall time 0.000477 
+Wall time 0.000464 
+    1536.000  25542.259 0 # matmult_gpu6
+permutation: gpu6 size 256
+Wall time 0.004583 
+Wall time 0.001612 
+Wall time 0.001585 
+    6144.000 103595.584 0 # matmult_gpu6
+permutation: gpu6 size 512
+Wall time 0.007591 
+Wall time 0.005239 
+Wall time 0.005242 
+   24576.000 356691.748 0 # matmult_gpu6
+permutation: gpu6 size 1024
+Wall time 0.025813 
+Wall time 0.024441 
+Wall time 0.024437 
+   98304.000 690097.507 300 # matmult_gpu6
+permutation: gpu6 size 2048
+Wall time 0.127854 
+Wall time 0.100282 
+Wall time 0.091880 
+  393216.000 1288444.556 19200 # matmult_gpu6
+permutation: gpu6 size 4096
+Wall time 0.645427 
+Wall time 0.594952 
+Wall time 0.593667 
+ 1572864.000 1798493.297 1.2288e+06 # matmult_gpu6
+permutation: gpu6 size 8192

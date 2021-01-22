@@ -556,7 +556,6 @@ void matmult_gpu5(int m,int n,int k,double *A,double *B,double *C){
         assert(n%BLOCK_SIZE!=0 == 0);
         assert(k%BLOCK_SIZE!=0 == 0);
     }
-    double start = omp_get_wtime();
 
     // Allocate device memory
     double *d_A, *d_B, *d_C;
@@ -584,9 +583,6 @@ void matmult_gpu5(int m,int n,int k,double *A,double *B,double *C){
     cudaFree(d_A);
     cudaFree(d_B);
     cudaFree(d_C);
-
-    double end = omp_get_wtime();
-    printf("Wall time %f \n" ,(end-start));
 }
 
 // Thread block size
@@ -670,7 +666,6 @@ void matmult_gpu6(int m,int n,int k,double *A,double *B,double *C){
         assert(n%BLOCK_SIZE1!=0 == 0);
         assert(k%BLOCK_SIZE1!=0 == 0);
     }
-    double start = omp_get_wtime();
 
     // Allocate device memory
     double *d_A, *d_B, *d_C;
@@ -698,9 +693,6 @@ void matmult_gpu6(int m,int n,int k,double *A,double *B,double *C){
     cudaFree(d_A);
     cudaFree(d_B);
     cudaFree(d_C);
-
-    double end = omp_get_wtime();
-    printf("Wall time %f \n" ,(end-start));
 }
 
 /*  matmult_gpulib:
