@@ -22,4 +22,5 @@ __global__
 void jacobi_kernel4new(double*** d_f,double*** d_u,double *** d_u_next,int N,double inv, double d_squares,double * norm);
 void jacobi_gpu_wrap4new(double*** d_f,double*** d_u,double *** d_u_next,int N,double tolerance,int iter_max,int * mp); 
 
+
 #endif
