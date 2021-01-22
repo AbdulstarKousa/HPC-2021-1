@@ -65,7 +65,6 @@ main(int argc, char *argv[]) {
     output_type = atoi(argv[6]);  // ouput type
     }
 
-    printf("output type %d \n", output_type);
 
 
     //Allocate memory on HOST
@@ -424,9 +423,9 @@ main(int argc, char *argv[]) {
 
         norm_result = jacobi(h_f,h_u,h_u_next,N,tolerance,iter_max,&m);
 
-        printf("total time = %lf seconds, with N=%d and %d iterations \n", (omp_get_wtime() - time_t1),N,iter_max);
+        printf("total time = %lf seconds, with N=%d and %d iterations and breaks after %d \n", (omp_get_wtime() - time_t1),N,iter_max, m);
         printf("Out of reference jacobi\n");
-
+ 
         break;
         } 
         default:
