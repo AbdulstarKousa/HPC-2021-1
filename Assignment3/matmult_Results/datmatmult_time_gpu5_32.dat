@@ -1,0 +1,49 @@
+matmult_gpu5:
+One or more of the defiend values for m , n , k are not integer multiples of the thread block size = 32.
+matmult_f.nvcc: functions.cu:556: void matmult_gpu5(int, int, int, double*, double*, double*): Assertion `m%32!=0 == 0' failed.
+permutation: gpu5 size 16
+Wall time 0.002740 
+Wall time 0.000326 
+Wall time 0.000309 
+      24.000     57.733 0 # matmult_gpu5
+permutation: gpu5 size 32
+Wall time 0.002796 
+Wall time 0.000333 
+Wall time 0.000318 
+      96.000    459.309 0 # matmult_gpu5
+permutation: gpu5 size 64
+Wall time 0.002782 
+Wall time 0.000374 
+Wall time 0.000370 
+     384.000   3578.937 0 # matmult_gpu5
+permutation: gpu5 size 128
+Wall time 0.003060 
+Wall time 0.000538 
+Wall time 0.000514 
+    1536.000  24565.240 0 # matmult_gpu5
+permutation: gpu5 size 256
+Wall time 0.004370 
+Wall time 0.001781 
+Wall time 0.001758 
+    6144.000 101891.994 0 # matmult_gpu5
+permutation: gpu5 size 512
+Wall time 0.008277 
+Wall time 0.005865 
+Wall time 0.005870 
+   24576.000 322072.658 0 # matmult_gpu5
+permutation: gpu5 size 1024
+Wall time 0.028525 
+Wall time 0.026994 
+Wall time 0.027014 
+   98304.000 624513.973 300 # matmult_gpu5
+permutation: gpu5 size 2048
+Wall time 0.135294 
+Wall time 0.135701 
+Wall time 0.108351 
+  393216.000 1086898.378 19200 # matmult_gpu5
+permutation: gpu5 size 4096
+Wall time 0.648798 
+Wall time 0.627739 
+Wall time 0.630757 
+ 1572864.000 1729421.437 1.2288e+06 # matmult_gpu5
+permutation: gpu5 size 8192
