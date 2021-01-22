@@ -13,14 +13,9 @@ extern "C" {                // c++ syntax purposes "in matmult_f.nvcc"
 */
 void matmult_lib(int m,int n,int k,double *A,double *B,double *C) {
     
-    double start = omp_get_wtime();
-
     double alpha, beta;
     alpha = 1.0; beta = 0.0;
     cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, m, n, k, alpha, A, k, B, n, beta, C, n);
-
-    double end = omp_get_wtime();
-    printf("Wall time %f \n" ,(end-start));
 }
 
 
@@ -231,62 +226,62 @@ void matmult_gpu3(int m,int n,int k,double *A,double *B,double *C){
 
 }
 
-__global__ void matmult_gpu6_kernel(int m,int n,int k,double *A,double *B,double *C){
+// __global__ void matmult_gpu3_col_kernel(int m,int n,int k,double *A,double *B,double *C){
 
-    int j = 2*(blockIdx.x * blockDim.x + threadIdx.x);
-    int i = blockIdx.y * blockDim.y + threadIdx.y;
+//     int j = 2*(blockIdx.x * blockDim.x + threadIdx.x);
+//     int i = blockIdx.y * blockDim.y + threadIdx.y;
 
-    double sum1 =0.0;
-    double sum2 =0.0;
+//     double sum1 =0.0;
+//     double sum2 =0.0;
 
-    if (i < m && j < n){
-        for (int l = 0; l < k; l++) {
-            sum1 += A[i * k +l] * B[l * n + j];
-            if (j+1 < n) 
-            sum2 += A[i * k +l] * B[l * n + (j+1)];
-        }
-        C[i * n + j] = sum1;
-        if (j+1 < n) 
-        C[i * n + (j+1)] = sum2;
-    }   
-}    
+//     if (i < m && j < n){
+//         for (int l = 0; l < k; l++) {
+//             sum1 += A[i * k +l] * B[l * n + j];
+//             if (j+1 < n) 
+//             sum2 += A[i * k +l] * B[l * n + (j+1)];
+//         }
+//         C[i * n + j] = sum1;
+//         if (j+1 < n) 
+//         C[i * n + (j+1)] = sum2;
+//     }   
+// }    
 
-void matmult_gpu6(int m,int n,int k,double *A,double *B,double *C){
+// void matmult_gpu3_col(int m,int n,int k,double *A,double *B,double *C){
     
-    double *d_A;
-    double *d_B;
-    double *d_C;
+//     double *d_A;
+//     double *d_B;
+//     double *d_C;
 
-    int dimA = m * k * sizeof(double);
-    int dimB = k * n * sizeof(double);
-    int dimC = m * n * sizeof(double);
+//     int dimA = m * k * sizeof(double);
+//     int dimB = k * n * sizeof(double);
+//     int dimC = m * n * sizeof(double);
 
-    cudaMalloc((void **)&d_A, dimA);
-    cudaMalloc((void **)&d_B, dimB);
-    cudaMalloc((void **)&d_C, dimC);
+//     cudaMalloc((void **)&d_A, dimA);
+//     cudaMalloc((void **)&d_B, dimB);
+//     cudaMalloc((void **)&d_C, dimC);
 
-    cudaMemcpy(d_A, A, dimA, cudaMemcpyHostToDevice);
-    cudaMemcpy(d_B, B, dimB, cudaMemcpyHostToDevice);
+//     cudaMemcpy(d_A, A, dimA, cudaMemcpyHostToDevice);
+//     cudaMemcpy(d_B, B, dimB, cudaMemcpyHostToDevice);
 
-    int numThreads = 16;
+//     int numThreads = 16;
 
-    dim3 threadsPerBlock = dim3(numThreads,numThreads);
+//     dim3 threadsPerBlock = dim3(numThreads,numThreads);
 
-    dim3 blocks = dim3(n/(numThreads*2)+1, m/numThreads+1);
+//     dim3 blocks = dim3(n/(numThreads*2)+1, m/numThreads+1);
 
-    matmult_gpu6_kernel<<<blocks,threadsPerBlock>>>(m, n, k, d_A, d_B, d_C);
+//     matmult_gpu3_col_kernel<<<blocks,threadsPerBlock>>>(m, n, k, d_A, d_B, d_C);
 
-    cudaDeviceSynchronize();
+//     cudaDeviceSynchronize();
 
-    cudaMemcpy(C, d_C, dimC, cudaMemcpyDeviceToHost);
+//     cudaMemcpy(C, d_C, dimC, cudaMemcpyDeviceToHost);
 
-    cudaFree(d_A); 
-    cudaFree(d_B);
-    cudaFree(d_C);
+//     cudaFree(d_A); 
+//     cudaFree(d_B);
+//     cudaFree(d_C);
 
-}
+// }
 
-// __global__ void matmult_gpu4_kernel(int m,int n,int k,double *A,double *B,double *C){
+// __global__ void matmult_gpu4_4_kernel(int m,int n,int k,double *A,double *B,double *C){
 
 
 //     int j = blockIdx.x * blockDim.x + threadIdx.x;
@@ -323,7 +318,7 @@ void matmult_gpu6(int m,int n,int k,double *A,double *B,double *C){
 //     }    
 // }    
 
-// void matmult_gpu4(int m,int n,int k,double *A,double *B,double *C){
+// void matmult_gpu4_4(int m,int n,int k,double *A,double *B,double *C){
     
 //     double *d_A;
 //     double *d_B;
@@ -346,7 +341,7 @@ void matmult_gpu6(int m,int n,int k,double *A,double *B,double *C){
 
 //     dim3 blocks = dim3(n/numThreads+1, m/(numThreads*4)+1);
 
-//     matmult_gpu4_kernel<<<blocks,threadsPerBlock>>>(m, n, k, d_A, d_B, d_C);
+//     matmult_gpu4_4_kernel<<<blocks,threadsPerBlock>>>(m, n, k, d_A, d_B, d_C);
 
 //     cudaDeviceSynchronize();
 
@@ -474,11 +469,6 @@ void matmult_gpu4(int m,int n,int k,double *A,double *B,double *C){
 
 
 
-
-
-
-
-
 // --------------------------------------------------------------------------
 /* Two functions for gpu5 that uses shared memory for reading the A and B matrices in order to improve the performance:
         - matmult_gpu5_kernel:  see the comment attached to the function below.
@@ -487,7 +477,7 @@ void matmult_gpu4(int m,int n,int k,double *A,double *B,double *C){
 */
 
 // Thread block size
-#define BLOCK_SIZE 16 
+#define BLOCK_SIZE 32 
 #define INPUT_ERR fprintf(stderr,"%s:\nOne or more of the defiend values for m , n , k are not integer multiples of the thread block size = %d.\n",__func__,BLOCK_SIZE)
 /*  matmult_gpu5_kernel:  
         helper function, that takes care of the calculations.
@@ -558,6 +548,8 @@ __global__ void matmult_gpu5_kernel(int m,int n,int k,double *A,double *B,double
 */
 void matmult_gpu5(int m,int n,int k,double *A,double *B,double *C){
 
+    double start = omp_get_wtime();
+
     //making sure that m, n and k are integer multiples of the thread block size.
     if(m%BLOCK_SIZE!=0 || n%BLOCK_SIZE!=0 || k%BLOCK_SIZE!=0){
         INPUT_ERR;
@@ -593,6 +585,9 @@ void matmult_gpu5(int m,int n,int k,double *A,double *B,double *C){
     cudaFree(d_A);
     cudaFree(d_B);
     cudaFree(d_C);
+
+    double end = omp_get_wtime();
+    printf("Wall time %f \n" ,(end-start));
 }
 
 
