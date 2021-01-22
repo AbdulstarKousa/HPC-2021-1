@@ -5,7 +5,7 @@
 #BSUB -n 16
 #BSUB -R "rusage[mem=2048]"
 #BSUB -R "span[hosts=1]"
-#BSUB -W 20
+#BSUB -W 59
 #BSUB -gpu "num=1:mode=exclusive_process"
 
 module load cuda/11.1
@@ -14,7 +14,7 @@ numactl --cpunodebind=1
 
 EXECUTABLE=poisson_j
 
-SIZE_N="30 40 50 60 100 150"
+SIZE_N="200 230 250"
 ITER="1000000"
 TOLE="0.001"
 START_T="0"

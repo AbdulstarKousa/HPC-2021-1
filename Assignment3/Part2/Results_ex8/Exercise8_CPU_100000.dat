@@ -10,3 +10,9 @@ total time = 2.731412
 size 100 iterations 1000000
 total time = 50.855968 
 size 150 iterations 1000000
+total time = 226.832362 
+size 200 iterations 1000000
+total time = 487.264235 
+size 230 iterations 1000000
+total time = 774.345242 
+size 250 iterations 1000000

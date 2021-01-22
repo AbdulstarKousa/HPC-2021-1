@@ -28,3 +28,18 @@ Wall time 50.855968
 Norm result from norm 9.998807e-04
 #Nr. iterations= 39355
 size 150 iterations 1000000
+Running Jacobi OMP
+Wall time 226.832362 
+Norm result from norm 9.999882e-04
+#Nr. iterations= 68559
+size 200 iterations 1000000
+Running Jacobi OMP
+Wall time 487.264235 
+Norm result from norm 9.999422e-04
+#Nr. iterations= 89801
+size 230 iterations 1000000
+Running Jacobi OMP
+Wall time 774.345242 
+Norm result from norm 9.999707e-04
+#Nr. iterations= 105492
+size 250 iterations 1000000
