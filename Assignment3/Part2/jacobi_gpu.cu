@@ -303,30 +303,32 @@ void jacobi_kernel4new(
     double *** d_u_next,  /* 3D matrix "Cube" to hold new temperature estimates */
     int N,                /* #nr. interior grid points */ 
     double inv,
-    double d_squared             ){
+    double d_squared,
+    double * norm             ){
 
-    double tester = 0.0;
+    double inter_norm;
 
-        int i = blockIdx.x * blockDim.x + threadIdx.x; 
-        int j = blockIdx.y * blockDim.y + threadIdx.y;
-        int k = blockIdx.z * blockDim.z + threadIdx.z;
+    int i = blockIdx.x * blockDim.x + threadIdx.x; 
+    int j = blockIdx.y * blockDim.y + threadIdx.y;
+    int k = blockIdx.z * blockDim.z + threadIdx.z;
 
-        if(0 < i && 0 < j && 0 < k && i < N+1 && j < N+1 && k < N+1)
-       {    
+    if(0 < i && 0 < j && 0 < k && i < N+1 && j < N+1 && k < N+1)
+    {    
 
-            d_u_next[i][j][k] = inv * (d_u[i-1][j][k] + d_u[i+1][j][k] + d_u[i][j-1][k] + d_u[i][j+1][k] + d_u[i][j][k-1] + d_u[i][j][k+1] + d_squared * d_f[i][j][k]);
-                        
-             //Add norm calculation 
-                        
-            //norm_result += (((d_u_next[i][j][k]) - (d_u[i][j][k]))*((d_u_next[i][j][k]) - (d_u[i][j][k])));
-    
+        d_u_next[i][j][k] = inv * (d_u[i-1][j][k] + d_u[i+1][j][k] + d_u[i][j-1][k] + d_u[i][j+1][k] + d_u[i][j][k-1] + d_u[i][j][k+1] + d_squared * d_f[i][j][k]);
+        inter_norm = (d_u_next[i][j][k] - d_u[i][j][k])*(d_u_next[i][j][k] - d_u[i][j][k]);
+        
+        double value = blockReduceSum(inter_norm);
+        
 
-            //if (i == 0 || j == 0 || k == 0){
-            //     atomicAdd(&tester, norm_result);
-            //}
+        if(threadIdx.x == 0){
+            //atomicAdd(norm,(d_u_next[i][j][k] - d_u[i][j][k])*(d_u_next[i][j][k] - d_u[i][j][k]));
+            atomicAdd(norm,value);
         }
 
-        printf("Norm_result end %lf \n",tester);
+    }
+    
+
 }
 
 
@@ -343,7 +345,11 @@ void jacobi_gpu_wrap4new(  double*** d_f,        /* 3D matrix "Cube" of function
     double inv = 1.0/6.0; 
     int m = 0; 
     double *** temp; 
-    double norm_result = 0.0; 
+    double * d_norm; 
+    double * h_norm; 
+
+    cudaMalloc((void**)&d_norm,sizeof(double));
+    cudaMallocHost((void**)&h_norm,sizeof(double)); 
                     
     int threads_blck = 8; 
 
@@ -351,20 +357,24 @@ void jacobi_gpu_wrap4new(  double*** d_f,        /* 3D matrix "Cube" of function
     dim3 dimGrid(((N+2)/dimBlock.x)+1,((N+2)/dimBlock.y)+1,((N+2)/dimBlock.z)+1); // xx blocks in total
 
     printf("Calling kernel\n");
+    
+    *h_norm = 1.0 + tolerance; 
 
-    while(m < iter_max && norm_result > tolerance){
-        norm_result = 0.0; 
+    while(m < iter_max &&  *h_norm > tolerance){
+        *h_norm = 0.0;
+        cudaMemcpy(d_norm, h_norm, sizeof(double),cudaMemcpyHostToDevice);
 
-        jacobi_kernel4new<<<dimGrid,dimBlock>>>(d_f, d_u, d_u_next, N,inv,d_squared);    
+        jacobi_kernel4new<<<dimGrid,dimBlock>>>(d_f, d_u, d_u_next, N,inv,d_squared,d_norm);    
         cudaDeviceSynchronize(); 
         
         temp = d_u;
         d_u = d_u_next; 
         d_u_next = temp;
-        
-        //norm_result = sqrt(norm_result);
+
+        cudaMemcpy(h_norm, d_norm, sizeof(double),cudaMemcpyDeviceToHost);
+        *h_norm = sqrt(*h_norm);
         //tester = sqrt(tester);
-        
+     
         m++;
     
     }        
