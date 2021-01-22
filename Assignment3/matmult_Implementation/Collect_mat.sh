@@ -19,7 +19,7 @@ export MFLOPS_MAX_IT=1
 
 EXECUTABLE=matmult_f.nvcc
 S="2048"
-P="gpu6"
+P="gpulib"
 
 nv-nsight-cu-cli -o profile_${P}_$LSB_JOBID \
     --section MemoryWorkloadAnalysis \
@@ -27,4 +27,5 @@ nv-nsight-cu-cli -o profile_${P}_$LSB_JOBID \
     --section ComputeWorkloadAnalysis \
     --section SchedulerStats \
     --section LaunchStats \
+    --section SOL \
     ./matmult_f.nvcc $P $S $S $S
