@@ -406,7 +406,7 @@ main(int argc, char *argv[]) {
             
             break;
         }
-    case 42: //OBS HOW TO WE SAT MAKEFILE TO 1 CPU     numactl --cpunodebind=0 
+        case 42: //OBS HOW TO WE SAT MAKEFILE TO 1 CPU     numactl --cpunodebind=0 
         {
             printf("\n");
             printf("Jacopi CPU with norm ex8\n");
@@ -420,24 +420,15 @@ main(int argc, char *argv[]) {
 
             norm_result = jacobi(h_f,h_u,h_u_next,N,tolerance,iter_max,&m);
 
-<<<<<<< HEAD
         printf("total time = %lf seconds, with N=%d and %d iterations and breaks after %d \n", (omp_get_wtime() - time_t1),N,iter_max, m);
         printf("Out of reference jacobi\n");
  
         break;
         } 
+
         default:
             fprintf(stderr, "Non-supported output type!\n");
-=======
-            printf("total time = %lf seconds, with N=%d and %d iterations \n", (omp_get_wtime() - time_t1),N,iter_max);
-            printf("Out of reference jacobi\n");
-
->>>>>>> 8196a044c614d7ba7aa4e4a2e3d79a984d825a59
             break;
-            } 
-            default:
-                fprintf(stderr, "Non-supported output type!\n");
-                break;
         }
 
 
