@@ -197,7 +197,7 @@ main(int argc, char *argv[]) {
             }
 
             //printf("\n");
-            printf("Jacobi running two GPU ex7\n");
+            //printf("Jacobi running two GPU ex7\n");
 
             //Allocate device memory 
             double 	***d0_u = NULL;
@@ -272,7 +272,7 @@ main(int argc, char *argv[]) {
                  exit(-1);
              }
             
-             printf("Im here 0\n");
+             //printf("Im here 0\n");
 
             //warm up GPU
             cudaSetDevice(0);
@@ -281,9 +281,9 @@ main(int argc, char *argv[]) {
             warmUp();  
 
             //Iniliazie matrices on HOST  
-            printf("Iniliazie matrices on HOST\n");
+            //printf("Iniliazie matrices on HOST\n");
             init(h_f, h_u, h_u_next, N, start_T); 
-            printf("Im here 1\n");
+            //printf("Im here 1\n");
 
             for(int i = 0; i < N2; i++){
                 for(int j = 0; j < N2; j++){
@@ -305,17 +305,17 @@ main(int argc, char *argv[]) {
             double time_t2 = omp_get_wtime();
             
             //Transfer data to DEVICE 0 
-            printf("Transfer data to DEVICE 0 \n");
+            //printf("Transfer data to DEVICE 0 \n");
             cudaSetDevice(0);
             cudaDeviceEnablePeerAccess(1, 0);
             transfer_3d(d0_u, h0_u, N2/2, N2, N2, cudaMemcpyHostToDevice); 
-            printf("Transfer data to DEVICE 0 \n");
+            //printf("Transfer data to DEVICE 0 \n");
             transfer_3d(d0_u_next, h0_u_next, N2/2, N2, N2, cudaMemcpyHostToDevice); 
-            printf("Transfer data to DEVICE 0 \n");
+            //printf("Transfer data to DEVICE 0 \n");
             transfer_3d(d0_f, h0_f, N2/2, N2, N2, cudaMemcpyHostToDevice); 
 
             //Transfer data to DEVICE 1
-            printf("Transfer data to DEVICE 1 \n");              
+            //printf("Transfer data to DEVICE 1 \n");              
         
             cudaSetDevice(1);
             cudaDeviceEnablePeerAccess(0, 0);
@@ -325,14 +325,14 @@ main(int argc, char *argv[]) {
 
 
             jacobi_gpu_wrap3(d0_f,d0_u,d0_u_next,d1_f,d1_u,d1_u_next,N,tolerance,iter_max,&m);
-            printf("Out of Jabobi exercise 7\n");
+            //printf("Out of Jabobi exercise 7\n");
 
             //Transfer data back to HOST 
-            printf("Transfer data back to HOST from DEVICE 0 \n");
+            //printf("Transfer data back to HOST from DEVICE 0 \n");
             cudaSetDevice(0);
             transfer_3d(h0_u, d0_u, N2/2, N2, N2, cudaMemcpyDeviceToHost);  
 
-            printf("Transfer data back to HOST from DEVICE 1 \n");
+            //printf("Transfer data back to HOST from DEVICE 1 \n");
             cudaSetDevice(1);
             transfer_3d(h1_u, d1_u, N2/2, N2, N2, cudaMemcpyDeviceToHost);  
 

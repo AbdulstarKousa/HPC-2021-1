@@ -211,7 +211,7 @@ void jacobi_gpu_wrap3(  double*** d0_f,        /* 3D matrix "Cube" of function v
     dim3 dimBlock(threads_blck,threads_blck,threads_blck);// threads per block
     dim3 dimGrid((((N+2)/2)/dimBlock.x)+1,((N+2)/dimBlock.y)+1,((N+2)/dimBlock.z)+1); 
 
-    printf("Entering while loop\n");
+    //printf("Entering while loop\n");
     while (m < iter_max) 
     {
         //DEVICE 0 
