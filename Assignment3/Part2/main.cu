@@ -65,6 +65,7 @@ main(int argc, char *argv[]) {
     output_type = atoi(argv[6]);  // ouput type
     }
 
+    printf("output type %d \n", output_type);
 
 
     //Allocate memory on HOST
@@ -397,15 +398,19 @@ main(int argc, char *argv[]) {
 
 
             jacobi_gpu_wrap4new(d_f,d_u,d_u_next,N,tolerance,iter_max,&m);
-            printf("Out of Jabobi exercise 6\n");
+            printf("Out of Jabobi exercise 8\n");
 
             printf("Transfer data back to HOST \n");
             transfer_3d(h_u,d_u, N2, N2, N2, cudaMemcpyDeviceToHost);  
             
-            printf("total time = %lf seconds, with N=%d and %d iterations \n", (omp_get_wtime() - time_t2),N,iter_max);
+            printf("total time = %lf seconds, with N=%d and %d iterations to break out of %d iterations\n", (omp_get_wtime() - time_t2),N,m,iter_max);
             
             break;
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> cc140802ebb63c324d61661e03395c30fb3c98cc
         case 42: //OBS HOW TO WE SAT MAKEFILE TO 1 CPU     numactl --cpunodebind=0 
         {
             printf("\n");
@@ -431,8 +436,7 @@ main(int argc, char *argv[]) {
             break;
         }
 
-
-
+    }
 
 
 
@@ -472,7 +476,8 @@ main(int argc, char *argv[]) {
 	    fprintf(stderr, "Write binary dump to %s: ", output_filename);
 	    print_binary(output_filename, N+2, h_u);
 	    break;
-	case 4:
+    case 4:
+        printf("\n I'm here case 4");
 	    output_ext = ".vtk";
 	    sprintf(output_filename, "%s_%d%s", output_prefix, N+2, output_ext);
 	    fprintf(stderr, "Write VTK file to %s: ", output_filename);

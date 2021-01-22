@@ -33,7 +33,7 @@ double jacobi(  double*** f,        /* 3D matrix "Cube" of function values, Seco
     int i,j,k, m = 0;
 
     // alg. from the slides show "Assignment 2: The Poisson Problem" p 14. 
-    while (m < iter_max && norm_result > tolerance ) //
+    while (m < iter_max) //&& norm_result > tolerance 
     {
         norm_result = 0.0;
         for (i = 1; i < edge_point_count - 1; i++) {
@@ -93,6 +93,4 @@ void jacobi_no_norm(  double*** f,        /* 3D matrix "Cube" of function values
 
         m++;
     }
-
-    *mp=m; 
 }
