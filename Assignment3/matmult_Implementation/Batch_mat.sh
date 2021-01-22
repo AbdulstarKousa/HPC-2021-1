@@ -17,13 +17,13 @@
 
 module load cuda/11.1
 module load gcc/9.2.0
-numactl --cpunodebind=1
+numactl --physcpubind=1
 
 EXECUTABLE=matmult_f.nvcc
-# SIZES="2000"
+# SIZES="2048"
 # SIZES="16 32 64 128 256 512 1024"
-# SIZES="2048 4096 8192"
-SIZES="16 32 64 128 256 512 1024"
+SIZES="4096 8192"
+# SIZES="16 32 64 128 256 512 1024 2048"
 
 
 PERMUTATIONS="gpulib gpu4"
@@ -33,8 +33,8 @@ for P in $PERMUTATIONS
 do
 	for S in $SIZES
 	do
-		LOGEXT=../matmult_Results/datmatmult_time_${P}.dat
-		MFLOPS_MIN_T=3 MFLOPS_MAX_IT=3 ./$EXECUTABLE $P $S ($S*10) $S |& grep -v CPU >> $LOGEXT
+		LOGEXT=../matmult_Results/datmatmult_long_${P}.dat
+		./$EXECUTABLE $P $S $S*10 $S |& grep -v CPU >> $LOGEXT
 		echo permutation: $P size $S |  grep -v CPU >>$LOGEXT
 	done
 done

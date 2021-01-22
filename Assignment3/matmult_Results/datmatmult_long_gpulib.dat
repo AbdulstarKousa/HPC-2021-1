@@ -1,0 +1,20 @@
+       6.000      4.059 0 # matmult_gpulib
+permutation: gpulib size 16
+      24.000     33.354 0 # matmult_gpulib
+permutation: gpulib size 32
+      96.000    263.074 0 # matmult_gpulib
+permutation: gpulib size 64
+     384.000   2056.658 0 # matmult_gpulib
+permutation: gpulib size 128
+    1536.000  15295.505 0 # matmult_gpulib
+permutation: gpulib size 256
+    6144.000  77059.725 0 # matmult_gpulib
+permutation: gpulib size 512
+   24576.000 343893.023 0 # matmult_gpulib
+permutation: gpulib size 1024
+   98304.000 993677.102 300 # matmult_gpulib
+permutation: gpulib size 2048
+  393216.000 2106474.252 19200 # matmult_gpulib
+permutation: gpulib size 4096
+ 1572864.000 3598626.622 1.2288e+06 # matmult_gpulib
+permutation: gpulib size 8192

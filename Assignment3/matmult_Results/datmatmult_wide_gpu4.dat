@@ -1,0 +1,16 @@
+       6.000     26.511 0 # matmult_gpu4
+permutation: gpu4 size 16
+      24.000    199.109 0 # matmult_gpu4
+permutation: gpu4 size 32
+      96.000   1493.050 0 # matmult_gpu4
+permutation: gpu4 size 64
+     384.000  10466.661 0 # matmult_gpu4
+permutation: gpu4 size 128
+    1536.000  51601.265 0 # matmult_gpu4
+permutation: gpu4 size 256
+    6144.000 143103.424 0 # matmult_gpu4
+permutation: gpu4 size 512
+   24576.000 383652.854 0 # matmult_gpu4
+permutation: gpu4 size 1024
+   98304.000 765939.381 300 # matmult_gpu4
+permutation: gpu4 size 2048
