@@ -22,7 +22,7 @@
 void warmUp()
 {
     const int device = 0;
-        
+
     // Wake up GPU from power save state.
     fflush(stdout);
     //double time = omp_get_wtime();
@@ -421,18 +421,20 @@ main(int argc, char *argv[]) {
 
             norm_result = jacobi(h_f,h_u,h_u_next,N,tolerance,iter_max,&m);
 
-        printf("total time = %lf seconds, with N=%d and %d iterations and breaks after %d \n", (omp_get_wtime() - time_t1),N,iter_max, m);
-        printf("Out of reference jacobi\n");
+            printf("total time = %lf seconds, with N=%d and %d iterations and breaks after %d \n", (omp_get_wtime() - time_t1),N,iter_max, m);
+            printf("Out of reference jacobi\n");
  
         break;
         } 
 
-        default:{
-            fprintf(stderr, "Non-supported output type!\n");
+        default:
+        {
+            fprintf(stderr, "No valid version specified!\n");
             break;
         }
-
     }
+
+
 
 
 
